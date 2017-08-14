@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_margin="@dimen/padding_small"
+              android:layout_width="match_parent"
+              android:layout_height="120dp"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:background="@color/text"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="@dimen/padding_small"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="4dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:padding="@dimen/padding_huge"
+                android:contentDescription="@string/description_content"
+                android:background="@android:color/white"
+                android:id="@+id/image"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                tools:src="@drawable/noimage"
+                />
+
+            <TextView
+                android:id="@+id/text"
+                android:background="@color/text"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_small"
+                android:paddingRight="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_huge"
+                android:paddingBottom="@dimen/padding_huge"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text"
+                tools:text="Journee mondiale de la famille"
+                />
+
+        </FrameLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

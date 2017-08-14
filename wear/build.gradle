@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "packi.day"
+        minSdkVersion 21
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        versionCode 75
+        versionName "1.4.0"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compile project(':journeemondialelib')
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.android.support:wearable:1.4.0'
+}
+
+apply plugin: 'net.ltgt.errorprone'
+
+configurations.errorprone {
+    resolutionStrategy.force 'com.google.errorprone:error_prone_core:' + rootProject.ext.error_prone
+}
+
+apply plugin: 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    ignoreFailures true
+
+    checkstyle { toolVersion = rootProject.ext.checkstyle }
+
+    configFile rootProject.file("check/checkstyle.xml")
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+}
+
+check.dependsOn('checkstyle')
+
+apply plugin: 'pmd'
+
+task pmd(type: Pmd) {
+    ignoreFailures = true
+
+    pmd { toolVersion = rootProject.ext.pmd }
+
+    ruleSetFiles = rootProject.files("check/pmd.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
+}
+
+apply plugin: 'findbugs'
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+
+    findbugs { toolVersion = rootProject.ext.findbugs }
+
+    effort = "max"
+    reportLevel = "high"
+
+    excludeFilter = rootProject.file("check/findbugs-exclude.xml")
+    classes = files("$project.buildDir/intermediates/classes/")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml {
+            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+            xml.withMessages true
+        }
+    }
+
+    classpath = files()
+}

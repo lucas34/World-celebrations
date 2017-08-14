@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="title">#F0FFA062</color>
+    <color name="text">#696979</color>
+    <color name="black">#F0292929</color>
+    <color name="my_awesome_color">#1d85e0</color>
+    <color name="my_awesome_darker_color">#0e66da</color>
+    <color name="accent">#1d82dd</color>
+    <color name="random">#90083BA6</color>
+    <color name="background">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="colorPrimary">#1d85e0</color>
+    <color name="colorAccent">#0e66da</color>
+
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorPrimary">@color/my_awesome_color</item>
+        <item name="colorPrimaryDark">@color/my_awesome_darker_color</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:windowTitleStyle">@style/MyTitleTextStyle</item>
+    </style>
+
+    <style name="MyTitleTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
+    <style name="floating_action_button">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+</resources>

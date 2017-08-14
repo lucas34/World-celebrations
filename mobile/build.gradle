@@ -1,0 +1,147 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+apply plugin: 'me.tatarka.retrolambda'
+
+def password = hasProperty('password') ? password : ""
+def key = hasProperty('key') ? key : ""
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "packi.day"
+        minSdkVersion 14
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        versionCode 82
+        versionName '7.1.0'
+
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../certificatDay')
+            storePassword password
+            keyAlias key
+            keyPassword password
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_URL', '"http://www.journee-mondiale.fr"'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_URL', '"http://www.journee-mondiale.fr"'
+        }
+    }
+}
+
+dependencies {
+    compile project(':journeemondialelib')
+
+    compile 'com.android.support:design:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:cardview-v7:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support:preference-v7:' + rootProject.ext.supportLibVersion
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'com.github.jonisaa:MaterialCalendarview:v1.2.2'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    wearApp project(':wear')
+
+}
+
+apply plugin: 'net.ltgt.errorprone'
+
+configurations.errorprone {
+    resolutionStrategy.force 'com.google.errorprone:error_prone_core:' + rootProject.ext.error_prone
+}
+
+apply plugin: 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    ignoreFailures true
+
+    checkstyle { toolVersion = rootProject.ext.checkstyle }
+
+    configFile rootProject.file("check/checkstyle.xml")
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+}
+
+check.dependsOn('checkstyle')
+
+apply plugin: 'pmd'
+
+task pmd(type: Pmd) {
+    ignoreFailures = true
+
+    pmd { toolVersion = rootProject.ext.pmd }
+
+    ruleSetFiles = rootProject.files("check/pmd.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+apply plugin: 'findbugs'
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+
+    findbugs { toolVersion = rootProject.ext.findbugs }
+
+    effort = "max"
+    reportLevel = "high"
+
+    excludeFilter = rootProject.file("check/findbugs-exclude.xml")
+    classes = files("$project.buildDir/intermediates/classes/")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml {
+            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+            xml.withMessages true
+        }
+    }
+
+    classpath = files()
+}

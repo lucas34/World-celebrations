@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">World Day Official</string>
+    <string name="launch_widget">Launching the widget</string>
+    <string name="description_content">Icon</string>
+    <string name="widget">Widget</string>
+    <string name="text_color">Text color</string>
+    <string name="pick_color">Pick a color</string>
+    <string name="background_color">Background color</string>
+    <string name="text_size">Text size</string>
+    <string name="report">Send</string>
+    <string name="your_message">Your message</string>
+    <string name="report_an_error">Report an issue</string>
+    <string name="today">Today</string>
+    <string name="search">Search</string>
+    <string name="random_day">Random celebration</string>
+    <string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
+    <string name="app_info">World celebration day is a free app without ad.</string>
+    <string name="thanks_for_report">Thanks for your reporting.</string>
+    <string name="put_more_info">Please put more info</string>
+    <string name="please_pic_date">Which date ?</string>
+    <string name="error_market">Could not open Google play.</string>
+    <string name="ok">OK</string>
+    <string name="loading">Loading</string>
+    <string name="please_wait">Please wait</string>
+    <string name="list_all_celebrations">All celebrations</string>
+    <string name="application">Application</string>
+    <string name="rate_the_app">Rate the app</string>
+    <string name="about">About</string>
+    <string name="celebrations">Celebrations</string>
+    <string name="activate_notification">Receive notification</string>
+    <string name="time_of_notification">Notification hour</string>
+    <string name="once_per_day">Only one per day</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="when_notify">When do you want to receive the notification</string>
+    <string name="preference">Preferences</string>
+
+    <string-array name="Select_Color_back">
+        <item>Black</item>
+        <item>White</item>
+        <item>Transparent</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+    </string-array>
+
+    <string-array name="Select_Color_text">
+        <item>Black</item>
+        <item>White</item>
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+    </string-array>
+
+    <string-array name="Select_Color_back_value">
+        <item name="#ff000000">#ff000000</item>
+        <item name="#ffffffff">#ffffffff</item>
+        <item name="#00000000">#00000000</item>
+        <item name="#ff0000ff">#ff0000ff</item>
+        <item name="#ffff0000">#ffff0000</item>
+        <item name="#ff00ff00">#ff00ff00</item>
+    </string-array>
+    <string-array name="Select_Color_text_value">
+        <item name="#ff000000">#ff000000</item>
+        <item name="#ffffffff">#ffffffff</item>
+        <item name="#ff0000ff">#ff0000ff</item>
+        <item name="#ffff0000">#ffff0000</item>
+        <item name="#ff00ff00">#ff00ff00</item>
+    </string-array>
+    <string name="date_text_title">%1$d %2$s</string>
+
+</resources>

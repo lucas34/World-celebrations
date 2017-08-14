@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:key="first_category"
+        android:title="Notification">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="notification"
+            android:summary="@string/once_per_day"
+            android:title="@string/activate_notification"/>
+
+        <packi.day.lib.TimePickerPreferences
+            android:key="dateNotification"
+            android:summary="@string/when_notify"
+            android:title="@string/time_of_notification"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="first_category"
+        android:title="@string/widget">
+
+        <ListPreference
+            android:defaultValue="#00000000"
+            android:entries="@array/Select_Color_text"
+            android:entryValues="@array/Select_Color_text_value"
+            android:key="TextColor"
+            android:summary="@string/pick_color"
+            android:title="@string/text_color"/>
+
+        <ListPreference
+            android:defaultValue="#00000000"
+            android:entries="@array/Select_Color_back"
+            android:entryValues="@array/Select_Color_back_value"
+            android:key="BackgroundColor"
+            android:summary="@string/pick_color"
+            android:title="@string/background_color"/>
+
+        <!--suppress AndroidElementNotAllowed -->
+        <SeekBarPreference
+            android:defaultValue="0"
+            android:key="TextSize"
+            android:max="100"
+            android:title="@string/text_size"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title">35sp</dimen>
+    <dimen name="text">15sp</dimen>
+
+    <dimen name="padding_small">3sp</dimen>
+    <dimen name="padding_medium">6sp</dimen>
+    <dimen name="padding_huge">12sp</dimen>
+</resources>

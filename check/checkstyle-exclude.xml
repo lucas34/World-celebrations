@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/test/.*"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/IncreasingQualityDataSourceSupplier2.java"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/RoundedCornersBackgroundSpan.java"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/AvatarContainer.java"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/AvatarIconView.java"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/LocalStorageProvider.java"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/NoticeSyncCandidateResponse.java"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/NoticeBinding.java"/>
+</suppressions>

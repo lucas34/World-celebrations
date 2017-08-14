@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Journée Mondiale</string>
+    <string name="launch_widget">Lancement du widget en cours</string>
+    <string name="description_content">Icone</string>
+    <string name="widget">Widget</string>
+    <string name="text_color">Couleur du texte</string>
+    <string name="pick_color">Choisir une couleur</string>
+    <string name="background_color">Couleur du fond</string>
+    <string name="text_size">Taille du texte</string>
+    <string name="report">Envoyer</string>
+    <string name="your_message">Votre message</string>
+    <string name="report_an_error">Signaler une erreur</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="search">Rechercher</string>
+    <string name="random_day">Une journée aléatoire ?</string>
+    <string name="open_drawer">Ouvrir</string>
+    <string name="close_drawer">Fermer</string>
+    <string name="app_info">Journée mondiale est une application gratuite et sans pub.</string>
+    <string name="thanks_for_report">Merci pour votre signalement.</string>
+    <string name="put_more_info">Il nous faut plus d\'informations</string>
+    <string name="please_pic_date">Quelle date ?</string>
+    <string name="error_market">Impossible d\'ouvrir le Google play.</string>
+    <string name="ok">OK</string>
+    <string name="loading">Chargement</string>
+    <string name="please_wait">Veuillez patienter</string>
+    <string name="list_all_celebrations">Les célébrations</string>
+    <string name="application">Application</string>
+    <string name="rate_the_app">Donner votre avis</string>
+    <string name="about">A propos</string>
+    <string name="celebrations">Les célebrations</string>
+    <string name="activate_notification">Activer la notification</string>
+    <string name="time_of_notification">Heure de la notification</string>
+    <string name="once_per_day">Notification 1 fois par jour</string>
+    <string name="an_error_occurred">une erreur s\'est produite</string>
+    <string name="when_notify">Quand souhaitez-vous être notifié</string>
+    <string name="date_text_title">%1$d %2$s</string>
+    <string name="preference">Préférences</string>
+
+    <string-array name="Select_Color_back">
+        <item>Noir</item>
+        <item>Blanc</item>
+        <item>Transparent</item>
+        <item>Bleu</item>
+        <item>Rouge</item>
+        <item>Vert</item>
+    </string-array>
+
+    <string-array name="Select_Color_text">
+        <item>Noir</item>
+        <item>Blanc</item>
+        <item>Bleu</item>
+        <item>Rouge</item>
+        <item>Vert</item>
+    </string-array>
+
+    <string-array name="Select_Color_back_value">
+        <item name="#ff000000">#ff000000</item>
+        <item name="#ffffffff">#ffffffff</item>
+        <item name="#00000000">#00000000</item>
+        <item name="#ff0000ff">#ff0000ff</item>
+        <item name="#ffff0000">#ffff0000</item>
+        <item name="#ff00ff00">#ff00ff00</item>
+    </string-array>
+    <string-array name="Select_Color_text_value">
+        <item name="#ff000000">#ff000000</item>
+        <item name="#ffffffff">#ffffffff</item>
+        <item name="#ff0000ff">#ff0000ff</item>
+        <item name="#ffff0000">#ffff0000</item>
+        <item name="#ff00ff00">#ff00ff00</item>
+    </string-array>
+
+</resources>
