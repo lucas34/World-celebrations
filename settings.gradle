@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':journeemondialelib'
+include ':mobile', ':wear', ':mainscreen', ':store', ':store-realm', ':common', ':instantapp'

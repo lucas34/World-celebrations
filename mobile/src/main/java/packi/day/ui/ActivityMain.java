@@ -1,6 +1,7 @@
 package packi.day.ui;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -23,17 +24,28 @@ import android.widget.Toast;
 import org.joda.time.MonthDay;
 
 import packi.day.R;
+import packi.day.WorldApplication;
 import packi.day.lib.SupportNavigationHandler;
+import packi.day.main.StoreLocator;
+import packi.day.store.StoreData;
 import packi.day.ui.fragments.CustomDateSearchBuilder;
-import packi.day.ui.fragments.FocusCelebrationFragment;
+import packi.day.main.FocusCelebrationFragment;
 import packi.day.ui.fragments.ListAllCelebrationFragment;
 import packi.day.ui.fragments.PreferencesFragment;
-import packi.day.ui.fragments.RequestFragment;
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity implements StoreLocator {
 
     private SupportNavigationHandler<Fragment> navigationHandler;
     private DrawerLayout drawerLayout;
+
+    private static boolean isNotLaunchedActivity(Activity activity, Intent intent) {
+        try {
+            activity.startActivity(intent);
+            return false;
+        } catch (ActivityNotFoundException e) {
+            return true;
+        }
+    }
 
     private void launchMarket() {
         String packageName = getPackageName();
@@ -47,15 +59,6 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    private static boolean isNotLaunchedActivity(Activity activity, Intent intent) {
-        try {
-            activity.startActivity(intent);
-            return false;
-        } catch (ActivityNotFoundException e) {
-            return true;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,7 @@ public class ActivityMain extends AppCompatActivity {
         navigationHandler.setOnFragmentChangeListener(fragment -> {
             View view = getCurrentFocus();
             if (view != null) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
@@ -74,7 +77,7 @@ public class ActivityMain extends AppCompatActivity {
             navigationHandler.showMain(new FocusCelebrationFragment());
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -84,7 +87,7 @@ public class ActivityMain extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(menuItem -> {
 
             menuItem.setChecked(false);
@@ -98,10 +101,6 @@ public class ActivityMain extends AppCompatActivity {
 
                 case R.id.menu_list_all:
                     navigationHandler.replaceContent(new ListAllCelebrationFragment());
-                    return true;
-
-                case R.id.menu_report:
-                    navigationHandler.replaceContent(new RequestFragment());
                     return true;
 
                 case R.id.menu_settings:
@@ -126,7 +125,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        drawerLayout = findViewById(R.id.drawer);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -167,4 +166,9 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    @Override
+    public StoreData getStore() {
+        WorldApplication application = (WorldApplication) getApplication();
+        return application.getCelebrationHelper();
+    }
 }

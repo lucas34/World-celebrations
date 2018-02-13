@@ -7,36 +7,38 @@ import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.journeemondialelib.Celebration;
-import com.journeemondialelib.WorldCelebration;
-import com.journeemondialelib.share.AnalyticsTracker;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.MonthDay;
 
+import packi.day.common.AnalyticsTracker;
+import packi.day.store.InternationalDay;
+import packi.day.store.StoreData;
+import packi.day.store.feature.HashMapDayStore;
+
 public class MainActivity extends Activity {
 
-    private WorldCelebration worldCelebrationHelper;
+    private StoreData storeData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null || worldCelebrationHelper == null) {
-            worldCelebrationHelper = new WorldCelebration(this);
+        if (savedInstanceState == null || storeData == null) {
+            storeData = new StoreData(new HashMapDayStore(this));
         }
         
-        CardScrollView cardScrollView = (CardScrollView) findViewById(R.id.card_scroll_view);
+        CardScrollView cardScrollView = findViewById(R.id.card_scroll_view);
         cardScrollView.setCardGravity(Gravity.BOTTOM);
 
         final MonthDay now = MonthDay.now();
-        Celebration celebration = worldCelebrationHelper.getCelebration(now);
+        InternationalDay celebration = storeData.get(now);
 
-        ImageView image = (ImageView) findViewById(R.id.IllustrationJournee);
-        Picasso.with(this).load(worldCelebrationHelper.getDrawableImage(celebration)).into(image);
+        ImageView image = findViewById(R.id.IllustrationJournee);
+        Picasso.with(this).load(celebration.getDrawable()).into(image);
 
-        TextView textView = (TextView) findViewById(R.id.text);
+        TextView textView = findViewById(R.id.text);
         textView.setText(celebration.name);
     }
 
@@ -48,7 +50,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        worldCelebrationHelper.close();
         super.onDestroy();
     }
 }

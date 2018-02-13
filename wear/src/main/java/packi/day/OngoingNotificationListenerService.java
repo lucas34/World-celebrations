@@ -17,10 +17,11 @@ import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
-import com.journeemondialelib.share.Constants;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import packi.day.common.Constants;
 
 public class OngoingNotificationListenerService extends WearableListenerService {
 
@@ -53,37 +54,40 @@ public class OngoingNotificationListenerService extends WearableListenerService 
             }
         }
 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (notificationManager == null) return;
+
+        Intent notificationIntent = new Intent(this, NotificationActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification.WearableExtender extender = new Notification.WearableExtender()
+                .setDisplayIntent(pendingIntent);
+
+        Notification.Builder notificationBuilder = new Notification.Builder(this)
+                .setContentTitle(getString(R.string.app_name))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .extend(extender);
+
         for (DataEvent event : events) {
-            if (event.getType() == DataEvent.TYPE_CHANGED) {
-                String path = event.getDataItem().getUri().getPath();
-                if (Constants.PATH_NOTIFICATION.equals(path)) {
-                    // Get the data out of the event
-                    DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
-                    final String title = dataMapItem.getDataMap().getString(Constants.KEY_TITLE);
-
-                    // Build the intent to display our custom notification
-                    Intent notificationIntent = new Intent(this, NotificationActivity.class);
-                    notificationIntent.putExtra(NotificationActivity.EXTRA_TITLE, title);
-                    PendingIntent notificationPendingIntent = PendingIntent.getActivity(
-                            this,
-                            0,
-                            notificationIntent,
-                            PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    Notification.Builder notificationBuilder =
-                            new Notification.Builder(this)
-                                    .setContentTitle(getString(R.string.app_name))
-                                    .setSmallIcon(R.mipmap.ic_launcher)
-                                    .extend(new Notification.WearableExtender()
-                                                    .setDisplayIntent(notificationPendingIntent)
-                                    );
-
-                    ((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
-                            .notify(++notificationId, notificationBuilder.build());
-                } else {
-                    Log.d(TAG, "Unrecognized path: " + path);
-                }
+            if (event.getType() != DataEvent.TYPE_CHANGED) {
+                continue;
             }
+
+            String path = event.getDataItem().getUri().getPath();
+            if (!Constants.PATH_NOTIFICATION.equals(path)) {
+                Log.d(TAG, "Unrecognized path: " + path);
+                continue;
+            }
+
+            // Get the data out of the event
+            DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
+            final String title = dataMapItem.getDataMap().getString(Constants.KEY_TITLE);
+
+            notificationIntent.putExtra(NotificationActivity.EXTRA_TITLE, title);
+
+            notificationManager.notify(++notificationId, notificationBuilder.build());
         }
     }
 

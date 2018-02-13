@@ -1,0 +1,24 @@
+language: android
+android:
+  components:
+    - build-tools-27.0.2
+    - android-27
+    - extra
+
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-27
+
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
+before_install:
+- yes | sdkmanager "platforms;android-27"
+
+script:
+  - ./gradlew assembleDebug
+  - ./gradlew check

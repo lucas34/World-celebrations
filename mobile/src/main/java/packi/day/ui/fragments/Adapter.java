@@ -9,12 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.journeemondialelib.Celebration;
-import com.journeemondialelib.WorldCelebration;
-import com.journeemondialelib.share.SomeTools;
 import com.squareup.picasso.Picasso;
-
-import org.joda.time.MonthDay;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +17,9 @@ import java.util.Set;
 
 import packi.day.R;
 import packi.day.WorldApplication;
+import packi.day.common.SomeTools;
+import packi.day.store.InternationalDay;
+import packi.day.store.StoreData;
 import packi.day.ui.ActivityMain;
 
 
@@ -30,37 +28,10 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private static final int HEADER = 0;
     private static final int ITEM = 2;
-
-    private static final class HeaderHolder extends RecyclerView.ViewHolder {
-
-        private final TextView title;
-
-        /* package */ HeaderHolder(View root) {
-            super(root);
-            title = (TextView) root.findViewById(R.id.section_text);
-        }
-    }
-
-    private static final class CelebrationHolder extends RecyclerView.ViewHolder {
-
-        private final View root;
-        private final TextView text;
-        private final ImageView image;
-
-        /* package */ CelebrationHolder(View root) {
-            super(root);
-            this.root = root;
-            text = (TextView) root.findViewById(packi.day.R.id.text);
-            image = (ImageView) root.findViewById(packi.day.R.id.image);
-        }
-    }
-
-    private final WorldCelebration viewModel;
+    private final StoreData viewModel;
     private final ActivityMain activity;
-
     private final Picasso picasso;
-
-    private List<Celebration> celebrations;
+    private List<InternationalDay> celebrations;
     private Set<Integer> headers;
 
     public Adapter(ActivityMain activity, @Nullable String filter) {
@@ -110,20 +81,19 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (holder.getItemViewType()) {
             case HEADER: {
                 HeaderHolder headerHolder = (HeaderHolder) holder;
-                Celebration celebration = celebrations.get(position - findNumberOfItemsBellow(position));
-                MonthDay monthDay = new MonthDay(celebration.month, 1);
-                headerHolder.title.setText(monthDay.monthOfYear().getAsText(Locale.getDefault()));
+                InternationalDay celebration = celebrations.get(position - findNumberOfItemsBellow(position));
+                headerHolder.title.setText(celebration.getDate().monthOfYear().getAsText(Locale.getDefault()));
                 break;
             }
             case ITEM:
             default: {
                 CelebrationHolder celebrationHolder = (CelebrationHolder) holder;
                 int childPosition = position - findNumberOfItemsBellow(position);
-                Celebration celebration = celebrations.get(childPosition);
+                InternationalDay celebration = celebrations.get(childPosition);
 
                 celebrationHolder.root.setTag(R.id.position, childPosition);
-                picasso.load(viewModel.getDrawableImage(celebration)).into(celebrationHolder.image);
-                celebrationHolder.text.setText(Html.fromHtml("<b>" + celebration.day + "</b> : " + celebration.name));
+                picasso.load(celebration.getDrawable()).into(celebrationHolder.image);
+                celebrationHolder.text.setText(Html.fromHtml("<b>" + celebration.getDate().getDayOfMonth() + "</b> : " + celebration.name));
                 celebrationHolder.root.setOnClickListener(this);
                 break;
             }
@@ -134,9 +104,9 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // Need to implement dichotomy on this
     private int findNumberOfItemsBellow(int position) {
         int count = 0;
-        for(Integer header: headers) {
+        for (Integer header : headers) {
             if (header < position) {
-                count ++;
+                count++;
             } else {
                 return count;
             }
@@ -147,9 +117,33 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onClick(View v) {
         int position = (int) v.getTag(R.id.position);
-        Celebration celebration = celebrations.get(position);
+        InternationalDay celebration = celebrations.get(position);
         SomeTools.hideKeyboard(activity);
-        activity.showFocus(new MonthDay(celebration.month, celebration.day));
+        activity.showFocus(celebration.getDate());
+    }
+
+    private static final class HeaderHolder extends RecyclerView.ViewHolder {
+
+        private final TextView title;
+
+        /* package */ HeaderHolder(View root) {
+            super(root);
+            title = root.findViewById(R.id.section_text);
+        }
+    }
+
+    private static final class CelebrationHolder extends RecyclerView.ViewHolder {
+
+        private final View root;
+        private final TextView text;
+        private final ImageView image;
+
+        /* package */ CelebrationHolder(View root) {
+            super(root);
+            this.root = root;
+            text = root.findViewById(R.id.text);
+            image = root.findViewById(R.id.image);
+        }
     }
 
 }

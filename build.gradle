@@ -1,15 +1,15 @@
 ext {
-    compileSdkVersion = 25
-    buildToolsVersion = "25.0.2"
-    targetSdkVersion = 25
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.2"
+    targetSdkVersion = 27
 
-    supportLibVersion = "25.3.1"
+    supportLibVersion = "27.0.2"
 
-    jacoco = "0.7.9"
+    jacoco = "0.8.0"
 
     findbugs = "3.0.1"
-    pmd = "5.6.1"
-    checkstyle = "7.7"
+    pmd = "6.0.1"
+    checkstyle = "8.8"
     error_prone = "2.0.19"
 }
 
@@ -25,10 +25,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'io.realm:realm-gradle-plugin:3.2.1'
-        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.10'
-        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'io.realm:realm-gradle-plugin:4.3.4'
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.13'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

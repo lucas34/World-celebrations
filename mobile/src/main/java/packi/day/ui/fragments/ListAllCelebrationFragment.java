@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -17,9 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.journeemondialelib.share.AnalyticsTracker;
-
 import packi.day.R;
+import packi.day.common.AnalyticsTracker;
 import packi.day.ui.ActivityMain;
 
 public class ListAllCelebrationFragment extends Fragment implements SearchView.OnQueryTextListener {
@@ -81,9 +79,10 @@ public class ListAllCelebrationFragment extends Fragment implements SearchView.O
         inflater.inflate(packi.day.R.menu.search_filter_all, menu);
 
         MenuItem searchItem = menu.findItem(packi.day.R.id.action_search);
-        SearchManager searchManager = (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        SearchManager searchManager = (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(this);

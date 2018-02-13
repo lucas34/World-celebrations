@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.journeemondialelib.share.AnalyticsTracker;
-
+import packi.day.common.AnalyticsTracker;
 
 public class NotificationActivity extends Activity {
 
@@ -19,7 +18,7 @@ public class NotificationActivity extends Activity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            TextView text = (TextView) findViewById(R.id.text_view);
+            TextView text = findViewById(R.id.text_view);
             text.setText(intent.getStringExtra(EXTRA_TITLE));
         }
     }

@@ -8,15 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import com.journeemondialelib.Celebration;
-import com.journeemondialelib.WorldCelebration;
-import com.journeemondialelib.share.AnalyticsTracker;
-import com.journeemondialelib.share.SomeTools;
-
 import org.joda.time.MonthDay;
 
 import packi.day.R;
 import packi.day.WorldApplication;
+import packi.day.common.AnalyticsTracker;
+import packi.day.common.SomeTools;
+import packi.day.store.InternationalDay;
+import packi.day.store.StoreData;
 import packi.day.ui.ActivityMain;
 
 
@@ -30,9 +29,9 @@ public class NotificationExecutor extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        WorldCelebration celebrationHelper = WorldApplication.with(getApplicationContext());
-        if (celebrationHelper.hasCelebration(TODAY)) {
-            Celebration celebration = celebrationHelper.getCelebration(TODAY);
+        StoreData storeData = WorldApplication.with(getApplicationContext());
+        if (storeData.hasCelebration(TODAY)) {
+            InternationalDay celebration = storeData.get(TODAY);
 
             showNotification(celebration.name);
             SomeTools.sendToWear(this, celebration.name);
@@ -41,7 +40,7 @@ public class NotificationExecutor extends IntentService {
 
     private void showNotification(String celebration) {
         Intent intent = new Intent(this, ActivityMain.class);
-        Notification notification = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentIntent(PendingIntent.getActivity(this, 0, intent, 0))
@@ -50,7 +49,9 @@ public class NotificationExecutor extends IntentService {
                 .build();
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(1, notification);
+        if (manager != null) {
+            manager.notify(1, notification);
+        }
         AnalyticsTracker.getInstance(this).sendTracker("/notification/publish");
     }
 }

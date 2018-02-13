@@ -9,9 +9,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.RemoteViews;
 
-import com.journeemondialelib.share.AnalyticsTracker;
-
 import packi.day.R;
+import packi.day.common.AnalyticsTracker;
 import packi.day.notification.Alarm;
 import packi.day.ui.ActivityMain;
 import packi.day.widget.WidgetProvider;
@@ -20,26 +19,24 @@ import static packi.day.R.string.preference;
 
 public class PreferencesFragment extends PreferenceFragmentCompat {
 
-    private final Alarm alarm = new Alarm();
-
     private static final String TXT_COLOR = "TextColor";
     private static final String BG_COLOR = "BackgroundColor";
     private static final String TXT_SIZE = "TextSize";
     private static final String DATE_NOTIFICATION = "dateNotification";
     private static final String NOTIFICATION = "notification";
-
     private static final String SET_TXT_COLOR = "setTextColor";
     private static final String SET_BG_COLOR = "setBackgroundColor";
     private static final String SET_TXT_SIZE = "setTextSize";
+    private final Alarm alarm = new Alarm();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
 
         setListener(TXT_COLOR, (pref, obj) -> update(SET_TXT_COLOR, getColor(obj)));
-        setListener(BG_COLOR,  (pref, obj) -> update(SET_BG_COLOR, getColor(obj)));
-        setListener(TXT_SIZE,  (pref, obj) -> update(SET_TXT_SIZE, getTextSize(obj)));
-        setListener(DATE_NOTIFICATION,  (preference, newValue) -> setAlarm());
+        setListener(BG_COLOR, (pref, obj) -> update(SET_BG_COLOR, getColor(obj)));
+        setListener(TXT_SIZE, (pref, obj) -> update(SET_TXT_SIZE, getTextSize(obj)));
+        setListener(DATE_NOTIFICATION, (preference, newValue) -> setAlarm());
 
         Preference checkBoxPreference = findPreference(NOTIFICATION);
         checkBoxPreference.setOnPreferenceChangeListener((p, check) ->
@@ -48,7 +45,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
 
     private void setListener(CharSequence key, Preference.OnPreferenceChangeListener listener) {
         Preference preference = findPreference(key);
-        if(preference != null) {
+        if (preference != null) {
             preference.setOnPreferenceChangeListener(listener);
         }
     }

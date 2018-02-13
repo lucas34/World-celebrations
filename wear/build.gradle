@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -29,10 +28,11 @@ android {
 }
 
 dependencies {
-    compile project(':journeemondialelib')
+    implementation project(':common')
+    implementation project(':store')
 
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.google.android.support:wearable:1.4.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.google.android.support:wearable:1.4.0'
 }
 
 apply plugin: 'net.ltgt.errorprone'
@@ -56,8 +56,6 @@ task checkstyle(type: Checkstyle) {
     classpath = files()
 }
 
-check.dependsOn('checkstyle')
-
 apply plugin: 'pmd'
 
 task pmd(type: Pmd) {
@@ -76,6 +74,8 @@ task pmd(type: Pmd) {
         html.enabled = false
     }
 }
+
+check.dependsOn('pmd')
 
 apply plugin: 'findbugs'
 
@@ -103,3 +103,5 @@ task findbugs(type: FindBugs) {
 
     classpath = files()
 }
+
+check.dependsOn('findbugs')

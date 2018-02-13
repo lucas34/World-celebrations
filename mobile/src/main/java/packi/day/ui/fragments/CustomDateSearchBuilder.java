@@ -39,7 +39,7 @@ public class CustomDateSearchBuilder extends AlertDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_calendar);
 
-        final CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+        final CalendarView calendarView = findViewById(R.id.calendarView);
 
         calendarView.setFirstDayOfWeek(Calendar.MONDAY);
         calendarView.setIsOverflowDateVisible(true);
