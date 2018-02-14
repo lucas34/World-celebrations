@@ -17,11 +17,11 @@ public final class AnalyticsTracker {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         analytics.setLocalDispatchPeriod(1800);
 
-//        tracker = analytics.newTracker(BuildConfig.ANALYTICS_TOKEN);
-//        tracker.enableExceptionReporting(true);
-//        tracker.enableAdvertisingIdCollection(true);
-//        tracker.enableAutoActivityTracking(true);
-//        tracker.setAppVersion(getVersion(context));
+        tracker = analytics.newTracker(BuildConfig.ANALYTICS_TOKEN);
+        tracker.enableExceptionReporting(true);
+        tracker.enableAdvertisingIdCollection(true);
+        tracker.enableAutoActivityTracking(true);
+        tracker.setAppVersion(getVersion(context));
     }
 
     public static AnalyticsTracker getInstance(Context context) {
@@ -43,8 +43,8 @@ public final class AnalyticsTracker {
     }
 
     public void sendTracker(String name) {
-//        tracker.setScreenName(name);
-//        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        tracker.setScreenName(name);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
 }

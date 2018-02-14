@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+def analytics = hasProperty('analytics') ? getProperty('analytics') : "UA-XXXX-Y"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -23,8 +25,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'ANALYTICS_TOKEN', '"'+analytics+'"'
+        }
+
+        debug {
+            buildConfigField 'String', 'ANALYTICS_TOKEN', '"UA-XXXX-Y"'
         }
     }
+
 }
 
 dependencies {
