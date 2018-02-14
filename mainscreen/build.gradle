@@ -1,5 +1,8 @@
 apply plugin: 'com.android.feature'
 
+def password = hasProperty('password') ? getProperty('password') : ""
+def key = hasProperty('key') ? getProperty('key') : ""
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -26,9 +29,19 @@ android {
         abortOnError false
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../certificatDay')
+            storePassword password
+            keyAlias key
+            keyPassword password
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
