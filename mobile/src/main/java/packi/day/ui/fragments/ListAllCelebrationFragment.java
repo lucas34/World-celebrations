@@ -1,8 +1,11 @@
 package packi.day.ui.fragments;
 
+import android.app.Activity;
 import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -39,21 +42,21 @@ public class ListAllCelebrationFragment extends Fragment implements SearchView.O
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putString("filter", filter);
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(packi.day.R.layout.fragment_list_all_celebration, container, false);
     }
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView realmRecyclerView = (RecyclerView) view.findViewById(R.id.realm_recycler_view);
+        RecyclerView realmRecyclerView = view.findViewById(R.id.realm_recycler_view);
         celebrationAdapter = new Adapter((ActivityMain) getActivity(), getFilter(savedInstanceState));
         realmRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), (int) computeNumberOfItems()));
         realmRecyclerView.setAdapter(celebrationAdapter);
@@ -82,8 +85,19 @@ public class ListAllCelebrationFragment extends Fragment implements SearchView.O
 
         SearchView searchView = (SearchView) searchItem.getActionView();
 
-        SearchManager searchManager = (SearchManager) getContext().getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        Activity activity = getActivity();
+        if (activity == null) {
+            super.onCreateOptionsMenu(menu, inflater);
+            return;
+        }
+
+        SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchManager != null) {
+            SearchableInfo searchableInfo = searchManager.getSearchableInfo(activity.getComponentName());
+            searchView.setSearchableInfo(searchableInfo);
+        }
+
         searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(this);
         searchView.setQuery(filter, false);
