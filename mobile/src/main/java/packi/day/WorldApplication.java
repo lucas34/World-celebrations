@@ -31,7 +31,7 @@ public class WorldApplication extends Application {
 
         Realm.setDefaultConfiguration(config);
 
-        worldCelebration = new StoreData(new RealmDayStore(this));
+        worldCelebration = new StoreData(getApplicationContext(), new RealmDayStore());
 
         if (BuildConfig.DEBUG) {
             new StrictMode.ThreadPolicy.Builder().detectAll().penaltyDeath().build();

@@ -1,5 +1,6 @@
 package packi.day.store;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -13,6 +14,8 @@ import java.util.Set;
  */
 
 public interface DayStore {
+
+    void loadData(Context context);
 
     @Nullable
     InternationalDay get(MonthDay date);

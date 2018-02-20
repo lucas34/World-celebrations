@@ -26,13 +26,10 @@ import packi.day.store.InternationalDay;
 
 public class RealmDayStore implements DayStore {
 
-    private final Context context;
-    private final Realm database;
+    private final Realm database = Realm.getDefaultInstance();
 
-    public RealmDayStore(Context context) {
-        this.context = context;
-        this.database = Realm.getDefaultInstance();
-
+    @Override
+    public void loadData(Context context) {
         if (database.isEmpty()) {
             database.beginTransaction();
             database.createOrUpdateAllFromJson(RealmInternationalDay.class,

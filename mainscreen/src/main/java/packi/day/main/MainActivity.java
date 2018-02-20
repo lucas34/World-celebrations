@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements StoreLocator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        storeData = new StoreData(new HashMapDayStore(this));
+        storeData = new StoreData(getApplicationContext(), new HashMapDayStore());
 
         Toolbar viewById = findViewById(R.id.toolbar);
         viewById.setTitle(R.string.app_name);

@@ -31,7 +31,8 @@ public class HashMapDayStore implements DayStore {
 
     private Map<MonthDay, InternationalDay> store = new HashMap<>(365);
 
-    public HashMapDayStore(Context context) {
+    @Override
+    public void loadData(Context context) {
         fillData(context.getResources().openRawResource(packi.day.store.feature.R.raw.celebration));
     }
 
