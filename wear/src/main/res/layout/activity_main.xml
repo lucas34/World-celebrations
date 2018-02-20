@@ -3,64 +3,64 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@android:color/white"
-    android:layout_width="match_parent">
+    android:background="@android:color/white">
 
     <ImageView
         android:id="@+id/IllustrationJournee"
-        android:layout_margin="6sp"
-        android:contentDescription="@string/desc"
-        android:background="@android:color/white"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="6sp"
+        android:background="@android:color/white"
+        android:contentDescription="@string/desc"
         tools:src="@drawable/vide"
         />
 
     <android.support.wearable.view.CardScrollView
         android:id="@+id/card_scroll_view"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_box="bottom">
 
         <android.support.wearable.view.CardFrame
-            android:layout_height="wrap_content"
+            android:id="@+id/cardFrame"
             android:layout_width="match_parent"
-            android:id="@+id/cardFrame">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center_horizontal"
                     android:text="@string/today"
                     android:textColor="#F0FFA062"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
                 <View
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:background="@color/black_54p"
                     />
 
                 <TextView
                     android:id="@+id/text"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    tools:text="Journée mondiale de la liberté d'expression"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    tools:text="Journée mondiale de la liberté d'expression"/>
 
             </LinearLayout>
         </android.support.wearable.view.CardFrame>

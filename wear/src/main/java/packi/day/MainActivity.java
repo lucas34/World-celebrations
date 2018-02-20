@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         if (savedInstanceState == null || storeData == null) {
             storeData = new StoreData(new HashMapDayStore(this));
         }
-        
+
         CardScrollView cardScrollView = findViewById(R.id.card_scroll_view);
         cardScrollView.setCardGravity(Gravity.BOTTOM);
 

@@ -1,7 +1,6 @@
 package packi.day.ui;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -26,10 +25,10 @@ import org.joda.time.MonthDay;
 import packi.day.R;
 import packi.day.WorldApplication;
 import packi.day.lib.SupportNavigationHandler;
+import packi.day.main.FocusCelebrationFragment;
 import packi.day.main.StoreLocator;
 import packi.day.store.StoreData;
 import packi.day.ui.fragments.CustomDateSearchBuilder;
-import packi.day.main.FocusCelebrationFragment;
 import packi.day.ui.fragments.ListAllCelebrationFragment;
 import packi.day.ui.fragments.PreferencesFragment;
 

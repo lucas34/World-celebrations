@@ -64,12 +64,11 @@ public class InternationalDay {
 
     @NonNull
     public Uri getDrawable() {
-        if (image ==  null || image.length() == 0) {
+        if (image == null || image.length() == 0) {
             return Uri.parse("file:///android_asset/noimage.png");
         } else {
             String base = "https://raw.githubusercontent.com/lucas34/World-celebrations/modular/assets/images/";
             return Uri.parse(base + image + ".png");
         }
     }
-
 }
