@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import org.joda.time.MonthDay;
 
-import java.util.ArrayList;
+import java.util.AbstractList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +14,7 @@ import java.util.Set;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import packi.day.store.DayStore;
 import packi.day.store.InternationalDay;
 
@@ -79,11 +80,19 @@ public class RealmDayStore implements DayStore {
         if (!TextUtils.isEmpty(criteria)) {
             where = where.contains("name", criteria, Case.INSENSITIVE);
         }
-        List<InternationalDay> result = new ArrayList<>((int) where.count());
-        for (RealmInternationalDay data : where.findAll()) {
-            result.add(mapData(data));
-        }
-        return result;
+
+        final RealmResults<RealmInternationalDay> results = where.findAll();
+        return new AbstractList<InternationalDay>() {
+            @Override
+            public int size() {
+                return results.size();
+            }
+
+            @Override
+            public InternationalDay get(int index) {
+                return mapData(results.get(index));
+            }
+        };
     }
 
     private InternationalDay mapData(RealmInternationalDay data) {
