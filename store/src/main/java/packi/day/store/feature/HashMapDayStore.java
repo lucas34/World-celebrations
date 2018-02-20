@@ -1,8 +1,6 @@
 package packi.day.store.feature;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -13,11 +11,12 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -50,12 +49,43 @@ public class HashMapDayStore implements DayStore {
     @Override
     public List<InternationalDay> find(String criteria) {
         List<InternationalDay> result = new ArrayList<>(store.size());
-        for(InternationalDay celebration : store.values()) {
+        for (InternationalDay celebration : store.values()) {
             if (celebration.name.contains(criteria)) {
                 result.add(celebration);
             }
         }
         return result;
+    }
+
+    @NonNull
+    @Override
+    public InternationalDay random() {
+        InternationalDay result;
+        do {
+            result = get(randomDate());
+        } while (result == null);
+        return result;
+    }
+
+    private MonthDay randomDate() {
+        final Random random = new Random();
+
+        int monthRandom = randomInt(random, 1, 12);
+
+        Calendar calendar = new GregorianCalendar(0, monthRandom - 1, 1);
+
+        int dayRandom = randomInt(random, 1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return new MonthDay(monthRandom, dayRandom);
+    }
+
+    /**
+     *
+     * @param lower bound included
+     * @param upper bound included
+     * @return random inside bound
+     */
+    private static int randomInt(Random random, int lower, int upper) {
+        return random.nextInt(upper - lower + 1) + lower;
     }
 
     private void fillData(InputStream in) {

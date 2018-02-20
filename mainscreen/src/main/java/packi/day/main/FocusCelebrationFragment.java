@@ -102,7 +102,7 @@ public class FocusCelebrationFragment extends Fragment implements OnSwipe {
     }
 
     public void random() {
-        celebrationObservableField.set(storeData.getRandomCelebration());
+        celebrationObservableField.set(storeData.random());
     }
 
     private MonthDay getDate(@Nullable Bundle savedInstanceState, @Nullable Bundle args) {

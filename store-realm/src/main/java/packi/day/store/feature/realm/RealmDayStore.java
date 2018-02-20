@@ -1,6 +1,7 @@
 package packi.day.store.feature.realm;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -9,6 +10,7 @@ import org.joda.time.MonthDay;
 import java.util.AbstractList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import io.realm.Case;
@@ -50,6 +52,11 @@ public class RealmDayStore implements DayStore {
         return first != null ? mapData(first) : null;
     }
 
+    /**
+     *
+     * @param criteria
+     * @return headers positions
+     */
     @Override
     public Set<Integer> count(String criteria) {
         Set<Integer> result = new HashSet<>(12);
@@ -61,15 +68,18 @@ public class RealmDayStore implements DayStore {
                     .equalTo("month", month)
                     .count();
 
-            if (current > 0) {
-                if (result.isEmpty()) {
-                    result.add(0);
-                    previous += current + 1;
-                } else {
-                    result.add(previous);
-                    previous += current + 1;
-                }
+            if (current == 0) {
+                // No result for this month
+                continue;
             }
+
+            result.add(previous);
+
+            // 1 cell for the header
+            previous += 1;
+
+            // Number of match for the cells
+            previous += current;
         }
         return result;
     }
@@ -95,9 +105,20 @@ public class RealmDayStore implements DayStore {
         };
     }
 
+    @NonNull
+    @Override
+    public InternationalDay random() {
+        RealmQuery<RealmInternationalDay> result = database.where(RealmInternationalDay.class);
+        int count = (int) result.count();
+
+        int value = new Random().nextInt(count);
+
+        RealmInternationalDay realmInternationalDay = result.findAll().get(value);
+        return mapData(realmInternationalDay);
+    }
+
     private InternationalDay mapData(RealmInternationalDay data) {
         return new InternationalDay(data.id, data.name, data.day, data.month, data.image);
     }
-
 
 }

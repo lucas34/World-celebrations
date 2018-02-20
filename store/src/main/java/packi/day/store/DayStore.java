@@ -21,4 +21,7 @@ public interface DayStore {
 
     List<InternationalDay> find(String criteria);
 
+    @NonNull
+    InternationalDay random();
+
 }
