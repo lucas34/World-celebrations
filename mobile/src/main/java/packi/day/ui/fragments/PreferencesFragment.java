@@ -10,7 +10,6 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.RemoteViews;
 
 import packi.day.R;
-import packi.day.common.AnalyticsTracker;
 import packi.day.notification.Alarm;
 import packi.day.ui.ActivityMain;
 import packi.day.widget.WidgetProvider;
@@ -83,7 +82,7 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
     @Override
     public void onResume() {
         super.onResume();
-        AnalyticsTracker.getInstance(getActivity()).sendTracker("/preferences");
+//        AnalyticsTracker.getInstance(getActivity()).sendTracker("/preferences");
         ((ActivityMain) getActivity()).setScreenTitle(preference);
     }
 }

@@ -19,8 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import packi.day.R;
-import packi.day.common.AnalyticsTracker;
 import packi.day.ui.ActivityMain;
 
 public class ListAllCelebrationFragment extends Fragment implements SearchView.OnQueryTextListener {
@@ -37,7 +37,9 @@ public class ListAllCelebrationFragment extends Fragment implements SearchView.O
     @Override
     public void onResume() {
         super.onResume();
-        AnalyticsTracker.getInstance(getActivity()).sendTracker("/listAll");
+
+
+//        AnalyticsTracker.getInstance(getActivity()).sendTracker("/listAll");
         ((ActivityMain) getActivity()).setScreenTitle(R.string.list_all_celebrations);
     }
 

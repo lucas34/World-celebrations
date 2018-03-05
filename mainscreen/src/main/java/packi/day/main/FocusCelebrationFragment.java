@@ -20,7 +20,6 @@ import org.joda.time.MonthDay;
 
 import java.util.Locale;
 
-import packi.day.common.AnalyticsTracker;
 import packi.day.main.databinding.FragmentFocusCelebrationBinding;
 import packi.day.store.DataStore;
 import packi.day.store.InternationalDay;
@@ -64,7 +63,7 @@ public class FocusCelebrationFragment extends Fragment implements OnSwipe {
     @Override
     public void onResume() {
         super.onResume();
-        AnalyticsTracker.getInstance(getActivity()).sendTracker("/launcher");
+//        AnalyticsTracker.getInstance(getActivity()).sendTracker("/launcher");
     }
 
     @Override

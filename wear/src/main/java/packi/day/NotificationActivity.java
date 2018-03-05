@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import packi.day.common.AnalyticsTracker;
-
 public class NotificationActivity extends Activity {
 
     public static final String EXTRA_TITLE = "title";
@@ -26,6 +24,6 @@ public class NotificationActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        AnalyticsTracker.getInstance(getApplicationContext()).sendTracker("/wear/notification");
+//        AnalyticsTracker.getInstance(getApplicationContext()).sendTracker("/wear/notification");
     }
 }

@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 import org.joda.time.MonthDay;
 
 import packi.day.R;
@@ -163,6 +165,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
         if (supportActionBar != null) {
             supportActionBar.setTitle(title);
         }
+//TODO send tracker        GoogleAnalytics.getInstance(this).newTracker()
     }
 
     @Override
