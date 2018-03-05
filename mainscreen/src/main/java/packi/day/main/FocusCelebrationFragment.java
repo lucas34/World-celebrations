@@ -20,12 +20,12 @@ import org.joda.time.MonthDay;
 
 import java.util.Locale;
 
-import packi.day.common.AnalyticsTracker;
 import packi.day.main.databinding.FragmentFocusCelebrationBinding;
 import packi.day.store.DataStore;
 import packi.day.store.InternationalDay;
+import packi.day.store.StoreLocator;
 
-public class FocusCelebrationFragment extends Fragment implements OnSwipe {
+public class FocusCelebrationFragment extends Fragment {
 
     private final ObservableField<InternationalDay> celebrationObservableField = new ObservableField<>();
     private DataStore store;
@@ -64,7 +64,7 @@ public class FocusCelebrationFragment extends Fragment implements OnSwipe {
     @Override
     public void onResume() {
         super.onResume();
-        AnalyticsTracker.getInstance(getActivity()).sendTracker("/launcher");
+//        AnalyticsTracker.getInstance(getActivity()).sendTracker("/launcher");
     }
 
     @Override
@@ -80,25 +80,13 @@ public class FocusCelebrationFragment extends Fragment implements OnSwipe {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.setOnTouchListener(new OnSwipeTouchListener(getActivity(), this));
+//        view.setOnTouchListener(new OnSwipeListener(getActivity(), this));
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable("date", celebrationObservableField.get().getDate());
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onSwipeHorizontal(int direction) {
-        MonthDay date = celebrationObservableField.get().getDate().plusDays(direction);
-        celebrationObservableField.set(store.get(date));
-    }
-
-    @Override
-    public void onSwipeVertical(int direction) {
-        MonthDay date = celebrationObservableField.get().getDate().plusMonths(direction);
-        celebrationObservableField.set(store.get(date));
     }
 
     public void random() {

@@ -17,7 +17,7 @@ import java.util.Set;
 
 import packi.day.R;
 import packi.day.WorldApplication;
-import packi.day.common.SomeTools;
+import packi.day.common.Keyword;
 import packi.day.store.DataStore;
 import packi.day.store.InternationalDay;
 import packi.day.ui.ActivityMain;
@@ -118,7 +118,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onClick(View v) {
         int position = (int) v.getTag(R.id.position);
         InternationalDay celebration = celebrations.get(position);
-        SomeTools.hideKeyboard(activity);
+        Keyword.Companion.hide(activity);
         activity.showFocus(celebration.getDate());
     }
 
