@@ -14,8 +14,8 @@ import packi.day.R;
 import packi.day.WorldApplication;
 import packi.day.common.AnalyticsTracker;
 import packi.day.common.SomeTools;
+import packi.day.store.DataStore;
 import packi.day.store.InternationalDay;
-import packi.day.store.StoreData;
 import packi.day.ui.ActivityMain;
 
 
@@ -29,12 +29,12 @@ public class NotificationExecutor extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        StoreData storeData = WorldApplication.with(getApplicationContext());
+        DataStore storeData = WorldApplication.with(getApplicationContext());
         if (storeData.hasCelebration(TODAY)) {
             InternationalDay celebration = storeData.get(TODAY);
 
-            showNotification(celebration.name);
-            SomeTools.sendToWear(this, celebration.name);
+            showNotification(celebration.getName());
+            SomeTools.sendToWear(this, celebration.getName());
         }
     }
 

@@ -70,6 +70,8 @@ dependencies {
     implementation 'com.android.support:preference-v7:' + rootProject.ext.supportLibVersion
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    implementation 'me.philio:preferencecompatextended:1.2.2'
+
     implementation 'com.github.jonisaa:MaterialCalendarview:v1.2.2'
 
     wearApp project(':wear')

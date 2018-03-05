@@ -1,0 +1,88 @@
+package packi.day.store.feature
+
+import android.content.Context
+import org.joda.time.MonthDay
+import org.json.JSONArray
+import org.json.JSONException
+import packi.day.store.InternationalDay
+import packi.day.store.StoreDelegate
+import java.io.InputStream
+import java.util.*
+
+/**
+ * Created by lucasnelaupe on 5/3/18.
+ */
+
+class HashMapStoreDelegate : StoreDelegate {
+
+    var store: HashMap<MonthDay, InternationalDay> = HashMap(365)
+
+    override fun loadData(context: Context) {
+        fillData(context.resources.openRawResource(R.raw.celebration))
+    }
+
+    override fun get(date: MonthDay): InternationalDay? {
+        return store.get(date)
+    }
+
+    override fun count(criteria: String): Set<Int> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun find(criteria: String): List<InternationalDay> {
+        val results = ArrayList<InternationalDay>(365)
+        for (celebration in store.values) {
+            if (celebration.name.contains(criteria)) {
+                results.add(celebration)
+            }
+        }
+        return results
+    }
+
+    override fun random(): InternationalDay {
+        var data: InternationalDay?
+        do {
+            data = get(randomDate())
+        } while (data == null)
+        return data
+    }
+
+    private fun randomInt(random: Random, lower: Int, upper: Int): Int {
+        return random.nextInt(upper - lower + 1) + lower
+    }
+
+    private fun randomDate(): MonthDay {
+        val random = Random()
+
+        val monthRandom = randomInt(random, 1, 12)
+
+        val calendar = GregorianCalendar(0, monthRandom - 1, 1)
+
+        val dayRandom = randomInt(random, 1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        return MonthDay(monthRandom, dayRandom)
+    }
+
+    private fun fillData(stream: InputStream) {
+        var scanner: Scanner? = null
+        try {
+            scanner = getFullStringScanner(stream)
+            val jsonArray = JSONArray(scanner.next())
+            for (i in 0 until jsonArray.length()) {
+                val jsonobject = jsonArray.getJSONObject(i)
+                val internationalDay = InternationalDay(jsonobject)
+                store.put(internationalDay.date, internationalDay)
+            }
+        } catch (e: JSONException) {
+            throw RuntimeException("Failed to read JSON", e)
+        } finally {
+            if (scanner != null) {
+                scanner.close()
+            }
+        }
+    }
+
+    private fun getFullStringScanner(`in`: InputStream): Scanner {
+        return Scanner(`in`, "UTF-8").useDelimiter("\\A")
+    }
+
+}

@@ -27,7 +27,7 @@ import packi.day.WorldApplication;
 import packi.day.lib.SupportNavigationHandler;
 import packi.day.main.FocusCelebrationFragment;
 import packi.day.main.StoreLocator;
-import packi.day.store.StoreData;
+import packi.day.store.DataStore;
 import packi.day.ui.fragments.CustomDateSearchBuilder;
 import packi.day.ui.fragments.ListAllCelebrationFragment;
 import packi.day.ui.fragments.PreferencesFragment;
@@ -166,7 +166,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
     }
 
     @Override
-    public StoreData getStore() {
+    public DataStore getStore() {
         WorldApplication application = (WorldApplication) getApplication();
         return application.getCelebrationHelper();
     }

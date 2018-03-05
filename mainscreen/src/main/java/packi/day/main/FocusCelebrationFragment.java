@@ -22,13 +22,13 @@ import java.util.Locale;
 
 import packi.day.common.AnalyticsTracker;
 import packi.day.main.databinding.FragmentFocusCelebrationBinding;
+import packi.day.store.DataStore;
 import packi.day.store.InternationalDay;
-import packi.day.store.StoreData;
 
 public class FocusCelebrationFragment extends Fragment implements OnSwipe {
 
     private final ObservableField<InternationalDay> celebrationObservableField = new ObservableField<>();
-    private StoreData storeData;
+    private DataStore store;
 
     @BindingAdapter({"bind:showText"})
     public static void loadText(TextView view, String text) {
@@ -55,10 +55,10 @@ public class FocusCelebrationFragment extends Fragment implements OnSwipe {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StoreLocator locator = (StoreLocator) getActivity();
-        storeData = locator.getStore();
+        store = locator.getStore();
         setHasOptionsMenu(false);
 
-        celebrationObservableField.set(storeData.get(getDate(savedInstanceState, getArguments())));
+        celebrationObservableField.set(store.get(getDate(savedInstanceState, getArguments())));
     }
 
     @Override
@@ -92,17 +92,17 @@ public class FocusCelebrationFragment extends Fragment implements OnSwipe {
     @Override
     public void onSwipeHorizontal(int direction) {
         MonthDay date = celebrationObservableField.get().getDate().plusDays(direction);
-        celebrationObservableField.set(storeData.get(date));
+        celebrationObservableField.set(store.get(date));
     }
 
     @Override
     public void onSwipeVertical(int direction) {
         MonthDay date = celebrationObservableField.get().getDate().plusMonths(direction);
-        celebrationObservableField.set(storeData.get(date));
+        celebrationObservableField.set(store.get(date));
     }
 
     public void random() {
-        celebrationObservableField.set(storeData.random());
+        celebrationObservableField.set(store.random());
     }
 
     private MonthDay getDate(@Nullable Bundle savedInstanceState, @Nullable Bundle args) {

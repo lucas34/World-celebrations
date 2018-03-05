@@ -5,19 +5,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import packi.day.store.StoreData;
-import packi.day.store.feature.HashMapDayStore;
+import packi.day.store.DataStore;
+import packi.day.store.feature.HashMapStoreDelegate;
 
 public class MainActivity extends AppCompatActivity implements StoreLocator {
 
-    private StoreData storeData;
+    private DataStore store;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        storeData = new StoreData(getApplicationContext(), new HashMapDayStore());
+        store = new DataStore(getApplicationContext(), new HashMapStoreDelegate());
 
         Toolbar viewById = findViewById(R.id.toolbar);
         viewById.setTitle(R.string.app_name);
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements StoreLocator {
     }
 
     @Override
-    public StoreData getStore() {
-        return storeData;
+    public DataStore getStore() {
+        return store;
     }
 
 }

@@ -28,7 +28,7 @@ public class WidgetProvider extends AppWidgetProvider {
             views.setInt(R.id.WidgetText, "setBackgroundColor", userSettings.background);
             views.setInt(R.id.WidgetText, "setTextColor", userSettings.text);
             views.setFloat(R.id.WidgetText, "setTextSize", userSettings.size);
-            views.setTextViewText(R.id.WidgetText, celebration.name);
+            views.setTextViewText(R.id.WidgetText, celebration.getName());
             views.setOnClickPendingIntent(R.id.WidgetText, getPendingIntent(context, appWidgetId));
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
