@@ -17,7 +17,7 @@ private val GoogleAnalytics.newTracker : Tracker
         return tracker
     }
 
-fun GoogleAnalytics.sendTracker(name: String) {
+fun GoogleAnalytics.report(name: String) {
     val tracker = this.newTracker
     tracker.setScreenName(name)
     tracker.send(HitBuilders.ScreenViewBuilder().build())

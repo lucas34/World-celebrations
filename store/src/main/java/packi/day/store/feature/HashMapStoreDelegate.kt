@@ -9,10 +9,6 @@ import packi.day.store.StoreDelegate
 import java.io.InputStream
 import java.util.*
 
-/**
- * Created by lucasnelaupe on 5/3/18.
- */
-
 class HashMapStoreDelegate : StoreDelegate {
 
     var store: HashMap<MonthDay, InternationalDay> = HashMap(365)

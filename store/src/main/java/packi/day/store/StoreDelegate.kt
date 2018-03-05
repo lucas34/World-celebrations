@@ -3,10 +3,6 @@ package packi.day.store
 import android.content.Context
 import org.joda.time.MonthDay
 
-/**
- * Created by lucasnelaupe on 5/3/18.
- */
-
 interface StoreDelegate {
 
     fun loadData(context: Context)

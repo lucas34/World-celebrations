@@ -4,10 +4,6 @@ import android.net.Uri
 import org.joda.time.MonthDay
 import org.json.JSONObject
 
-/**
- * Created by lucasnelaupe on 5/3/18.
- */
-
 data class InternationalDay(val id: Int,
                             val name: String,
                             val day: Int,

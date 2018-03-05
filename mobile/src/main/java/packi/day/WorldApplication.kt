@@ -38,7 +38,7 @@ class WorldApplication : Application() {
     // TODO this cast is quite dirty
     // See how we can avoid this static method
     companion object {
-        private val VERSION = 4L
+        private const val VERSION = 4L
 
         fun with(context: Context): DataStore {
             val application = context.applicationContext as WorldApplication

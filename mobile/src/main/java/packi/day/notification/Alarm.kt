@@ -8,14 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.os.PowerManager
-import packi.day.common.UserSettings
+import packi.day.store.UserSetting
 import java.util.*
-
 
 class Alarm : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (!UserSettings(context).shouldNotify) return
+        if (!UserSetting(context).shouldNotify) return
 
         val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         val wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "")
@@ -34,9 +33,9 @@ class Alarm : BroadcastReceiver() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DATE)
 
-        val settings = UserSettings(context)
+        val settings = UserSetting(context)
 
-        calendar.set(year, month, day, settings.notificationHour, settings.notificationMinute, 0)
+        calendar.set(year, month, day, settings.notificationDate.first.hours, settings.notificationDate.second.minutes, 0)
         if (calendar.before(Calendar.getInstance(Locale.getDefault()))) {
             calendar.add(Calendar.DATE, 1)
         }
@@ -79,7 +78,7 @@ class AutoStart : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if ("android.intent.action.BOOT_COMPLETED" != intent.action) return
 
-        if (UserSettings(context).shouldNotify) {
+        if (UserSetting(context).shouldNotify) {
             alarm.init(context)
         } else {
             alarm.cancelAlarm(context)

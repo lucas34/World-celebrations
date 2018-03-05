@@ -11,7 +11,7 @@ import org.joda.time.MonthDay
 
 import packi.day.R
 import packi.day.WorldApplication
-import packi.day.common.UserSettings
+import packi.day.store.UserSetting
 import packi.day.ui.ActivityMain
 
 class WidgetProvider : AppWidgetProvider() {
@@ -19,13 +19,13 @@ class WidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         val (_, name) = WorldApplication.with(context).get(MonthDay.now())
 
-        val userSettings = UserSettings(context)
+        val userSettings = UserSetting(context)
 
         for (appWidgetId in appWidgetIds) {
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
             views.setInt(R.id.WidgetText, "setBackgroundColor", userSettings.background)
-            views.setInt(R.id.WidgetText, "setTextColor", userSettings.text)
-            views.setFloat(R.id.WidgetText, "setTextSize", userSettings.size.toFloat())
+            views.setInt(R.id.WidgetText, "setTextColor", userSettings.widgetTextColor)
+            views.setFloat(R.id.WidgetText, "setTextSize", userSettings.widgetFontSize)
             views.setTextViewText(R.id.WidgetText, name)
             views.setOnClickPendingIntent(R.id.WidgetText, getPendingIntent(context, appWidgetId))
             appWidgetManager.updateAppWidget(appWidgetId, views)

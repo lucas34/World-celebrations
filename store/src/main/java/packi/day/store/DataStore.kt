@@ -5,7 +5,6 @@ import org.joda.time.MonthDay
 import packi.day.store.feature.HashMapStoreDelegate
 import packi.day.store.feature.R
 
-
 class DataStore(private val context: Context, private val delegate: StoreDelegate = HashMapStoreDelegate()) {
 
     init {
