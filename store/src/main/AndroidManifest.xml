@@ -1,4 +1,1 @@
-<manifest
-    package="packi.day.store.feature">
-
-</manifest>
+<manifest package="packi.day.store.feature" />
