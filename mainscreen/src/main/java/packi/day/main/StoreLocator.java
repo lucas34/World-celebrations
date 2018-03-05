@@ -1,6 +1,6 @@
 package packi.day.main;
 
-import packi.day.store.StoreData;
+import packi.day.store.DataStore;
 
 /**
  * Created by lucas34990 on 13/2/18.
@@ -8,6 +8,6 @@ import packi.day.store.StoreData;
 
 public interface StoreLocator {
 
-    StoreData getStore();
+    DataStore getStore();
 
 }

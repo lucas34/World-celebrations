@@ -18,8 +18,8 @@ import java.util.Set;
 import packi.day.R;
 import packi.day.WorldApplication;
 import packi.day.common.SomeTools;
+import packi.day.store.DataStore;
 import packi.day.store.InternationalDay;
-import packi.day.store.StoreData;
 import packi.day.ui.ActivityMain;
 
 
@@ -28,7 +28,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private static final int HEADER = 0;
     private static final int ITEM = 2;
-    private final StoreData viewModel;
+    private final DataStore viewModel;
     private final ActivityMain activity;
     private final Picasso picasso;
     private List<InternationalDay> celebrations;
@@ -93,7 +93,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 celebrationHolder.root.setTag(R.id.position, childPosition);
                 picasso.load(celebration.getDrawable()).into(celebrationHolder.image);
-                celebrationHolder.text.setText(Html.fromHtml("<b>" + celebration.getDate().getDayOfMonth() + "</b> : " + celebration.name));
+                celebrationHolder.text.setText(Html.fromHtml("<b>" + celebration.getDate().getDayOfMonth() + "</b> : " + celebration.getName()));
                 celebrationHolder.root.setOnClickListener(this);
                 break;
             }

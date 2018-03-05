@@ -12,8 +12,6 @@ import android.preference.PreferenceManager;
 import java.util.Calendar;
 import java.util.Locale;
 
-import packi.day.lib.TimePickerPreferences;
-
 public class Alarm extends BroadcastReceiver {
 
     @Override
@@ -43,13 +41,13 @@ public class Alarm extends BroadcastReceiver {
 
         String savedDate = sharedPrefs.getString("dateNotification", "00:00");
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        int hours = TimePickerPreferences.getHour(savedDate);
-        int minutes = TimePickerPreferences.getMinute(savedDate);
+//        int hours = TimePickerPreferences.getHour(savedDate);
+//        int minutes = TimePickerPreferences.getMinute(savedDate);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DATE);
 
-        calendar.set(year, month, day, hours, minutes, 0);
+        calendar.set(year, month, day, 0, 0, 0);
         if (calendar.before(Calendar.getInstance(Locale.getDefault()))) {
             calendar.add(Calendar.DATE, 1);
         }

@@ -6,16 +6,16 @@ import android.os.StrictMode;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import packi.day.store.StoreData;
-import packi.day.store.feature.realm.RealmDayStore;
+import packi.day.store.DataStore;
+import packi.day.store.feature.realm.RealmStoreDelegate;
 
 public class WorldApplication extends Application {
 
     private static final int VERSION = 4;
 
-    private StoreData worldCelebration;
+    private DataStore worldCelebration;
 
-    public static StoreData with(Context context) {
+    public static DataStore with(Context context) {
         WorldApplication application = (WorldApplication) context.getApplicationContext();
         return application.getCelebrationHelper();
     }
@@ -31,7 +31,7 @@ public class WorldApplication extends Application {
 
         Realm.setDefaultConfiguration(config);
 
-        worldCelebration = new StoreData(getApplicationContext(), new RealmDayStore());
+        worldCelebration = new DataStore(getApplicationContext(), new RealmStoreDelegate());
 
         if (BuildConfig.DEBUG) {
             new StrictMode.ThreadPolicy.Builder().detectAll().penaltyDeath().build();
@@ -44,7 +44,7 @@ public class WorldApplication extends Application {
         super.onTerminate();
     }
 
-    public StoreData getCelebrationHelper() {
+    public DataStore getCelebrationHelper() {
         return worldCelebration;
     }
 
