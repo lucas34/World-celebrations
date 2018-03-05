@@ -11,7 +11,7 @@ interface StoreDelegate {
 
     fun loadData(context: Context)
 
-    fun get(date: MonthDay) : InternationalDay?
+    fun get(date: MonthDay): InternationalDay?
 
     fun count(criteria: String): Set<Int>
 

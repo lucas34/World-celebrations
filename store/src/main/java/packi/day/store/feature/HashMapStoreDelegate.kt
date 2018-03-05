@@ -13,7 +13,7 @@ import java.util.*
  * Created by lucasnelaupe on 5/3/18.
  */
 
-class HashMapStoreDelegate: StoreDelegate {
+class HashMapStoreDelegate : StoreDelegate {
 
     var store: HashMap<MonthDay, InternationalDay> = HashMap(365)
 
@@ -40,10 +40,10 @@ class HashMapStoreDelegate: StoreDelegate {
     }
 
     override fun random(): InternationalDay {
-        var data: InternationalDay? = null
+        var data: InternationalDay?
         do {
             data = get(randomDate())
-        }while (data == null)
+        } while (data == null)
         return data
     }
 

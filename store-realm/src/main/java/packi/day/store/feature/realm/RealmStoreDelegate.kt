@@ -3,6 +3,7 @@ package packi.day.store.feature.realm
 import android.content.Context
 import io.realm.Case
 import io.realm.Realm
+import io.realm.kotlin.where
 import org.joda.time.MonthDay
 import packi.day.store.InternationalDay
 import packi.day.store.StoreDelegate
@@ -10,19 +11,18 @@ import java.util.*
 
 class RealmStoreDelegate : StoreDelegate {
 
-    val celebrationClass = RealmInternationalDay::class.java
     val store = Realm.getDefaultInstance()
 
     override fun loadData(context: Context) {
         if (store.isEmpty) {
             store.executeTransaction {
-                store.createAllFromJson(celebrationClass, context.resources.openRawResource(R.raw.celebration))
+                store.createAllFromJson(RealmInternationalDay::class.java, context.resources.openRawResource(R.raw.celebration))
             }
         }
     }
 
     override fun get(date: MonthDay): InternationalDay? {
-        return store.where(celebrationClass)
+        return store.where<RealmInternationalDay>()
                 .equalTo("day", date.dayOfMonth)
                 .equalTo("month", date.monthOfYear)
                 .findFirst()
@@ -35,8 +35,8 @@ class RealmStoreDelegate : StoreDelegate {
         var total = 0
 
         for (month in 1..12) {
-            val current = store
-                    .where(celebrationClass)
+
+            val current = store.where<RealmInternationalDay>()
                     .contains("name", criteria, Case.INSENSITIVE)
                     .equalTo("month", month)
                     .count().toInt()
@@ -60,7 +60,7 @@ class RealmStoreDelegate : StoreDelegate {
     }
 
     override fun find(criteria: String): List<InternationalDay> {
-        var query = store.where(celebrationClass)
+        var query = store.where<RealmInternationalDay>()
         if (criteria.isNotBlank()) {
             query = query.contains("name", criteria, Case.INSENSITIVE)
         }
@@ -78,10 +78,10 @@ class RealmStoreDelegate : StoreDelegate {
     }
 
     override fun random(): InternationalDay {
-        val size = store.where(celebrationClass).count().toInt()
+        val size = store.where<RealmInternationalDay>().count().toInt()
 
         val value = Random().nextInt(size)
-        return store.where(celebrationClass).findAll().get(value)!!.adapt()
+        return store.where<RealmInternationalDay>().findAll().get(value)!!.adapt()
     }
 
 

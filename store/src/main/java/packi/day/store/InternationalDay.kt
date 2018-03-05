@@ -1,6 +1,5 @@
 package packi.day.store
 
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import org.joda.time.MonthDay
 import org.json.JSONObject
@@ -28,12 +27,12 @@ data class InternationalDay(val id: Int,
         }
     }
 
-    constructor(id : Int = -1, date: MonthDay, name: String, image: String? = null) :
+    constructor(id: Int = -1, date: MonthDay, name: String, image: String? = null) :
             this(id, name, date.dayOfMonth, date.monthOfYear, image)
 
     constructor(json: JSONObject) : this(
             json.getInt("id"),
-            json.getString ("name"),
+            json.getString("name"),
             json.getInt("day"),
             json.getInt("month"),
             json.getString("image")

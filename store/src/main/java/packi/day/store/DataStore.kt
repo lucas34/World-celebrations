@@ -12,14 +12,15 @@ class DataStore(private val context: Context, private val delegate: StoreDelegat
         delegate.loadData(context)
     }
 
-    fun get(date: MonthDay) : InternationalDay? {
+    fun get(date: MonthDay): InternationalDay {
         val celebration = delegate.get(date)
-//        return celebration ?: InternationalDay(date, context.getString(R.string.no_celebration))
-        return null
+
+        // First parameter should use the default value but this produce a compilation error
+        return celebration ?: InternationalDay(-1, date, context.getString(R.string.no_celebration))
     }
 
     fun hasCelebration(date: MonthDay): Boolean {
-        return get(date) != null
+        return delegate.get(date) != null
     }
 
     fun count(criteria: String): Set<Int> {
