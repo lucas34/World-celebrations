@@ -22,7 +22,7 @@ class NotificationActivity : Activity() {
         GoogleAnalytics.getInstance(applicationContext).report("/wear/notification")
     }
 
-    private companion object {
+    companion object {
         const val EXTRA_TITLE = "title"
     }
 }
