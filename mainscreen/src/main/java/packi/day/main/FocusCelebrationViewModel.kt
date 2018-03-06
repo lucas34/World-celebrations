@@ -17,7 +17,11 @@ class FocusCelebrationViewModel: ViewModel() {
 
     fun setup(model: DataStore) {
         this.model = model
-        setDate(MonthDay.now())
+
+        if (celebration.value == null) {
+            // Emit default value
+            setDate(MonthDay.now())
+        }
     }
 
     fun observeCelebration() : LiveData<InternationalDay> {

@@ -29,7 +29,7 @@ import packi.day.main.FocusCelebrationView;
 import packi.day.store.DataStore;
 import packi.day.store.StoreLocator;
 import packi.day.ui.fragments.CustomDateSearchBuilder;
-import packi.day.ui.fragments.ListAllCelebrationFragment;
+import packi.day.ui.fragments.ListAllCelebrationsView;
 import packi.day.ui.fragments.PreferencesFragment;
 
 public class ActivityMain extends AppCompatActivity implements StoreLocator {
@@ -99,7 +99,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
                     return true;
 
                 case R.id.menu_list_all:
-                    navigationHandler.replaceContent(new ListAllCelebrationFragment());
+                    navigationHandler.replaceContent(new ListAllCelebrationsView());
                     return true;
 
                 case R.id.menu_settings:
