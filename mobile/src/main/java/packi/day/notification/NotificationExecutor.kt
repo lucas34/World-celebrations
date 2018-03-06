@@ -6,10 +6,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
+import com.google.android.gms.analytics.GoogleAnalytics
 import org.joda.time.MonthDay
 import packi.day.R
 import packi.day.WorldApplication
 import packi.day.common.Wear
+import packi.day.common.report
 import packi.day.ui.ActivityMain
 
 
@@ -18,11 +20,10 @@ class NotificationExecutor : IntentService("NotificationExecutor") {
     override fun onHandleIntent(intent: Intent?) {
         val storeData = WorldApplication.with(applicationContext)
         if (storeData.hasCelebration(TODAY)) {
-            // TODO see for destructuring
-            val celebration = storeData.get(TODAY)
+            val celebrationName = storeData.get(TODAY).name
 
-            showNotification(celebration.name)
-            Wear.sendNotification(this, celebration.name)
+            showNotification(celebrationName)
+            Wear.sendNotification(this, celebrationName)
         }
     }
 
@@ -38,7 +39,8 @@ class NotificationExecutor : IntentService("NotificationExecutor") {
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.notify(1, notification)
-// TODO       AnalyticsTracker.getInstance(this).sendTracker("/notification/publish")
+
+        GoogleAnalytics.getInstance(applicationContext).report("/notification/publish")
     }
 
     companion object {

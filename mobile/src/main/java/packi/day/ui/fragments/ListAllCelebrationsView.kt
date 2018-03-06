@@ -1,8 +1,8 @@
 package packi.day.ui.fragments
 
-import android.app.Activity
 import android.app.SearchManager
-import android.app.SearchableInfo
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,23 +12,29 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.analytics.GoogleAnalytics
 
 
 import packi.day.R
+import packi.day.WorldApplication
 import packi.day.common.report
+import packi.day.main.FocusCelebrationViewModel
+import packi.day.store.InternationalDay
 import packi.day.ui.ActivityMain
 
-class ListAllCelebrationFragment : Fragment(), SearchView.OnQueryTextListener {
+class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
-    private var celebrationAdapter: Adapter? = null
-    private var filter: String? = null
+    private lateinit var viewModel: ListAllCelebrationsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(ListAllCelebrationsViewModel::class.java)
+
+        val app = activity!!.application as WorldApplication
+        viewModel.setup(app.celebrationHelper)
+
         setHasOptionsMenu(true)
     }
 
@@ -38,11 +44,6 @@ class ListAllCelebrationFragment : Fragment(), SearchView.OnQueryTextListener {
         (activity as ActivityMain).setScreenTitle(R.string.list_all_celebrations)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("filter", filter)
-        super.onSaveInstanceState(outState)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(packi.day.R.layout.fragment_list_all_celebration, container, false)
     }
@@ -50,16 +51,18 @@ class ListAllCelebrationFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val realmRecyclerView = view.findViewById<RecyclerView>(R.id.realm_recycler_view)
-        celebrationAdapter = Adapter(activity as ActivityMain?, getFilter(savedInstanceState))
-        realmRecyclerView.layoutManager = GridLayoutManager(activity, computeNumberOfItems().toInt())
-        realmRecyclerView.adapter = celebrationAdapter
-    }
+        val adapter = ListAllCelebrationsAdapter(this)
 
-    private fun getFilter(savedInstanceState: Bundle?): String? {
-        return if (savedInstanceState != null && savedInstanceState.containsKey("filter")) {
-            savedInstanceState.getString("filter")
-        } else null
+        viewModel.observeList().observe(this, Observer<Pair<Set<Int>, List<InternationalDay>>> { setListData ->
+            if (setListData != null) {
+                adapter.setData(setListData)
+            }
+        })
+
+        val realmRecyclerView = view.findViewById<RecyclerView>(R.id.realm_recycler_view)
+
+        realmRecyclerView.layoutManager = GridLayoutManager(activity, computeNumberOfItems().toInt())
+        realmRecyclerView.adapter = adapter
     }
 
     private fun computeNumberOfItems(): Double {
@@ -89,7 +92,7 @@ class ListAllCelebrationFragment : Fragment(), SearchView.OnQueryTextListener {
 
         searchView.setIconifiedByDefault(false)
         searchView.setOnQueryTextListener(this)
-        searchView.setQuery(filter, false)
+        searchView.setQuery(viewModel.getFilter() ?: "", false)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -99,8 +102,7 @@ class ListAllCelebrationFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        this.filter = newText
-        celebrationAdapter!!.setFilter(newText)
+        viewModel.setFilter(newText)
         return true
     }
 }
