@@ -20,14 +20,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import org.joda.time.MonthDay;
 
 import packi.day.R;
 import packi.day.WorldApplication;
 import packi.day.lib.SupportNavigationHandler;
-import packi.day.main.FocusCelebrationFragment;
+import packi.day.main.FocusCelebrationView;
 import packi.day.store.DataStore;
 import packi.day.store.StoreLocator;
 import packi.day.ui.fragments.CustomDateSearchBuilder;
@@ -75,7 +73,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
         });
 
         if (savedInstanceState == null) {
-            navigationHandler.showMain(new FocusCelebrationFragment());
+            navigationHandler.showMain(new FocusCelebrationView());
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -97,7 +95,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
             switch (menuItem.getItemId()) {
 
                 case R.id.menu_home:
-                    navigationHandler.showMain(new FocusCelebrationFragment());
+                    navigationHandler.showMain(new FocusCelebrationView());
                     return true;
 
                 case R.id.menu_list_all:
@@ -157,7 +155,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
         Bundle args = new Bundle();
         args.putSerializable("date", date);
         data.putExtras(args);
-        navigationHandler.replaceContent(new FocusCelebrationFragment(), args);
+        navigationHandler.replaceContent(new FocusCelebrationView(), args);
     }
 
     public void setScreenTitle(int title) {

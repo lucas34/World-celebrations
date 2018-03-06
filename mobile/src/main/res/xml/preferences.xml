@@ -14,13 +14,6 @@
             android:summary="@string/once_per_day"
             android:title="@string/activate_notification"/>
 
-        <TimePickerPreference
-            android:key="time_picker"
-            android:title="A time picker preference"
-            app:defaultHours="10"
-            app:defaultMins="0"
-            app:timeAsSummary="true" />
-
     </PreferenceCategory>
 
     <PreferenceCategory

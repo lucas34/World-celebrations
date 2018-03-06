@@ -28,9 +28,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private static final int HEADER = 0;
     private static final int ITEM = 2;
+
     private final DataStore viewModel;
     private final ActivityMain activity;
     private final Picasso picasso;
+
     private List<InternationalDay> celebrations;
     private Set<Integer> headers;
 
@@ -101,7 +103,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    // Need to implement dichotomy on this
+    // Need to implement binary search
     private int findNumberOfItemsBellow(int position) {
         int count = 0;
         for (Integer header : headers) {
@@ -119,6 +121,8 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         int position = (int) v.getTag(R.id.position);
         InternationalDay celebration = celebrations.get(position);
         Keyword.Companion.hide(activity);
+        // TODO remove this link to activity
+        // Use intent app app links to progate date
         activity.showFocus(celebration.getDate());
     }
 

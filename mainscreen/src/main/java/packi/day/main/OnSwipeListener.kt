@@ -3,6 +3,7 @@ package packi.day.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.annotation.IntDef
+import android.support.annotation.LongDef
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -53,7 +54,7 @@ class OnSwipeListener(ctx: Context, listener: SwipeListener) : View.OnTouchListe
 
 }
 
-@IntDef(LEFT, RIGHT, UP, DOWN)
+@LongDef(LEFT, RIGHT, UP, DOWN)
 @Retention(AnnotationRetention.SOURCE)
 annotation class Direction
 

@@ -22,16 +22,16 @@ class DataStore(private val context: Context, private val delegate: StoreDelegat
         return delegate.get(date) != null
     }
 
-    fun count(criteria: String): Set<Int> {
+    fun count(criteria: String?): Set<Int> {
         return delegate.count(criteria)
     }
 
-    fun find(criteria: String): List<InternationalDay> {
+    fun find(criteria: String?): List<InternationalDay> {
         return delegate.find(criteria)
     }
 
-    fun random(): InternationalDay {
-        return delegate.random()
+    fun getRandom(): InternationalDay {
+        return delegate.getRandom()
     }
 
 }

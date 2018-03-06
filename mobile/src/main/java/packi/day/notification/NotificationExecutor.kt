@@ -18,10 +18,11 @@ class NotificationExecutor : IntentService("NotificationExecutor") {
     override fun onHandleIntent(intent: Intent?) {
         val storeData = WorldApplication.with(applicationContext)
         if (storeData.hasCelebration(TODAY)) {
-            val (_, name) = storeData.get(TODAY)
+            // TODO see for destructuring
+            val celebration = storeData.get(TODAY)
 
-            showNotification(name)
-            Wear.sendNotification(this, name)
+            showNotification(celebration.name)
+            Wear.sendNotification(this, celebration.name)
         }
     }
 

@@ -21,11 +21,15 @@ class HashMapStoreDelegate : StoreDelegate {
         return store.get(date)
     }
 
-    override fun count(criteria: String): Set<Int> {
+    override fun count(criteria: String?): Set<Int> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun find(criteria: String): List<InternationalDay> {
+    override fun find(criteria: String?): List<InternationalDay> {
+        if (criteria == null) {
+            return ArrayList(store.values)
+        }
+
         val results = ArrayList<InternationalDay>(365)
         for (celebration in store.values) {
             if (celebration.name.contains(criteria)) {
@@ -35,7 +39,7 @@ class HashMapStoreDelegate : StoreDelegate {
         return results
     }
 
-    override fun random(): InternationalDay {
+    override fun getRandom(): InternationalDay {
         var data: InternationalDay?
         do {
             data = get(randomDate())

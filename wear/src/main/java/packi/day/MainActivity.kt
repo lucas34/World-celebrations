@@ -6,9 +6,10 @@ import android.support.wearable.view.CardScrollView
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.gms.analytics.GoogleAnalytics
 import com.squareup.picasso.Picasso
 import org.joda.time.MonthDay
-import packi.day.common.AnalyticsTracker
+import packi.day.common.report
 import packi.day.store.DataStore
 
 
@@ -37,7 +38,7 @@ class MainActivity: Activity() {
 
     override fun onResume() {
         super.onResume()
-        AnalyticsTracker.getInstance(applicationContext).sendTracker("/wear/launcher")
+        GoogleAnalytics.getInstance(applicationContext).report("/wear/launcher")
     }
 
 }
