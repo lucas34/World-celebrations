@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -31,77 +32,8 @@ dependencies {
     implementation project(':common')
     implementation project(':store')
 
+    implementation 'com.android.support:design:' + rootProject.ext.supportLibVersion
+
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.google.android.support:wearable:1.4.0'
 }
-
-apply plugin: 'net.ltgt.errorprone'
-
-configurations.errorprone {
-    resolutionStrategy.force 'com.google.errorprone:error_prone_core:' + rootProject.ext.error_prone
-}
-
-apply plugin: 'checkstyle'
-
-task checkstyle(type: Checkstyle) {
-    ignoreFailures true
-
-    checkstyle { toolVersion = rootProject.ext.checkstyle }
-
-    configFile rootProject.file("check/checkstyle.xml")
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-
-    classpath = files()
-}
-
-apply plugin: 'pmd'
-
-task pmd(type: Pmd) {
-    ignoreFailures = true
-
-    pmd { toolVersion = rootProject.ext.pmd }
-
-    ruleSetFiles = rootProject.files("check/pmd.xml")
-
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-
-    reports {
-        xml.enabled = true
-        html.enabled = false
-    }
-}
-
-check.dependsOn('pmd')
-
-apply plugin: 'findbugs'
-
-task findbugs(type: FindBugs) {
-    ignoreFailures = true
-
-    findbugs { toolVersion = rootProject.ext.findbugs }
-
-    effort = "max"
-    reportLevel = "high"
-
-    excludeFilter = rootProject.file("check/findbugs-exclude.xml")
-    classes = files("$project.buildDir/intermediates/classes/")
-
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-
-    reports {
-        xml {
-            destination "$project.buildDir/reports/findbugs/findbugs.xml"
-            xml.withMessages true
-        }
-    }
-
-    classpath = files()
-}
-
-check.dependsOn('findbugs')

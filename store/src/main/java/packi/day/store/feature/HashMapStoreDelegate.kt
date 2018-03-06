@@ -35,7 +35,7 @@ class HashMapStoreDelegate : StoreDelegate {
         return results
     }
 
-    override fun random(): InternationalDay {
+    override fun getRandom(): InternationalDay {
         var data: InternationalDay?
         do {
             data = get(randomDate())

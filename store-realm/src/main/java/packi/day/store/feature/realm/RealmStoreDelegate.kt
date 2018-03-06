@@ -77,7 +77,7 @@ class RealmStoreDelegate : StoreDelegate {
         }
     }
 
-    override fun random(): InternationalDay {
+    override fun getRandom(): InternationalDay {
         val size = store.where<RealmInternationalDay>().count().toInt()
 
         val value = Random().nextInt(size)

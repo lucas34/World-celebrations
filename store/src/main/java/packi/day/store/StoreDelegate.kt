@@ -13,6 +13,6 @@ interface StoreDelegate {
 
     fun find(criteria: String): List<InternationalDay>
 
-    fun random(): InternationalDay
+    fun getRandom(): InternationalDay
 
 }

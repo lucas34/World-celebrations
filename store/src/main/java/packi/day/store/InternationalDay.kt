@@ -4,10 +4,10 @@ import android.net.Uri
 import org.joda.time.MonthDay
 import org.json.JSONObject
 
-data class InternationalDay(val id: Int,
+data class InternationalDay(internal val id: Int,
                             val name: String,
-                            val day: Int,
-                            val month: Int,
+                            internal val day: Int,
+                            internal val month: Int,
                             val image: String?) : CelebrationAdaptable {
 
     val date: MonthDay by lazy {
@@ -21,6 +21,10 @@ data class InternationalDay(val id: Int,
             val base = "https://raw.githubusercontent.com/lucas34/World-celebrations/modular/assets/images/"
             return@lazy Uri.parse("$base$image.png")
         }
+    }
+
+    val isToday: Boolean by lazy {
+        return@lazy MonthDay.now().equals(date)
     }
 
     constructor(id: Int = -1, date: MonthDay, name: String, image: String? = null) :

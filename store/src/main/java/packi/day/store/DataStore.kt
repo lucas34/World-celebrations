@@ -30,8 +30,8 @@ class DataStore(private val context: Context, private val delegate: StoreDelegat
         return delegate.find(criteria)
     }
 
-    fun random(): InternationalDay {
-        return delegate.random()
+    fun getRandom(): InternationalDay {
+        return delegate.getRandom()
     }
 
 }

@@ -17,7 +17,8 @@ import packi.day.ui.ActivityMain
 class WidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val (_, name) = WorldApplication.with(context).get(MonthDay.now())
+        // TODO see destructuring
+//        val (_, name) = WorldApplication.with(context).get(MonthDay.now())
 
         val userSettings = UserSetting(context)
 
@@ -26,7 +27,7 @@ class WidgetProvider : AppWidgetProvider() {
             views.setInt(R.id.WidgetText, "setBackgroundColor", userSettings.background)
             views.setInt(R.id.WidgetText, "setTextColor", userSettings.widgetTextColor)
             views.setFloat(R.id.WidgetText, "setTextSize", userSettings.widgetFontSize)
-            views.setTextViewText(R.id.WidgetText, name)
+//            views.setTextViewText(R.id.WidgetText, name)
             views.setOnClickPendingIntent(R.id.WidgetText, getPendingIntent(context, appWidgetId))
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
