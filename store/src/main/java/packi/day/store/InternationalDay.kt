@@ -11,7 +11,7 @@ data class InternationalDay(internal val id: Int,
                             val image: String?) : CelebrationAdaptable {
 
     val date: MonthDay by lazy {
-        return@lazy MonthDay(day, month)
+        return@lazy MonthDay(month, day)
     }
 
     val drawable: Uri by lazy {

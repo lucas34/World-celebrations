@@ -16,7 +16,7 @@ import packi.day.store.InternationalDay
 import packi.day.store.StoreLocator
 import java.util.*
 
-class FocusCelebrationFragment : Fragment(), SwipeListener {
+class FocusCelebrationView : Fragment(), SwipeListener {
 
     // TODO see how to inject the view model
     private lateinit var viewModel: FocusCelebrationViewModel

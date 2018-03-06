@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), StoreLocator {
         viewById.setTitle(R.string.app_name)
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.content, FocusCelebrationFragment())
+                .replace(R.id.content, FocusCelebrationView())
                 .commit()
     }
 
