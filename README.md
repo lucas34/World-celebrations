@@ -18,9 +18,14 @@ Available on Smartphone and tablet.
 
 - Android 4.0 Ice Cream Sandwich (API 14)
 
-## Architecture
+## Modules architecture
 
 ![img](assets/readme/architecture.png)
+
+## Application Architecture
+
+This application is using MVVM pattern with android components. Most screen will be split into View and ViewModel.
+While the model part remain the same and defined in Store module + ext.
 
 ## Contributors
 
