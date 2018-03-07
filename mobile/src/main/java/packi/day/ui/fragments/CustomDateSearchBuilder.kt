@@ -4,17 +4,11 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AlertDialog
-
 import com.samsistemas.calendarview.widget.CalendarView
-
 import org.joda.time.MonthDay
-
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
-
 import packi.day.R
 import packi.day.ui.ActivityMain
+import java.util.*
 
 class CustomDateSearchBuilder(private val activity: ActivityMain) :
         AlertDialog(activity, R.style.MyAlertDialogStyle),

@@ -3,11 +3,10 @@ package packi.day
 import android.app.Application
 import android.content.Context
 import android.os.StrictMode
-
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import packi.day.store.DataStore
 import packi.day.store.feature.realm.RealmStoreDelegate
-import io.realm.RealmConfiguration
 
 class WorldApplication : Application() {
 

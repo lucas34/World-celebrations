@@ -34,9 +34,11 @@ class SupportNavigationHandler<FRAGMENT : Fragment> {
         this.layout = layout
     }
 
-    fun showMain(target: FRAGMENT) {
+    @JvmOverloads
+    fun showMain(target: FRAGMENT, args: Bundle? = null) {
         notifyChange(target)
         removeAllBackStack(manager)
+        target.arguments = args
         val ft = manager.beginTransaction()
         ft.replace(layout, target, generateTag(0))
         ft.commit()

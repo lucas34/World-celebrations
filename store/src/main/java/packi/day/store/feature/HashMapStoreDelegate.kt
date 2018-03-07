@@ -21,11 +21,11 @@ class HashMapStoreDelegate : StoreDelegate {
         return store.get(date)
     }
 
-    override fun count(criteria: String?): Set<Int> {
+    override fun count(criteria: String): Set<Int> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun find(criteria: String?): List<InternationalDay> {
+    override fun find(criteria: String): List<InternationalDay> {
         if (criteria == null) {
             return ArrayList(store.values)
         }

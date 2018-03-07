@@ -7,7 +7,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 
-class Keyword {
+class Keyboard {
 
     companion object {
 

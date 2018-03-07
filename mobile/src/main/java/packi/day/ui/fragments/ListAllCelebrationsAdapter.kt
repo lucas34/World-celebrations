@@ -1,5 +1,7 @@
 package packi.day.ui.fragments
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.text.Html
@@ -8,12 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.squareup.picasso.Picasso
-import java.util.Locale
 import packi.day.R
 import packi.day.store.InternationalDay
-
+import packi.day.ui.ActivityMain
+import java.util.*
 
 internal class ListAllCelebrationsAdapter(fragment: Fragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
@@ -86,11 +87,11 @@ internal class ListAllCelebrationsAdapter(fragment: Fragment) : RecyclerView.Ada
 
     override fun onClick(v: View) {
         val position = v.getTag(R.id.position) as Int
-//        val (id, name, day, month, image) = listData!!.component2()[position]
-        //        Keyword.Companion.hide(activity);
-        // TODO remove this link to activity
-        // Use intent app app links to progate date
-        //        activity.showFocus(celebration.getDate());
+        val celebrationDate = listData.component2()[position].date
+
+        val target = Intent(v.context, ActivityMain::class.java)
+        target.putExtra("date", celebrationDate)
+        v.context.startActivity(target)
     }
 
     private class HeaderHolder internal constructor(root: View) : RecyclerView.ViewHolder(root) {

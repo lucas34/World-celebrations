@@ -1,6 +1,8 @@
 package packi.day.main
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -18,21 +20,19 @@ import java.util.*
 
 class FocusCelebrationView : Fragment(), SwipeListener {
 
-    // TODO see how to inject the view model
     private lateinit var viewModel: FocusCelebrationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(FocusCelebrationViewModel::class.java)
-
-        val locator = activity as StoreLocator?
-        viewModel.setup(locator!!.store)
+        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val locator = activity as StoreLocator?
+                return FocusCelebrationViewModel(locator!!.store, arguments) as T
+            }
+        }).get(FocusCelebrationViewModel::class.java)
 
         setHasOptionsMenu(false)
-
-        // TODO restoring
-//        celebrationObservableField.set(store!!.get(getDate(savedInstanceState, arguments)))
     }
 
     override fun onResume() {
@@ -74,16 +74,13 @@ class FocusCelebrationView : Fragment(), SwipeListener {
         view.setOnTouchListener(OnSwipeListener(context!!, this));
     }
 
-//    private fun getDate(savedInstanceState: Bundle?, args: Bundle?): MonthDay {
-//        return if (args != null && args.containsKey("date")) {
-//            args.getSerializable("date") as MonthDay
-//        } else MonthDay.now()
-//
-//    }
-
-    override fun onSwipe(direction: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onSwipe(direction: Direction) {
+        when (direction) {
+            Direction.LEFT -> viewModel.plusDays(-1)
+            Direction.RIGHT -> viewModel.plusDays(1)
+            Direction.UP -> viewModel.plusMonths(1)
+            Direction.DOWN -> viewModel.plusMonths(-1)
+        }
     }
-
 
 }

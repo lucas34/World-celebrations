@@ -1,7 +1,10 @@
 package packi.day.ui.fragments
 
+
 import android.app.SearchManager
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -9,19 +12,12 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.google.android.gms.analytics.GoogleAnalytics
-
-
 import packi.day.R
-import packi.day.WorldApplication
 import packi.day.common.report
-import packi.day.main.FocusCelebrationViewModel
 import packi.day.store.InternationalDay
+import packi.day.store.StoreLocator
 import packi.day.ui.ActivityMain
 
 class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
@@ -30,10 +26,13 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ListAllCelebrationsViewModel::class.java)
 
-        val app = activity!!.application as WorldApplication
-        viewModel.setup(app.celebrationHelper)
+        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val locator = activity as StoreLocator?
+                return ListAllCelebrationsViewModel(locator!!.store) as T
+            }
+        }).get(ListAllCelebrationsViewModel::class.java)
 
         setHasOptionsMenu(true)
     }
@@ -92,7 +91,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
         searchView.setIconifiedByDefault(false)
         searchView.setOnQueryTextListener(this)
-        searchView.setQuery(viewModel.getFilter() ?: "", false)
+        searchView.setQuery(viewModel.filter, false)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -102,7 +101,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        viewModel.setFilter(newText)
+        viewModel.filter = newText
         return true
     }
 }

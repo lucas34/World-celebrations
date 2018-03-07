@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -26,6 +27,9 @@ android {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api 'com.google.dagger:dagger:' + rootProject.ext.dagger
+    kapt 'com.google.dagger:dagger-compiler:' + rootProject.ext.dagger
 
     api 'joda-time:joda-time:2.9.9'
     api 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion

@@ -3,6 +3,8 @@ ext {
     buildToolsVersion = "27.0.3"
     targetSdkVersion = 27
 
+    dagger = "2.14.1"
+
     supportLibVersion = "27.1.0"
 
     jacoco = "0.8.0"

@@ -2,7 +2,6 @@ package packi.day.main
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.annotation.IntDef
 import android.support.annotation.LongDef
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -30,16 +29,16 @@ class OnSwipeListener(ctx: Context, listener: SwipeListener) : View.OnTouchListe
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffX > 0) {
-                        listener.onSwipe(LEFT)
+                        listener.onSwipe(Direction.LEFT)
                     } else {
-                        listener.onSwipe(RIGHT)
+                        listener.onSwipe(Direction.RIGHT)
                     }
                 }
             } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                 if (diffY > 0) {
-                    listener.onSwipe(DOWN)
+                    listener.onSwipe(Direction.DOWN)
                 } else {
-                    listener.onSwipe(UP)
+                    listener.onSwipe(Direction.UP)
                 }
             }
             return true
@@ -54,17 +53,15 @@ class OnSwipeListener(ctx: Context, listener: SwipeListener) : View.OnTouchListe
 
 }
 
-@LongDef(LEFT, RIGHT, UP, DOWN)
-@Retention(AnnotationRetention.SOURCE)
-annotation class Direction
-
-const val LEFT = 0L
-const val RIGHT = 1L
-const val UP = 2L
-const val DOWN = 3L
+enum class Direction {
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+}
 
 interface SwipeListener {
 
-    fun onSwipe(@Direction direction: Long)
+    fun onSwipe(direction: Direction)
 
 }

@@ -23,8 +23,11 @@ import android.widget.Toast;
 
 import org.joda.time.MonthDay;
 
+import java.io.Serializable;
+
 import packi.day.R;
 import packi.day.WorldApplication;
+import packi.day.common.Keyboard;
 import packi.day.lib.SupportNavigationHandler;
 import packi.day.main.FocusCelebrationView;
 import packi.day.store.DataStore;
@@ -44,6 +47,19 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
             return false;
         } catch (ActivityNotFoundException e) {
             return true;
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Keyboard.Companion.hide(this);
+        if (intent.hasExtra("date")) {
+            Serializable serializable = intent.getSerializableExtra("date");
+            if (serializable != null) {
+                MonthDay date = (MonthDay) serializable;
+                showFocus(date);
+            }
         }
     }
 
@@ -156,7 +172,7 @@ public class ActivityMain extends AppCompatActivity implements StoreLocator {
         Bundle args = new Bundle();
         args.putSerializable("date", date);
         data.putExtras(args);
-        navigationHandler.replaceContent(new FocusCelebrationView(), args);
+        navigationHandler.showMain(new FocusCelebrationView(), args);
     }
 
     public void setScreenTitle(int title) {

@@ -54,7 +54,8 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
         return Color.parseColor(obj.toString());
     }
 
-    private @ColorInt int getTextSize(Object obj) {
+    private @ColorInt
+    int getTextSize(Object obj) {
         return Integer.parseInt(obj.toString()) * 30 / 100 + 10;
     }
 

@@ -29,14 +29,14 @@ class RealmStoreDelegate : StoreDelegate {
                 ?.adapt()
     }
 
-    override fun count(criteria: String?): Set<Int> {
+    override fun count(criteria: String): Set<Int> {
         val result = HashSet<Int>(12)
 
         var total = 0
 
         for (month in 1..12) {
             var query = store.where<RealmInternationalDay>().equalTo("month", month)
-            if (criteria?.isNotBlank() == true) {
+            if (criteria.isNotBlank() == true) {
                 query = query.contains("name", criteria, Case.INSENSITIVE)
             }
 
@@ -60,9 +60,9 @@ class RealmStoreDelegate : StoreDelegate {
         return result
     }
 
-    override fun find(criteria: String?): List<InternationalDay> {
+    override fun find(criteria: String): List<InternationalDay> {
         var query = store.where<RealmInternationalDay>()
-        if (criteria?.isNotBlank() == true) {
+        if (criteria.isNotBlank() == true) {
             query = query.contains("name", criteria, Case.INSENSITIVE)
         }
 
