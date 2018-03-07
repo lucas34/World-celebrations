@@ -9,7 +9,7 @@ class SupportNavigationHandler<FRAGMENT : Fragment> {
 
     private val manager: FragmentManager
     private val layout: Int
-    private var changeListener: SupportFragmentChangeListener<FRAGMENT>? = null
+    private var changeListener: ((FRAGMENT) -> Unit)? = null
 
     val deepness: Int
         get() = manager.backStackEntryCount
@@ -76,7 +76,7 @@ class SupportNavigationHandler<FRAGMENT : Fragment> {
         }
     }
 
-    fun setOnFragmentChangeListener(listener: SupportFragmentChangeListener<FRAGMENT>) {
+    fun setOnFragmentChangeListener(listener: (FRAGMENT) -> Unit) {
         changeListener = listener
     }
 
@@ -92,7 +92,7 @@ class SupportNavigationHandler<FRAGMENT : Fragment> {
     }
 
     private fun notifyChange(fragment: FRAGMENT) {
-        changeListener?.onChangeContent(fragment)
+        changeListener?.invoke(fragment)
     }
 
 }
