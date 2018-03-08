@@ -8,7 +8,6 @@ def key = hasProperty('key') ? getProperty('key') : ""
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "packi.day"
