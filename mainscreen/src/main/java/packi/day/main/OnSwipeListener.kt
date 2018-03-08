@@ -2,7 +2,6 @@ package packi.day.main
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.annotation.LongDef
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View

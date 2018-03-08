@@ -16,7 +16,7 @@ class FocusCelebrationViewModel(private val model: DataStore, private val args: 
         setDate(getDateParam() ?: MonthDay.now())
     }
 
-    private val currentDate : MonthDay
+    private val currentDate: MonthDay
         get() {
             return celebration.value?.date ?: MonthDay.now()
         }

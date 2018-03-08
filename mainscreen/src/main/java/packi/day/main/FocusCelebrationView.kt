@@ -1,7 +1,6 @@
 package packi.day.main
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -13,24 +12,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.squareup.picasso.Picasso
+import dagger.android.support.AndroidSupportInjection
 import packi.day.common.report
 import packi.day.store.InternationalDay
-import packi.day.store.StoreLocator
 import java.util.*
+import javax.inject.Inject
 
 class FocusCelebrationView : Fragment(), SwipeListener {
 
     private lateinit var viewModel: FocusCelebrationViewModel
 
+    @Inject
+    lateinit var focusViewModelFactory: ViewModelProvider.Factory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidSupportInjection.inject(this)
 
-        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val locator = activity as StoreLocator?
-                return FocusCelebrationViewModel(locator!!.store, arguments) as T
-            }
-        }).get(FocusCelebrationViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, focusViewModelFactory).get(FocusCelebrationViewModel::class.java)
 
         setHasOptionsMenu(false)
     }

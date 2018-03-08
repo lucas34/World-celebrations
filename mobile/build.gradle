@@ -71,6 +71,15 @@ dependencies {
 
     implementation 'com.github.jonisaa:MaterialCalendarview:v1.2.2'
 
+    // Dagger core
+    kapt "com.google.dagger:dagger-compiler:" + rootProject.ext.dagger
+    api "com.google.dagger:dagger:" + rootProject.ext.dagger
+
+    // Dagger Android
+    kapt "com.google.dagger:dagger-android-processor:" + rootProject.ext.dagger
+    api "com.google.dagger:dagger-android-support:" + rootProject.ext.dagger
+    // if you are not using support library, include this instead
+    api "com.google.dagger:dagger-android:" + rootProject.ext.dagger
     wearApp project(':wear')
 
 }

@@ -1,7 +1,6 @@
 package packi.day.ui.fragments
 
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.text.Html
