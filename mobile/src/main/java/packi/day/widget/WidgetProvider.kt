@@ -6,18 +6,19 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-
 import org.joda.time.MonthDay
-
 import packi.day.R
 import packi.day.WorldApplication
+import packi.day.store.DataStore
 import packi.day.store.UserSetting
 import packi.day.ui.ActivityMain
+import javax.inject.Inject
 
 class WidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val celebrationName = WorldApplication.with(context).get(MonthDay.now()).name
+        val store = WorldApplication.getDataStoreComponent(context).dataStore
+        val celebrationName = store.get(MonthDay.now()).name
 
         val userSettings = UserSetting(context)
 

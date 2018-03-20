@@ -19,23 +19,17 @@ import packi.day.R
 import packi.day.WorldApplication
 import packi.day.common.Keyboard
 import packi.day.lib.SupportNavigationHandler
+import packi.day.main.DataStoreComponent
+import packi.day.main.DataStoreComponentLocator
 import packi.day.main.FocusCelebrationView
-import packi.day.store.DataStore
-import packi.day.store.StoreLocator
 import packi.day.ui.fragments.CustomDateSearchBuilder
 import packi.day.ui.fragments.ListAllCelebrationsView
 import packi.day.ui.fragments.PreferencesFragment
 
-class ActivityMain : AppCompatActivity(), StoreLocator {
+class ActivityMain : AppCompatActivity(), DataStoreComponentLocator {
 
     private lateinit var navigationHandler: SupportNavigationHandler<Fragment>
     private lateinit var drawerLayout: DrawerLayout
-
-    override val store: DataStore
-        get() {
-            val application = application as WorldApplication
-            return application.celebrationHelper
-        }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -149,6 +143,10 @@ class ActivityMain : AppCompatActivity(), StoreLocator {
     fun setScreenTitle(title: Int) {
         val supportActionBar = supportActionBar
         supportActionBar?.setTitle(title)
+    }
+
+    override fun dataStoreComponent(): DataStoreComponent {
+        return WorldApplication.getDataStoreComponent(applicationContext)
     }
 
     companion object {

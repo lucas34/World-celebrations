@@ -7,20 +7,29 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import com.google.android.gms.analytics.GoogleAnalytics
+import dagger.android.AndroidInjection
 import org.joda.time.MonthDay
 import packi.day.R
-import packi.day.WorldApplication
 import packi.day.common.Wear
 import packi.day.common.report
+import packi.day.store.DataStore
 import packi.day.ui.ActivityMain
-
+import javax.inject.Inject
 
 class NotificationExecutor : IntentService("NotificationExecutor") {
 
+    @Inject
+    lateinit var store: DataStore
+
     override fun onHandleIntent(intent: Intent?) {
-        val storeData = WorldApplication.with(applicationContext)
-        if (storeData.hasCelebration(TODAY)) {
-            val celebrationName = storeData.get(TODAY).name
+
+
+
+
+        AndroidInjection.inject(this)
+
+        if (store.hasCelebration(TODAY)) {
+            val celebrationName = store.get(TODAY).name
 
             showNotification(celebrationName)
             Wear.sendNotification(this, celebrationName)

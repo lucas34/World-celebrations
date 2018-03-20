@@ -7,20 +7,15 @@ import android.support.v7.widget.Toolbar
 import com.google.android.gms.analytics.GoogleAnalytics
 import packi.day.common.report
 
-import packi.day.store.DataStore
-import packi.day.store.StoreLocator
-
 /// Class is actually registered
 @SuppressLint("Registered")
-class MainActivity : AppCompatActivity(), StoreLocator {
-
-    override lateinit var store: DataStore
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        store = DataStore(applicationContext)
+//        store = DataStore(applicationContext)
 
         val viewById = findViewById<Toolbar>(R.id.toolbar)
         viewById.setTitle(R.string.app_name)

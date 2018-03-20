@@ -3,21 +3,25 @@ package packi.day.ui.fragments
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import packi.day.store.CelebrationComponent
 import packi.day.store.DataStore
-import packi.day.store.InternationalDay
+import javax.inject.Inject
 
-class ListAllCelebrationsViewModel(private val model: DataStore) : ViewModel() {
+class ListAllCelebrationsViewModel : ViewModel() {
+
+    @Inject
+    lateinit var model: DataStore
 
     var filter: String = ""
         set(value) {
             field = value
-            headerList.value = Pair(model.count(filter), model.find(filter))
+            headerCelebration.value = model.find(filter)
         }
 
-    private val headerList: MutableLiveData<Pair<Set<Int>, List<InternationalDay>>> = MutableLiveData()
+    private val headerCelebration: MutableLiveData<List<CelebrationComponent>> = MutableLiveData()
 
-    fun observeList(): LiveData<Pair<Set<Int>, List<InternationalDay>>> {
-        return headerList
+    fun observeList(): LiveData<List<CelebrationComponent>> {
+        return headerCelebration
     }
 
 }

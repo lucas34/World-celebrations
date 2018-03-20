@@ -1,10 +1,7 @@
 package packi.day.ui.fragments
 
-
 import android.app.SearchManager
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -16,8 +13,7 @@ import android.view.*
 import com.google.android.gms.analytics.GoogleAnalytics
 import packi.day.R
 import packi.day.common.report
-import packi.day.store.InternationalDay
-import packi.day.store.StoreLocator
+import packi.day.store.CelebrationComponent
 import packi.day.ui.ActivityMain
 
 class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
@@ -27,12 +23,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val locator = activity as StoreLocator?
-                return ListAllCelebrationsViewModel(locator!!.store) as T
-            }
-        }).get(ListAllCelebrationsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ListAllCelebrationsViewModel::class.java)
 
         setHasOptionsMenu(true)
     }
