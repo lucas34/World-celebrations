@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import packi.day.R
-import packi.day.store.InternationalDay
+import packi.day.store.CelebrationComponent
 import packi.day.ui.ActivityMain
 import java.util.*
 
@@ -19,19 +19,22 @@ internal class ListAllCelebrationsAdapter(fragment: Fragment) : RecyclerView.Ada
 
     private val picasso: Picasso = Picasso.with(fragment.context)
 
-    private var listData: Pair<Set<Int>, List<InternationalDay>> = Pair(emptySet(), emptyList())
+    private var listData: List<CelebrationComponent> = emptyList()
 
-    fun setData(data: Pair<Set<Int>, List<InternationalDay>>) {
+    fun setData(data: List<CelebrationComponent>) {
         listData = data
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (listData.component1().contains(position)) HEADER else ITEM
+        when (listData[position]) {
+            is CelebrationComponent.Header -> return HEADER
+            else -> return ITEM
+        }
     }
 
     override fun getItemCount(): Int {
-        return listData.component1().size + listData.component2().size
+        return listData.count()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -40,10 +43,6 @@ internal class ListAllCelebrationsAdapter(fragment: Fragment) : RecyclerView.Ada
             HEADER -> {
                 val root = inflater.inflate(R.layout.section, parent, false)
                 return HeaderHolder(root)
-            }
-            ITEM -> {
-                val root = inflater.inflate(R.layout.cell_celebration, parent, false)
-                return CelebrationHolder(root)
             }
             else -> {
                 val root = inflater.inflate(R.layout.cell_celebration, parent, false)
@@ -56,37 +55,25 @@ internal class ListAllCelebrationsAdapter(fragment: Fragment) : RecyclerView.Ada
         when (holder.itemViewType) {
             HEADER -> {
                 val headerHolder = holder as HeaderHolder
-                val celebration = listData.component2()[position - findNumberOfItemsBellow(position)]
-                headerHolder.title.text = celebration.date.monthOfYear().getAsText(Locale.getDefault())
+                val header = listData[position] as CelebrationComponent.Header
+
+                headerHolder.title.text = header.date.monthOfYear().getAsText(Locale.getDefault())
             }
             else -> {
                 val celebrationHolder = holder as CelebrationHolder
-                val childPosition = position - findNumberOfItemsBellow(position)
-                val celebration = listData.component2()[childPosition]
-                celebrationHolder.root.setTag(R.id.position, childPosition)
+                val celebration = (listData[position] as CelebrationComponent.Celebration).data
+
                 picasso.load(celebration.drawable).into(celebrationHolder.image)
+                celebrationHolder.root.setTag(R.id.position, position)
                 celebrationHolder.text.text = Html.fromHtml("<b>" + celebration.date.dayOfMonth + "</b> : " + celebration.name)
                 celebrationHolder.root.setOnClickListener(this)
             }
         }
     }
 
-    // Need to implement binary search
-    private fun findNumberOfItemsBellow(position: Int): Int {
-        var count = 0
-        for (header in listData.component1()) {
-            if (header < position) {
-                count++
-            } else {
-                return count
-            }
-        }
-        return count
-    }
-
     override fun onClick(v: View) {
         val position = v.getTag(R.id.position) as Int
-        val celebrationDate = listData.component2()[position].date
+        val celebrationDate = (listData[position] as CelebrationComponent.Celebration).data.date
 
         val target = Intent(v.context, ActivityMain::class.java)
         target.putExtra("date", celebrationDate)

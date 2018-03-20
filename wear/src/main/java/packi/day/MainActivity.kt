@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso
 import org.joda.time.MonthDay
 import packi.day.common.report
 import packi.day.store.DataStore
+import packi.day.store.feature.HashMapStoreDelegate
 
 
 class MainActivity: Activity() {
@@ -21,7 +22,7 @@ class MainActivity: Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        store = DataStore(applicationContext)
+        store = DataStore(applicationContext, HashMapStoreDelegate())
 
         val cardScrollView = findViewById<CardScrollView>(R.id.card_scroll_view)
         cardScrollView.cardGravity = Gravity.BOTTOM

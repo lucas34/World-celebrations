@@ -3,9 +3,11 @@ package packi.day.store.feature.realm
 import android.content.Context
 import io.realm.Case
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import io.realm.kotlin.where
 import org.joda.time.MonthDay
 import packi.day.store.InternationalDay
+import packi.day.store.CelebrationComponent
 import packi.day.store.StoreDelegate
 import java.util.*
 
@@ -29,51 +31,61 @@ class RealmStoreDelegate : StoreDelegate {
                 ?.adapt()
     }
 
-    override fun count(criteria: String): Set<Int> {
+    private fun count(criteria: String): Set<Int> {
         val result = HashSet<Int>(12)
 
         var total = 0
 
-        for (month in 1..12) {
-            var query = store.where<RealmInternationalDay>().equalTo("month", month)
-            if (criteria.isNotBlank() == true) {
-                query = query.contains("name", criteria, Case.INSENSITIVE)
-            }
+        var query = store.where<RealmInternationalDay>()
+        if (criteria.isNotBlank()) {
+            query = query.contains("name", criteria, Case.INSENSITIVE)
+        }
 
-            val current = query.count().toInt()
-
-            // No result for this month
-            if (current == 0) continue
-
+        (1..12).map {
+            return@map query.equalTo("month", it).count().toInt()
+        }.filter { it > 0 }.forEach {
             // Got match for this month
             // We add the header position for the current month
             // Which is the total count of all previous celebrations + headers
-            result.add(total)
+            result.add(it)
 
             // 1 cell for the header
             total += 1
 
             // Number of match for the cells
-            total += current
+            total += it
         }
 
         return result
     }
 
-    override fun find(criteria: String): List<InternationalDay> {
+    override fun find(criteria: String): List<CelebrationComponent> {
+        val headersPositions = count(criteria = criteria)
+
         var query = store.where<RealmInternationalDay>()
-        if (criteria.isNotBlank() == true) {
+        if (criteria.isNotBlank()) {
             query = query.contains("name", criteria, Case.INSENSITIVE)
         }
 
         val result = query.findAll()
-        return object : AbstractList<InternationalDay>() {
+        return object : AbstractList<CelebrationComponent>() {
 
             override val size: Int
-                get() = result.size
+                get() = result.size + headersPositions.count()
 
-            override fun get(index: Int): InternationalDay {
-                return result.get(index)!!.adapt()
+            override fun get(index: Int): CelebrationComponent {
+                if (headersPositions.contains(index)) {
+                    val next = get(index + 1) as CelebrationComponent.Celebration
+                    return CelebrationComponent.Header(next.data.date)
+                } else {
+                    var actualIndex = index
+                    for (position in headersPositions) {
+                        if (position > index) {
+                            actualIndex--;
+                        }
+                    }
+                    return CelebrationComponent.Celebration(result.get(actualIndex)!!.adapt())
+                }
             }
         }
     }
@@ -85,5 +97,21 @@ class RealmStoreDelegate : StoreDelegate {
         return store.where<RealmInternationalDay>().findAll().get(value)!!.adapt()
     }
 
+    companion object {
+        private const val REALM_VERSION = 4L
+
+        fun init(context: Context) {
+            Realm.init(context)
+
+            val config = RealmConfiguration.Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .schemaVersion(RealmStoreDelegate.REALM_VERSION)
+                    .build()
+
+            Realm.setDefaultConfiguration(config)
+        }
+
+    }
 
 }
+

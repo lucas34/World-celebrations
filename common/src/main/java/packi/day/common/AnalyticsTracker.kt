@@ -4,7 +4,6 @@ import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.HitBuilders
 import com.google.android.gms.analytics.Tracker
 
-
 private val GoogleAnalytics.newTracker : Tracker
     get() {
         this.setLocalDispatchPeriod(1800)

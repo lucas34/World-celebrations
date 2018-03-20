@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.preference.PreferenceManager
 import org.joda.time.Hours
 import org.joda.time.Minutes
-import org.joda.time.MonthDay
 
 class UserSetting(context: Context) {
 
@@ -37,8 +36,7 @@ class UserSetting(context: Context) {
     }
 
     val widgetFontSize: Float by lazy {
-        preferences.getFloat("TextSize", 50f) * 30 / 100 + 10
+        preferences.getInt("TextSize", 50).toFloat() * 30 / 100 + 10
     }
-
 
 }

@@ -38,7 +38,7 @@ class FocusCelebrationViewModel(private val model: DataStore, private val args: 
     }
 
     fun plusMonths(months: Int) {
-        setDate(currentDate.plusMonths(1))
+        setDate(currentDate.plusMonths(months))
     }
 
     fun setRandomDate() {

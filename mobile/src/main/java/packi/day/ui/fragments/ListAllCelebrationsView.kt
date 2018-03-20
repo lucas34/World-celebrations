@@ -52,7 +52,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
         val adapter = ListAllCelebrationsAdapter(this)
 
-        viewModel.observeList().observe(this, Observer<Pair<Set<Int>, List<InternationalDay>>> { setListData ->
+        viewModel.observeList().observe(this, Observer<List<CelebrationComponent>> { setListData ->
             if (setListData != null) {
                 adapter.setData(setListData)
             }

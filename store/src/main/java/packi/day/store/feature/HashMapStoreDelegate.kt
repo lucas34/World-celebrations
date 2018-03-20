@@ -5,6 +5,7 @@ import org.joda.time.MonthDay
 import org.json.JSONArray
 import org.json.JSONException
 import packi.day.store.InternationalDay
+import packi.day.store.CelebrationComponent
 import packi.day.store.StoreDelegate
 import java.io.InputStream
 import java.util.*
@@ -21,22 +22,23 @@ class HashMapStoreDelegate : StoreDelegate {
         return store.get(date)
     }
 
-    override fun count(criteria: String): Set<Int> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun find(criteria: String): List<CelebrationComponent> {
 
-    override fun find(criteria: String): List<InternationalDay> {
-        if (criteria == null) {
-            return ArrayList(store.values)
-        }
 
-        val results = ArrayList<InternationalDay>(365)
-        for (celebration in store.values) {
-            if (celebration.name.contains(criteria)) {
-                results.add(celebration)
-            }
-        }
-        return results
+
+
+        TODO()
+//        if (criteria.isBlank()) {
+//            return ArrayList(store.values)
+//        }
+//
+//        val results = ArrayList<InternationalDay>(365)
+//        for (celebration in store.values) {
+//            if (celebration.name.contains(criteria)) {
+//                results.add(celebration)
+//            }
+//        }
+//        return results
     }
 
     override fun getRandom(): InternationalDay {

@@ -42,8 +42,8 @@ class FocusCelebrationView : Fragment(), SwipeListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_focus_celebration, container, false)
 
-        rootView.findViewById<View>(R.id.fab).setOnClickListener { v -> viewModel.setRandomDate() }
-        rootView.findViewById<View>(R.id.random_button).setOnClickListener { v -> viewModel.setRandomDate() }
+        rootView.findViewById<View>(R.id.fab).setOnClickListener { _ -> viewModel.setRandomDate() }
+        rootView.findViewById<View>(R.id.random_button).setOnClickListener { _ -> viewModel.setRandomDate() }
 
         val dateView: TextView = rootView.findViewById(R.id.celebration_date)
         val nameView: TextView = rootView.findViewById(R.id.celebration_name)
