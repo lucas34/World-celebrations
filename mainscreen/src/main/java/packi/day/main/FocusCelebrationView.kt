@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.gms.analytics.GoogleAnalytics
 import com.squareup.picasso.Picasso
+import packi.day.common.report
 import packi.day.di.DaggerAppComponent
 import packi.day.di.FocusCelebrationViewModelProvider
 import packi.day.store.InternationalDay
@@ -40,7 +42,7 @@ class FocusCelebrationView : Fragment(), SwipeListener {
 
     override fun onResume() {
         super.onResume()
-//        GoogleAnalytics.getInstance(context).report("/launcher")
+        GoogleAnalytics.getInstance(requireContext()).report("/launcher")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,28 +55,25 @@ class FocusCelebrationView : Fragment(), SwipeListener {
         val nameView: TextView = rootView.findViewById(R.id.celebration_name)
         val imageView: ImageView = rootView.findViewById(R.id.celebration_image)
 
-        viewModel.observeCelebration().observe(this, Observer<InternationalDay> { celebration ->
-            // Unwrap. Not sure why celebration can be null in this case
-            val celebration = celebration ?: return@Observer
-
+        viewModel.observeCelebration().observe(viewLifecycleOwner) { celebration ->
             if (celebration.isToday) {
                 dateView.setText(R.string.today)
             } else {
                 val date = celebration.date.dayOfMonth
                 val month = celebration.date.monthOfYear().getAsText(Locale.getDefault())
-                dateView.setText(dateView.resources.getString(R.string.date_text_title, date, month))
+                dateView.text = dateView.resources.getString(R.string.date_text_title, date, month)
             }
 
-            nameView.setText(celebration.name)
+            nameView.text = celebration.name
             Picasso.get().load(celebration.drawable).error(R.drawable.noimage).into(imageView)
-        })
+        }
 
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.setOnTouchListener(OnSwipeListener(context!!, this));
+        view.setOnTouchListener(OnSwipeListener(requireContext(), this));
     }
 
     override fun onSwipe(direction: Direction) {

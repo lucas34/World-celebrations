@@ -52,11 +52,11 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
         val adapter = ListAllCelebrationsAdapter()
 
-        viewModel.observeList().observe(this, Observer<Pair<Set<Int>, List<InternationalDay>>> { setListData ->
+        viewModel.observeList().observe(viewLifecycleOwner) { setListData ->
             if (setListData != null) {
                 adapter.setData(setListData)
             }
-        })
+        }
 
         val realmRecyclerView = view.findViewById<RecyclerView>(R.id.realm_recycler_view)
 
@@ -83,9 +83,9 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
         val activity = activity ?: return
 
-        inflater.inflate(packi.day.R.menu.search_filter_all, menu)
+        inflater.inflate(R.menu.search_filter_all, menu)
 
-        val searchItem = menu.findItem(packi.day.R.id.action_search)
+        val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
 
         val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager

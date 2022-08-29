@@ -49,10 +49,6 @@ class ActivityMain : AppCompatActivity(), StoreLocator {
         }
     }
 
-    private fun launchMarket() {
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

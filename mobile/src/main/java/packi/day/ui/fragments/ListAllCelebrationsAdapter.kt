@@ -1,7 +1,6 @@
 package packi.day.ui.fragments
 
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.view.LayoutInflater
@@ -93,7 +92,7 @@ internal class ListAllCelebrationsAdapter : RecyclerView.Adapter<RecyclerView.Vi
         v.context.startActivity(target)
     }
 
-    private class HeaderHolder internal constructor(root: View) : RecyclerView.ViewHolder(root) {
+    private class HeaderHolder(root: View) : RecyclerView.ViewHolder(root) {
 
         val title: TextView
 
@@ -102,15 +101,9 @@ internal class ListAllCelebrationsAdapter : RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    private class CelebrationHolder internal constructor(internal val root: View) : RecyclerView.ViewHolder(root) {
-
-        val text: TextView
-        val image: ImageView
-
-        init {
-            text = root.findViewById(R.id.text)
-            image = root.findViewById(R.id.image)
-        }
+    private class CelebrationHolder(val root: View) : RecyclerView.ViewHolder(root) {
+        val text: TextView = root.findViewById(R.id.text)
+        val image: ImageView = root.findViewById(R.id.image)
     }
 
     companion object {
