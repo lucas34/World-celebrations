@@ -66,7 +66,7 @@ class FocusCelebrationView : Fragment(), SwipeListener {
             }
 
             nameView.setText(celebration.name)
-            Picasso.with(rootView.context).load(celebration.drawable).error(R.drawable.noimage).into(imageView)
+            Picasso.get().load(celebration.drawable).error(R.drawable.noimage).into(imageView)
         })
 
         return rootView

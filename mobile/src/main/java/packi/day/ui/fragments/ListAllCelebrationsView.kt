@@ -50,7 +50,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ListAllCelebrationsAdapter(this)
+        val adapter = ListAllCelebrationsAdapter()
 
         viewModel.observeList().observe(this, Observer<Pair<Set<Int>, List<InternationalDay>>> { setListData ->
             if (setListData != null) {

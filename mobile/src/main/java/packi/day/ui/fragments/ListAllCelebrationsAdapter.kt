@@ -15,9 +15,9 @@ import packi.day.store.InternationalDay
 import packi.day.ui.ActivityMain
 import java.util.*
 
-internal class ListAllCelebrationsAdapter(fragment: Fragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+internal class ListAllCelebrationsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
-    private val picasso: Picasso = Picasso.with(fragment.context)
+    private val picasso: Picasso = Picasso.get()
 
     private var listData: Pair<Set<Int>, List<InternationalDay>> = Pair(emptySet(), emptyList())
 
