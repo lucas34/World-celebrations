@@ -2,10 +2,8 @@ package packi.day.ui.fragments
 
 
 import android.app.SearchManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,10 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.analytics.GoogleAnalytics
 import packi.day.R
 import packi.day.common.report
-import packi.day.store.InternationalDay
 import packi.day.store.StoreLocator
 import packi.day.ui.ActivityMain
 
