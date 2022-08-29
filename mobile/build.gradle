@@ -60,10 +60,10 @@ dependencies {
 
     implementation project(":mainscreen")
 
-    implementation 'com.android.support:design:' + rootProject.ext.supportLibVersion
-    implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportLibVersion
-    implementation 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibVersion
-    implementation 'com.android.support:preference-v7:' + rootProject.ext.supportLibVersion
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:preference-v7:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation 'com.github.jonisaa:MaterialCalendarview:v1.2.2'

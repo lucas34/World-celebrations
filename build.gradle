@@ -4,8 +4,6 @@ ext {
 
     dagger = "2.43.2"
 
-    supportLibVersion = "27.1.0"
-
     jacoco = "0.8.0"
 }
 
