@@ -38,8 +38,6 @@ android {
 dependencies {
     api 'com.google.android.gms:play-services-analytics:11.8.0'
     api 'com.google.android.gms:play-services-wearable:11.8.0'
-
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()
