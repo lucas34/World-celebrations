@@ -39,7 +39,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onResume() {
         super.onResume()
-        GoogleAnalytics.getInstance(context).report("/listAll")
+        GoogleAnalytics.getInstance(requireContext()).report("/listAll")
         (activity as ActivityMain).setScreenTitle(R.string.list_all_celebrations)
     }
 
