@@ -36,7 +36,7 @@ class FocusCelebrationView : Fragment(), SwipeListener {
 
     override fun onResume() {
         super.onResume()
-        GoogleAnalytics.getInstance(context).report("/launcher")
+//        GoogleAnalytics.getInstance(context).report("/launcher")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
