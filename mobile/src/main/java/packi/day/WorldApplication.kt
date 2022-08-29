@@ -3,26 +3,13 @@ package packi.day
 import android.app.Application
 import android.content.Context
 import android.os.StrictMode
-import android.support.v4.app.Fragment
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import packi.day.di.DaggerAppComponent
 import packi.day.store.DataStore
 import packi.day.store.StoreLocator
 import packi.day.store.feature.realm.RealmStoreDelegate
-import javax.inject.Inject
 
-class WorldApplication : Application(), HasSupportFragmentInjector, StoreLocator {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingAndroidInjector
-    }
+class WorldApplication : Application(), StoreLocator {
 
     lateinit var celebrationHelper: DataStore
 
@@ -34,13 +21,6 @@ class WorldApplication : Application(), HasSupportFragmentInjector, StoreLocator
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(VERSION)
                 .build()
-
-        val component = DaggerAppComponent
-                .builder()
-                .storeLocator(this)
-                .build()
-                .inject(this)
-
 
         Realm.setDefaultConfiguration(config)
 

@@ -2,7 +2,7 @@ ext {
     compileSdkVersion = 33
     targetSdkVersion = 33
 
-    dagger = "2.14.1"
+    dagger = "2.43.2"
 
     supportLibVersion = "27.1.0"
 
@@ -12,8 +12,8 @@ ext {
 buildscript {
     ext.kotlin_version = '1.7.10'
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 
     dependencies {

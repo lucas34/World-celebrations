@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.gms.analytics.GoogleAnalytics
 import com.squareup.picasso.Picasso
-import dagger.android.support.AndroidSupportInjection
-import packi.day.common.report
+import packi.day.di.DaggerAppComponent
+import packi.day.di.FocusCelebrationViewModelProvider
 import packi.day.store.InternationalDay
+import packi.day.store.StoreLocator
 import java.util.*
 import javax.inject.Inject
 
@@ -27,7 +27,11 @@ class FocusCelebrationView : Fragment(), SwipeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidSupportInjection.inject(this)
+
+        DaggerAppComponent.builder()
+            .storeLocator(requireContext().applicationContext as StoreLocator)
+            .build()
+            .inject(this)
 
         viewModel = ViewModelProviders.of(this, focusViewModelFactory).get(FocusCelebrationViewModel::class.java)
 
