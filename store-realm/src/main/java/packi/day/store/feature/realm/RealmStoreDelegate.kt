@@ -11,7 +11,7 @@ import java.util.*
 
 class RealmStoreDelegate : StoreDelegate {
 
-    val store = Realm.getDefaultInstance()
+    val store: Realm = Realm.getDefaultInstance()
 
     override fun loadData(context: Context) {
         if (store.isEmpty) {
@@ -23,10 +23,10 @@ class RealmStoreDelegate : StoreDelegate {
 
     override fun get(date: MonthDay): InternationalDay? {
         return store.where<RealmInternationalDay>()
-                .equalTo("day", date.dayOfMonth)
-                .equalTo("month", date.monthOfYear)
-                .findFirst()
-                ?.adapt()
+            .equalTo("day", date.dayOfMonth)
+            .equalTo("month", date.monthOfYear)
+            .findFirst()
+            ?.adapt()
     }
 
     override fun count(criteria: String): Set<Int> {
@@ -36,7 +36,7 @@ class RealmStoreDelegate : StoreDelegate {
 
         for (month in 1..12) {
             var query = store.where<RealmInternationalDay>().equalTo("month", month)
-            if (criteria.isNotBlank() == true) {
+            if (criteria.isNotBlank()) {
                 query = query.contains("name", criteria, Case.INSENSITIVE)
             }
 
@@ -62,7 +62,7 @@ class RealmStoreDelegate : StoreDelegate {
 
     override fun find(criteria: String): List<InternationalDay> {
         var query = store.where<RealmInternationalDay>()
-        if (criteria.isNotBlank() == true) {
+        if (criteria.isNotBlank()) {
             query = query.contains("name", criteria, Case.INSENSITIVE)
         }
 
@@ -73,7 +73,7 @@ class RealmStoreDelegate : StoreDelegate {
                 get() = result.size
 
             override fun get(index: Int): InternationalDay {
-                return result.get(index)!!.adapt()
+                return result[index]!!.adapt()
             }
         }
     }
@@ -84,6 +84,5 @@ class RealmStoreDelegate : StoreDelegate {
         val value = Random().nextInt(size)
         return store.where<RealmInternationalDay>().findAll().get(value)!!.adapt()
     }
-
 
 }
