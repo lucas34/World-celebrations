@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    api 'joda-time:joda-time:2.9.9'
-    api 'androidx.annotation:annotation:1.0.0'
+    api 'joda-time:joda-time:2.11.1'
+    api 'androidx.annotation:annotation:1.4.0'
 }
