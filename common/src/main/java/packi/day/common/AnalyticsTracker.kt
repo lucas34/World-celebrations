@@ -13,7 +13,7 @@ private val GoogleAnalytics.newTracker : Tracker
         tracker.enableExceptionReporting(true)
         tracker.enableAdvertisingIdCollection(true)
         tracker.enableAutoActivityTracking(true)
-        tracker.setAppVersion(BuildConfig.VERSION_NAME)
+//        tracker.setAppVersion(BuildConfig.VERSION_NAME)
         return tracker
     }
 

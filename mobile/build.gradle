@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "packi.day"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         versionCode 82
@@ -55,7 +55,7 @@ android {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(':common')
     implementation project(':store-realm')

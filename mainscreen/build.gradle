@@ -1,4 +1,4 @@
-apply plugin: 'com.android.feature'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
@@ -9,13 +9,11 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
-
-    baseFeature true
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,6 +44,7 @@ android {
 
 dependencies {
     implementation 'com.android.support:design:' + rootProject.ext.supportLibVersion
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
     api 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation project(':store')
@@ -65,6 +64,4 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:1.1.0"
 
     api 'com.squareup.picasso:picasso:2.5.2'
-
-    application project(':mobile')
 }

@@ -30,6 +30,7 @@ class WorldApplication : Application(), HasSupportFragmentInjector, StoreLocator
         super.onCreate()
         Realm.init(this)
         val config = RealmConfiguration.Builder()
+                .allowWritesOnUiThread(true)
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(VERSION)
                 .build()

@@ -34,5 +34,5 @@ dependencies {
     implementation 'com.android.support:design:' + rootProject.ext.supportLibVersion
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.google.android.support:wearable:1.4.0'
+    implementation 'com.google.android.support:wearable:2.1.0'
 }
