@@ -2,8 +2,8 @@ package packi.day.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.analytics.GoogleAnalytics
 import packi.day.common.report
 

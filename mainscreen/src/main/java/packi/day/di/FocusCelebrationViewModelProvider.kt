@@ -1,7 +1,7 @@
 package packi.day.di
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import packi.day.main.FocusCelebrationViewModel

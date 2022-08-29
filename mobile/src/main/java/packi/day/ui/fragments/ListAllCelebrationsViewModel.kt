@@ -1,8 +1,8 @@
 package packi.day.ui.fragments
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import packi.day.store.DataStore
 import packi.day.store.InternationalDay
 
