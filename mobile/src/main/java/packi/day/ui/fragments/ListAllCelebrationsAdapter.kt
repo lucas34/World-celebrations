@@ -63,8 +63,8 @@ internal class ListAllCelebrationsAdapter : RecyclerView.Adapter<RecyclerView.Vi
                 val childPosition = position - findNumberOfItemsBellow(position)
                 val celebration = listData.component2()[childPosition]
                 celebrationHolder.root.setTag(R.id.position, childPosition)
-                picasso.load(celebration.drawable).into(celebrationHolder.image)
-                celebrationHolder.text.text = Html.fromHtml("<b>" + celebration.date.dayOfMonth + "</b> : " + celebration.name)
+//                picasso.load(celebration.drawable).into(celebrationHolder.image)
+//                celebrationHolder.text.text = Html.fromHtml("<b>" + celebration.date.dayOfMonth + "</b> : " + celebration.name)
                 celebrationHolder.root.setOnClickListener(this)
             }
         }

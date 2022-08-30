@@ -10,18 +10,18 @@ import com.google.android.gms.analytics.GoogleAnalytics
 import com.squareup.picasso.Picasso
 import org.joda.time.MonthDay
 import packi.day.common.report
-import packi.day.store.DataStore
+import packi.day.store.InternationalDayRepository
 
 
 class MainActivity: Activity() {
 
-    lateinit var store: DataStore
+    lateinit var store: InternationalDayRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        store = DataStore(applicationContext)
+        store = InternationalDayRepository(applicationContext)
 
         val cardScrollView = findViewById<CardScrollView>(R.id.card_scroll_view)
         cardScrollView.cardGravity = Gravity.BOTTOM

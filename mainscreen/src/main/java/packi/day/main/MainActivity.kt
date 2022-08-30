@@ -7,20 +7,20 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.analytics.GoogleAnalytics
 import packi.day.common.report
 
-import packi.day.store.DataStore
+import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
 
 /// Class is actually registered
 @SuppressLint("Registered")
 class MainActivity : AppCompatActivity(), StoreLocator {
 
-    override lateinit var store: DataStore
+    override lateinit var store: InternationalDayRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        store = DataStore(applicationContext)
+        store = InternationalDayRepository(applicationContext)
 
         val viewById = findViewById<Toolbar>(R.id.toolbar)
         viewById.setTitle(R.string.app_name)

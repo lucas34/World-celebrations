@@ -21,12 +21,12 @@ class RealmStoreDelegate : StoreDelegate {
         }
     }
 
-    override fun get(date: MonthDay): InternationalDay? {
+    override fun get(date: MonthDay): InternationalDay {
         return store.where<RealmInternationalDay>()
             .equalTo("day", date.dayOfMonth)
             .equalTo("month", date.monthOfYear)
             .findFirst()
-            ?.adapt()
+            ?.adapt() ?: InternationalDay(date, null)
     }
 
     override fun count(criteria: String): Set<Int> {
@@ -82,7 +82,7 @@ class RealmStoreDelegate : StoreDelegate {
         val size = store.where<RealmInternationalDay>().count().toInt()
 
         val value = Random().nextInt(size)
-        return store.where<RealmInternationalDay>().findAll().get(value)!!.adapt()
+        return store.where<RealmInternationalDay>().findAll()[value]!!.adapt()
     }
 
 }

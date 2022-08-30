@@ -2,6 +2,6 @@ package packi.day.store
 
 interface StoreLocator {
 
-    val store: DataStore
+    val store: InternationalDayRepository
 
 }

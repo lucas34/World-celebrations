@@ -1,23 +1,21 @@
 package packi.day.ui.fragments
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import packi.day.store.DataStore
+import org.joda.time.MonthDay
+import packi.day.store.InternationalDayRepository
 import packi.day.store.InternationalDay
 
-class ListAllCelebrationsViewModel(private val model: DataStore) : ViewModel() {
+class ListAllCelebrationsViewModel(private val model: InternationalDayRepository) : ViewModel() {
+
+    private val state by lazy { mutableStateOf(model.find(filter)) }
 
     var filter: String = ""
         set(value) {
             field = value
-            headerList.value = Pair(model.count(filter), model.find(filter))
+            state.value = model.find(value)
         }
-
-    private val headerList: MutableLiveData<Pair<Set<Int>, List<InternationalDay>>> = MutableLiveData()
-
-    fun observeList(): LiveData<Pair<Set<Int>, List<InternationalDay>>> {
-        return headerList
-    }
 
 }

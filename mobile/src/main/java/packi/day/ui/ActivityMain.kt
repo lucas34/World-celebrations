@@ -20,7 +20,7 @@ import packi.day.WorldApplication
 import packi.day.common.Keyboard
 import packi.day.lib.SupportNavigationHandler
 import packi.day.main.FocusCelebrationView
-import packi.day.store.DataStore
+import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
 import packi.day.ui.fragments.CustomDateSearchBuilder
 import packi.day.ui.fragments.ListAllCelebrationsView
@@ -31,7 +31,7 @@ class ActivityMain : AppCompatActivity(), StoreLocator {
     private lateinit var navigationHandler: SupportNavigationHandler<Fragment>
     private lateinit var drawerLayout: DrawerLayout
 
-    override val store: DataStore
+    override val store: InternationalDayRepository
         get() {
             val application = application as WorldApplication
             return application.celebrationHelper

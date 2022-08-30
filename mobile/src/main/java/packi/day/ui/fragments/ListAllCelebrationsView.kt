@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
 import android.view.*
+import androidx.compose.runtime.Composable
 import com.google.android.gms.analytics.GoogleAnalytics
+import org.w3c.dom.Text
 import packi.day.R
 import packi.day.common.report
+import packi.day.store.Celebration
+import packi.day.store.InternationalDay
 import packi.day.store.StoreLocator
 import packi.day.ui.ActivityMain
 
@@ -47,22 +51,25 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ListAllCelebrationsAdapter()
+//        viewModel.observeList()
 
-        viewModel.observeList().observe(viewLifecycleOwner) { setListData ->
-            if (setListData != null) {
-                adapter.setData(setListData)
-            }
-        }
 
-        val realmRecyclerView = view.findViewById<RecyclerView>(R.id.realm_recycler_view)
-
-        realmRecyclerView.layoutManager =
-            GridLayoutManager(
-                activity,
-                computeNumberOfItems().toInt()
-            )
-        realmRecyclerView.adapter = adapter
+//        val adapter = ListAllCelebrationsAdapter()
+//
+//        viewModel.observeList().observe(viewLifecycleOwner) { setListData ->
+//            if (setListData != null) {
+//                adapter.setData(setListData)
+//            }
+//        }
+//
+//        val realmRecyclerView = view.findViewById<RecyclerView>(R.id.realm_recycler_view)
+//
+//        realmRecyclerView.layoutManager =
+//            GridLayoutManager(
+//                activity,
+//                computeNumberOfItems().toInt()
+//            )
+//        realmRecyclerView.adapter = adapter
     }
 
     private fun computeNumberOfItems(): Double {

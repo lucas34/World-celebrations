@@ -17,8 +17,8 @@ class HashMapStoreDelegate : StoreDelegate {
         fillData(context.resources.openRawResource(R.raw.celebration))
     }
 
-    override fun get(date: MonthDay): InternationalDay? {
-        return store.get(date)
+    override fun get(date: MonthDay): InternationalDay {
+        return store[date]!!
     }
 
     override fun count(criteria: String): Set<Int> {
@@ -26,14 +26,10 @@ class HashMapStoreDelegate : StoreDelegate {
     }
 
     override fun find(criteria: String): List<InternationalDay> {
-        if (criteria == null) {
-            return ArrayList(store.values)
-        }
-
         val results = ArrayList<InternationalDay>(365)
-        for (celebration in store.values) {
-            if (celebration.name.contains(criteria)) {
-                results.add(celebration)
+        for (value in store.values) {
+            if (value.celebration?.name?.contains(criteria) == true) {
+                results.add(value)
             }
         }
         return results
@@ -68,9 +64,9 @@ class HashMapStoreDelegate : StoreDelegate {
             scanner = getFullStringScanner(stream)
             val jsonArray = JSONArray(scanner.next())
             for (i in 0 until jsonArray.length()) {
-                val jsonobject = jsonArray.getJSONObject(i)
-                val internationalDay = InternationalDay(jsonobject)
-                store.put(internationalDay.date, internationalDay)
+//                val jsonobject = jsonArray.getJSONObject(i)
+//                val internationalDay = InternationalDay(jsonobject)
+//                store[internationalDay.date] = internationalDay
             }
         } catch (e: JSONException) {
             throw RuntimeException("Failed to read JSON", e)

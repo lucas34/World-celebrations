@@ -17,7 +17,7 @@ import packi.day.ui.ActivityMain
 class WidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val celebrationName = WorldApplication.with(context).get(MonthDay.now()).name
+        val celebrationName = WorldApplication.with(context).get(MonthDay.now()).celebration?.name
 
         val userSettings = UserSetting(context)
 

@@ -2,6 +2,8 @@ package packi.day.store.feature.realm
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import org.joda.time.MonthDay
+import packi.day.store.Celebration
 import packi.day.store.CelebrationAdaptable
 import packi.day.store.InternationalDay
 
@@ -25,6 +27,6 @@ open class RealmInternationalDay : RealmObject(), CelebrationAdaptable {
     var image: String? = null
 
     override fun adapt(): InternationalDay {
-        return InternationalDay(id, name ?: "", day, month, image)
+        return InternationalDay(MonthDay(month, day), Celebration(id, name.orEmpty(), image))
     }
 }

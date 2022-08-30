@@ -2,47 +2,34 @@ package packi.day.main
 
 import androidx.lifecycle.ViewModel
 import android.os.Bundle
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import org.joda.time.MonthDay
-import packi.day.store.DataStore
-import packi.day.store.InternationalDay
+import packi.day.store.InternationalDayRepository
 
-class FocusCelebrationViewModel(private val model: DataStore, private val args: Bundle? = null) : ViewModel() {
+class FocusCelebrationViewModel(
+    private val repository: InternationalDayRepository,
+    private val args: Bundle? = null
+) : ViewModel() {
 
-    private val celebration: MutableState<InternationalDay> = mutableStateOf(model.get(MonthDay.now()))
+    private val state by lazy { mutableStateOf(repository.get((args?.getSerializable("date") as MonthDay?) ?: MonthDay.now())) }
 
-    init {
-        setDate(getDateParam() ?: MonthDay.now())
-    }
+    val current by state
 
-    private val currentDate: MonthDay
-        get() {
-            return celebration.value.date
-        }
-
-    private fun getDateParam(): MonthDay? {
-        return args?.getSerializable("date") as MonthDay?
-    }
-
-    fun observeCelebration(): MutableState<InternationalDay> {
-        return celebration
-    }
-
-    fun setDate(date: MonthDay) {
-        celebration.value = model.get(date)
+    private fun updateState(date: MonthDay) {
+        state.value = repository.get(date)
     }
 
     fun plusDays(days: Int) {
-        setDate(currentDate.plusDays(days))
+        updateState(state.value.date.plusDays(days))
     }
 
     fun plusMonths(months: Int) {
-        setDate(currentDate.plusMonths(1))
+        updateState(state.value.date.plusMonths(months))
     }
 
     fun setRandomDate() {
-        celebration.value = model.getRandom()
+        state.value = repository.getRandom()
     }
 
 }
