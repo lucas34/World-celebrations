@@ -1,16 +1,16 @@
 package packi.day.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.os.Bundle
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import org.joda.time.MonthDay
 import packi.day.store.DataStore
 import packi.day.store.InternationalDay
 
 class FocusCelebrationViewModel(private val model: DataStore, private val args: Bundle? = null) : ViewModel() {
 
-    private val celebration: MutableLiveData<InternationalDay> = MutableLiveData()
+    private val celebration: MutableState<InternationalDay> = mutableStateOf(model.get(MonthDay.now()))
 
     init {
         setDate(getDateParam() ?: MonthDay.now())
@@ -18,14 +18,14 @@ class FocusCelebrationViewModel(private val model: DataStore, private val args: 
 
     private val currentDate: MonthDay
         get() {
-            return celebration.value?.date ?: MonthDay.now()
+            return celebration.value.date
         }
 
     private fun getDateParam(): MonthDay? {
         return args?.getSerializable("date") as MonthDay?
     }
 
-    fun observeCelebration(): LiveData<InternationalDay> {
+    fun observeCelebration(): MutableState<InternationalDay> {
         return celebration
     }
 

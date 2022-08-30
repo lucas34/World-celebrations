@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
 import android.view.*
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.analytics.GoogleAnalytics
 import packi.day.R
 import packi.day.common.report
@@ -25,12 +24,12 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val locator = activity as StoreLocator?
                 return ListAllCelebrationsViewModel(locator!!.store) as T
             }
-        }).get(ListAllCelebrationsViewModel::class.java)
+        })[ListAllCelebrationsViewModel::class.java]
 
         setHasOptionsMenu(true)
     }
@@ -42,7 +41,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(packi.day.R.layout.fragment_list_all_celebration, container, false)
+        return inflater.inflate(R.layout.fragment_list_all_celebration, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

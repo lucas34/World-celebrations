@@ -4,11 +4,13 @@ import android.net.Uri
 import org.joda.time.MonthDay
 import org.json.JSONObject
 
-data class InternationalDay(internal val id: Int,
-                            val name: String,
-                            internal val day: Int,
-                            internal val month: Int,
-                            val image: String?) : CelebrationAdaptable {
+data class InternationalDay(
+    internal val id: Int,
+    val name: String,
+    internal val day: Int,
+    internal val month: Int,
+    val image: String?
+) : CelebrationAdaptable {
 
     val date: MonthDay by lazy {
         return@lazy MonthDay(month, day)
@@ -31,11 +33,11 @@ data class InternationalDay(internal val id: Int,
             this(id, name, date.dayOfMonth, date.monthOfYear, image)
 
     constructor(json: JSONObject) : this(
-            json.getInt("id"),
-            json.getString("name"),
-            json.getInt("day"),
-            json.getInt("month"),
-            json.getString("image")
+        json.getInt("id"),
+        json.getString("name"),
+        json.getInt("day"),
+        json.getInt("month"),
+        json.getString("image")
     )
 
     override fun adapt(): InternationalDay {

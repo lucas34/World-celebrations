@@ -1,20 +1,35 @@
 package packi.day.main
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import com.google.android.gms.analytics.GoogleAnalytics
-import com.squareup.picasso.Picasso
-import packi.day.common.report
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.squareup.picasso3.Picasso
+import com.squareup.picasso3.compose.rememberPainter
 import packi.day.di.DaggerAppComponent
-import packi.day.di.FocusCelebrationViewModelProvider
 import packi.day.store.InternationalDay
 import packi.day.store.StoreLocator
 import java.util.*
@@ -35,40 +50,28 @@ class FocusCelebrationView : Fragment(), SwipeListener {
             .build()
             .inject(this)
 
-        viewModel = ViewModelProviders.of(this, focusViewModelFactory).get(FocusCelebrationViewModel::class.java)
+        viewModel = ViewModelProvider(this, focusViewModelFactory)[FocusCelebrationViewModel::class.java]
 
         setHasOptionsMenu(false)
     }
 
     override fun onResume() {
         super.onResume()
-        GoogleAnalytics.getInstance(requireContext()).report("/launcher")
+//        GoogleAnalytics.getInstance(requireContext()).report("/launcher")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_focus_celebration, container, false)
+        val composeView = ComposeView(requireContext())
 
-        rootView.findViewById<View>(R.id.fab).setOnClickListener { v -> viewModel.setRandomDate() }
-        rootView.findViewById<View>(R.id.random_button).setOnClickListener { v -> viewModel.setRandomDate() }
+//        rootView.findViewById<View>(R.id.fab).setOnClickListener { v -> viewModel.setRandomDate() }
+//        rootView.findViewById<View>(R.id.random_button).setOnClickListener { v -> viewModel.setRandomDate() }
 
-        val dateView: TextView = rootView.findViewById(R.id.celebration_date)
-        val nameView: TextView = rootView.findViewById(R.id.celebration_name)
-        val imageView: ImageView = rootView.findViewById(R.id.celebration_image)
-
-        viewModel.observeCelebration().observe(viewLifecycleOwner) { celebration ->
-            if (celebration.isToday) {
-                dateView.setText(R.string.today)
-            } else {
-                val date = celebration.date.dayOfMonth
-                val month = celebration.date.monthOfYear().getAsText(Locale.getDefault())
-                dateView.text = dateView.resources.getString(R.string.date_text_title, date, month)
+        composeView.apply {
+            setContent {
+                MessageCard(context, viewModel.observeCelebration())
             }
-
-            nameView.text = celebration.name
-            Picasso.get().load(celebration.drawable).error(R.drawable.noimage).into(imageView)
         }
-
-        return rootView
+        return composeView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,3 +89,76 @@ class FocusCelebrationView : Fragment(), SwipeListener {
     }
 
 }
+
+
+@Composable
+fun MessageCard(
+    context: Context,
+    liveData: MutableState<InternationalDay>
+) {
+    val data by liveData
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(
+            text = data.asTitle(),
+            color =  colorResource(R.color.title),
+            fontSize = 35.sp
+        )
+        Divider(
+            color = colorResource(R.color.text),
+            thickness = 1.dp,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        Text(
+            text = data.name,
+            color =  colorResource(R.color.text),
+            modifier = Modifier.padding(top = 16.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp
+        )
+        Text(
+            text = stringResource(R.string.random_day),
+            color =  colorResource(R.color.text),
+            modifier = Modifier.padding(top = 16.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp,
+        )
+        Image(
+            painter = makePainter(context, data),
+            modifier = Modifier.padding(top = 16.dp),
+            contentDescription = "Image"
+        )
+    }
+}
+
+@Composable
+fun InternationalDay.asTitle(): String {
+    return if (this.isToday) {
+        stringResource(R.string.today)
+    } else {
+        val date = this.date.dayOfMonth
+        val month = this.date.monthOfYear().getAsText(Locale.getDefault())
+        stringResource(R.string.date_text_title, date, month)
+    }
+}
+
+@Composable
+fun makePainter(
+    context: Context,
+    data: InternationalDay
+): Painter {
+    val picasso = Picasso.Builder(context).build()
+    return picasso.rememberPainter(key = data.drawable) {
+        it.load(data.drawable).placeholder(R.drawable.noimage).error(R.drawable.noimage)
+    }
+}
+
+//@Preview
+//@Composable
+//fun PreviewMessageCard() {
+//    MessageCard(
+//        msg = Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!")
+//    )
+//}
