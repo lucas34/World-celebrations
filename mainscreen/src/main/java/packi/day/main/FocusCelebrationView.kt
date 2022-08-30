@@ -28,6 +28,7 @@ import com.squareup.picasso3.Picasso
 import com.squareup.picasso3.compose.rememberPainter
 import org.joda.time.MonthDay
 import packi.day.di.DaggerAppComponent
+import packi.day.image.PicassoHolder
 import packi.day.store.Celebration
 import packi.day.store.StoreLocator
 import java.util.*
@@ -49,6 +50,7 @@ class FocusCelebrationView : Fragment(), SwipeListener {
             .inject(this)
 
         viewModel = ViewModelProvider(this, focusViewModelFactory)[FocusCelebrationViewModel::class.java]
+        viewModel.initWithState(arguments)
 
         setHasOptionsMenu(false)
     }
@@ -75,7 +77,7 @@ class FocusCelebrationView : Fragment(), SwipeListener {
                         thickness = 1.dp,
                         modifier = Modifier.padding(top = 16.dp)
                     )
-                    CelebrationCompose(context, viewModel.current.celebration) {
+                    CelebrationCompose(celebration = viewModel.current.celebration) {
                         viewModel.setRandomDate()
                     }
                 }
@@ -113,7 +115,7 @@ fun DateTitleCompose(
 
 @Composable
 fun CelebrationCompose(
-    context: Context,
+    picasso: Picasso = PicassoHolder.get(),
     celebration: Celebration?,
     random: () -> Unit
 ) {
@@ -136,7 +138,7 @@ fun CelebrationCompose(
         )
     }
     Image(
-        painter = makePainter(context, celebration),
+        painter = celebrationPainter(picasso, celebration),
         modifier = Modifier.padding(top = 16.dp),
         contentDescription = "Image"
     )
@@ -154,15 +156,14 @@ fun MonthDay.asTitle(): String {
 }
 
 @Composable
-fun makePainter(
-    context: Context,
-    data: Celebration?
+fun celebrationPainter(
+    picasso: Picasso = PicassoHolder.get(),
+    celebration: Celebration?
 ): Painter {
-    if (data == null) {
+    if (celebration == null) {
         return painterResource(R.drawable.vide)
     }
-    val picasso = Picasso.Builder(context).build()
-    return picasso.rememberPainter(key = data.drawable) {
-        it.load(data.drawable).placeholder(R.drawable.noimage).error(R.drawable.noimage)
+    return picasso.rememberPainter(key = celebration.path) {
+        it.load(celebration.path).placeholder(R.drawable.noimage).error(R.drawable.noimage)
     }
 }

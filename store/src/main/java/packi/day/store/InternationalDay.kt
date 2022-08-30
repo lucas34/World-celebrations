@@ -19,16 +19,10 @@ data class InternationalDay(
 data class Celebration(
     val id: Int,
     val name: String,
-    val image: String?
+    private val image: String?
 ) {
 
-    val drawable: Uri by lazy {
-        if (image.isNullOrBlank()) {
-            return@lazy Uri.parse("file:///android_asset/noimage.png")
-        } else {
-            val base = "https://raw.githubusercontent.com/lucas34/World-celebrations/modular/assets/images/"
-            return@lazy Uri.parse("$base$image.png")
-        }
-    }
+    val path
+        get() = "https://raw.githubusercontent.com/lucas34/World-celebrations/master/assets/images/$image.png"
 
 }

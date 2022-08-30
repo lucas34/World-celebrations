@@ -9,15 +9,18 @@ import packi.day.store.InternationalDayRepository
 
 class FocusCelebrationViewModel(
     private val repository: InternationalDayRepository,
-    private val args: Bundle? = null
 ) : ViewModel() {
 
-    private val state by lazy { mutableStateOf(repository.get((args?.getSerializable("date") as MonthDay?) ?: MonthDay.now())) }
+    private val state by lazy { mutableStateOf(repository.get(MonthDay.now())) }
 
     val current by state
 
     private fun updateState(date: MonthDay) {
         state.value = repository.get(date)
+    }
+
+    fun initWithState(args: Bundle?) {
+        (args?.getSerializable("date") as MonthDay?) ?: MonthDay.now()
     }
 
     fun plusDays(days: Int) {

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.StrictMode
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import packi.day.image.PicassoHolder
 import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
 import packi.day.store.feature.realm.RealmStoreDelegate
@@ -15,12 +16,13 @@ class WorldApplication : Application(), StoreLocator {
 
     override fun onCreate() {
         super.onCreate()
+        PicassoHolder.appContext = this
         Realm.init(this)
         val config = RealmConfiguration.Builder()
-                .allowWritesOnUiThread(true)
-                .deleteRealmIfMigrationNeeded()
-                .schemaVersion(VERSION)
-                .build()
+            .allowWritesOnUiThread(true)
+            .deleteRealmIfMigrationNeeded()
+            .schemaVersion(VERSION)
+            .build()
 
         Realm.setDefaultConfiguration(config)
 

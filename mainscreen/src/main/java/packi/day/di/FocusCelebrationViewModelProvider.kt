@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package packi.day.di
 
 import androidx.lifecycle.ViewModel
@@ -14,7 +16,7 @@ object FocusCelebrationViewModelProvider {
     fun provideFocusCelebrationViewModel(locator: StoreLocator): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return FocusCelebrationViewModel(locator.store, null) as T
+                return FocusCelebrationViewModel(locator.store) as T
             }
         }
     }
