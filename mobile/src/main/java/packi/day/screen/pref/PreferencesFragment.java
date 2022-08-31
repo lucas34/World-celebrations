@@ -1,4 +1,4 @@
-package packi.day.ui.fragments;
+package packi.day.screen.pref;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;

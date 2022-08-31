@@ -12,7 +12,7 @@ import org.joda.time.MonthDay
 import packi.day.R
 import packi.day.WorldApplication
 import packi.day.store.UserSetting
-import packi.day.ui.ActivityMain
+import packi.day.screen.ActivityMain
 
 class WidgetProvider : AppWidgetProvider() {
 

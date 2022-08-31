@@ -1,4 +1,4 @@
-package packi.day.ui.fragments
+package packi.day.screen.list
 
 import androidx.lifecycle.ViewModel
 import packi.day.store.InternationalDayRepository

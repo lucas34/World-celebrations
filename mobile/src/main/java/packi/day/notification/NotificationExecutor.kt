@@ -12,7 +12,7 @@ import packi.day.R
 import packi.day.WorldApplication
 import packi.day.common.Wear
 import packi.day.common.report
-import packi.day.ui.ActivityMain
+import packi.day.screen.ActivityMain
 
 
 class NotificationExecutor : IntentService("NotificationExecutor") {

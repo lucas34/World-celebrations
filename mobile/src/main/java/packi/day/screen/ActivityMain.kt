@@ -1,4 +1,4 @@
-package packi.day.ui
+package packi.day.screen
 
 import android.content.Context
 import android.content.Intent
@@ -34,7 +34,7 @@ import packi.day.WorldApplication
 import packi.day.main.FocusCelebrationView
 import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
-import packi.day.ui.fragments.ListAllCelebrationsView
+import packi.day.screen.list.ListAllCelebrationsView
 
 class ActivityMain : ComponentActivity(), StoreLocator {
 

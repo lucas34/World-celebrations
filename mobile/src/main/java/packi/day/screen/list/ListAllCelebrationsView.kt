@@ -1,4 +1,4 @@
-package packi.day.ui.fragments
+package packi.day.screen.list
 
 
 import android.content.Context
@@ -37,42 +37,6 @@ import packi.day.store.Celebration
 import packi.day.store.InternationalDay
 import packi.day.store.StoreLocator
 import java.util.*
-
-
-//
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        if (activity == null) {
-//            super.onCreateOptionsMenu(menu, inflater)
-//        }
-//
-//        val activity = activity ?: return
-//
-//        inflater.inflate(R.menu.search_filter_all, menu)
-//
-//        val searchItem = menu.findItem(R.id.action_search)
-//        val searchView = searchItem.actionView as SearchView
-//
-//        val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//        val searchableInfo = searchManager.getSearchableInfo(activity.componentName)
-//
-//        searchView.setSearchableInfo(searchableInfo)
-//
-//        searchView.setIconifiedByDefault(false)
-//        searchView.setOnQueryTextListener(this)
-//        searchView.setQuery(viewModel.filter, false)
-//
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onQueryTextSubmit(query: String): Boolean {
-//        return false
-//    }
-//
-//    override fun onQueryTextChange(newText: String): Boolean {
-//        viewModel.filter = newText
-//        return true
-//    }
-//}
 
 private fun ListAllCelebrationsViewModelDagger(context: Context): ListAllCelebrationsViewModel {
     return ViewModelProvider(context as ViewModelStoreOwner, object : ViewModelProvider.Factory {
