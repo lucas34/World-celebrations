@@ -84,6 +84,6 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
     public void onResume() {
         super.onResume();
 //        AnalyticsTracker.getInstance(getActivity()).sendTracker("/preferences");
-        ((ActivityMain) getActivity()).setScreenTitle(preference);
+//        ((ActivityMain) getActivity()).setScreenTitle(preference);
     }
 }

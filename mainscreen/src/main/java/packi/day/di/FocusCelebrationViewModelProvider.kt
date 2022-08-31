@@ -13,11 +13,11 @@ import packi.day.store.StoreLocator
 object FocusCelebrationViewModelProvider {
 
     @Provides
-    fun provideFocusCelebrationViewModel(locator: StoreLocator): ViewModelProvider.Factory {
+    fun provideFocusCelebrationViewModel(locator: StoreLocator): FocusCelebrationViewModel {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return FocusCelebrationViewModel(locator.store) as T
             }
-        }
+        }.create(FocusCelebrationViewModel::class.java)
     }
 }

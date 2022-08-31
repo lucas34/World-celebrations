@@ -14,7 +14,7 @@
     <color name="colorPrimary">#1d85e0</color>
     <color name="colorAccent">#0e66da</color>
 
-    <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MyAppTheme" parent="Theme.MaterialComponents">
         <item name="android:windowBackground">@color/background</item>
         <item name="colorPrimary">@color/my_awesome_color</item>
         <item name="colorPrimaryDark">@color/my_awesome_darker_color</item>

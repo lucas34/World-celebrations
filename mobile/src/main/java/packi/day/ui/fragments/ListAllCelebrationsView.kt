@@ -19,20 +19,24 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.google.android.gms.analytics.GoogleAnalytics
 import org.joda.time.MonthDay
 import packi.day.R
@@ -51,12 +55,7 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val locator = activity as StoreLocator?
-                return ListAllCelebrationsViewModel(locator!!.store) as T
-            }
-        })[ListAllCelebrationsViewModel::class.java]
+
 
         setHasOptionsMenu(true)
     }
@@ -70,11 +69,6 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return ComposeView(requireContext()).apply {
             setContent {
-                FooBar(requireContext(), viewModel.actual) {
-                    val target = Intent(context, ActivityMain::class.java)
-                    target.putExtra("date", it.date)
-                    context.startActivity(target)
-                }
             }
         }
     }
@@ -113,9 +107,26 @@ class ListAllCelebrationsView : Fragment(), SearchView.OnQueryTextListener {
     }
 }
 
+private fun ListAllCelebrationsViewModelDagger(context: Context): ListAllCelebrationsViewModel {
+     return ViewModelProvider(context as ViewModelStoreOwner, object : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            val locator = context as StoreLocator?
+            return ListAllCelebrationsViewModel(locator!!.store) as T
+        }
+    })[ListAllCelebrationsViewModel::class.java]
+}
+
 @Composable
-fun FooBar(
-    context: Context,
+fun ListAllCelebrationsView(
+    onItemClick: (InternationalDay) -> Unit
+) {
+    val context = LocalContext.current
+    val viewModel = remember { ListAllCelebrationsViewModelDagger(context) }
+    ListAllCelebrationsViewList(viewModel.actual, onItemClick)
+}
+
+@Composable
+fun ListAllCelebrationsViewList(
     internationalDays: List<InternationalDay>,
     onItemClick: (InternationalDay) -> Unit
 ) {
@@ -133,7 +144,7 @@ fun FooBar(
                 }
             }
             item {
-                CardCelebration(context, internationalDay.date, celebration, onItemClick)
+                CardCelebration(internationalDay.date, celebration, onItemClick)
             }
         }
     }
@@ -147,7 +158,9 @@ fun HeaderText(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
     ) {
         Text(
             text = title,
@@ -162,7 +175,6 @@ fun HeaderText(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CardCelebration(
-    context: Context,
     date: MonthDay,
     celebration: Celebration,
     onClick: (InternationalDay) -> Unit

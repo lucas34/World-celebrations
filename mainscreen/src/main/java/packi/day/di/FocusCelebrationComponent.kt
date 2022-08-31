@@ -2,20 +2,20 @@ package packi.day.di
 
 import dagger.BindsInstance
 import dagger.Component
-import packi.day.main.FocusCelebrationView
+import packi.day.main.FocusCelebrationViewModel
 import packi.day.store.StoreLocator
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [FocusCelebrationViewModelProvider::class])
-interface AppComponent {
+abstract class FocusCelebrationComponent {
 
-    fun inject(app: FocusCelebrationView)
+    abstract fun getViewModel() : FocusCelebrationViewModel
 
     @Component.Builder
     interface Builder {
         @BindsInstance
         fun storeLocator(locator: StoreLocator): Builder
-        fun build(): AppComponent
+        fun build(): FocusCelebrationComponent
     }
 }

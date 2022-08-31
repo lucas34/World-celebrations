@@ -13,7 +13,7 @@ import packi.day.common.report
 import packi.day.store.InternationalDayRepository
 
 
-class MainActivity: Activity() {
+class WearActivity: Activity() {
 
     lateinit var store: InternationalDayRepository
 

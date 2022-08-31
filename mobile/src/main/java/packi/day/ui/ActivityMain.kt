@@ -4,32 +4,35 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.fragment.app.Fragment
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AlertDialog
+import androidx.compose.material.BackdropScaffold
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import org.joda.time.MonthDay
 import packi.day.R
 import packi.day.WorldApplication
 import packi.day.common.Keyboard
-import packi.day.lib.SupportNavigationHandler
 import packi.day.main.FocusCelebrationView
 import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
-import packi.day.ui.fragments.CustomDateSearchBuilder
 import packi.day.ui.fragments.ListAllCelebrationsView
-import packi.day.ui.fragments.PreferencesFragment
 
-class ActivityMain : AppCompatActivity(), StoreLocator {
+class ActivityMain : ComponentActivity(), StoreLocator {
 
-    private lateinit var navigationHandler: SupportNavigationHandler<Fragment>
-    private lateinit var drawerLayout: DrawerLayout
+//    private lateinit var navigationHandler: SupportNavigationHandler<Fragment>
+//    private lateinit var drawerLayout: DrawerLayout
 
     override val store: InternationalDayRepository
         get() {
@@ -49,77 +52,87 @@ class ActivityMain : AppCompatActivity(), StoreLocator {
         }
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
 
         // Init lateinit var
-        navigationHandler = SupportNavigationHandler(this, R.id.content)
-        drawerLayout = findViewById(R.id.drawer)
+//        navigationHandler = SupportNavigationHandler(fragmentManager, R.id.content)
+//        drawerLayout = findViewById(R.id.drawer)
 
-        navigationHandler.setOnFragmentChangeListener { _ ->
-            Keyboard.hide(this@ActivityMain)
+        setContent {
+            MyAppNavHost(this)
         }
 
-        if (savedInstanceState == null) {
-            navigationHandler.showMain(FocusCelebrationView())
-        }
+//        navigationHandler.setOnFragmentChangeListener { _ ->
+//            Keyboard.hide(this@ActivityMain)
+//        }
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        if (savedInstanceState == null) {
+//            navigationHandler.showMain(FocusCelebrationView())
+//        }
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home_black_24dp)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
-        findViewById<NavigationView>(R.id.navigation_view)?.setNavigationItemSelectedListener { menuItem ->
-            //            menuItem.isChecked = false
-            drawerLayout.closeDrawers()
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home_black_24dp)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-            when (menuItem.itemId) {
-                R.id.menu_home -> {
-                    navigationHandler.showMain(FocusCelebrationView())
-                    return@setNavigationItemSelectedListener true
-                }
+//        findViewById<NavigationView>(R.id.navigation_view)?.setNavigationItemSelectedListener { menuItem ->
+//            //            menuItem.isChecked = false
+//            drawerLayout.closeDrawers()
+//
+//            when (menuItem.itemId) {
+//                R.id.menu_home -> {
+//                    navigationHandler.showMain(FocusCelebrationView())
+//                    return@setNavigationItemSelectedListener true
+//                }
+//
+//                R.id.menu_list_all -> {
+//                    navigationHandler.replaceContent(ListAllCelebrationsView())
+//                    return@setNavigationItemSelectedListener true
+//                }
+//
+//                R.id.menu_settings -> {
+//                    navigationHandler.replaceContent(PreferencesFragment())
+//                    return@setNavigationItemSelectedListener true
+//                }
+//
+//                R.id.menu_google_play -> {
+//                    launchStoreApp(applicationContext)
+//                    return@setNavigationItemSelectedListener true
+//                }
+//
+//                R.id.menu_pick_date -> {
+//                    val picker = MaterialDatePicker.Builder.datePicker().build()
+//                    picker.addOnPositiveButtonClickListener {
+//                        showFocus(MonthDay.fromDateFields(Date(it)))
+//                    }
+//                    picker.show(supportFragmentManager, "Calendar")
+//                    return@setNavigationItemSelectedListener true
+//                }
+//
+//                R.id.menu_info -> {
+//                    info()
+//                    return@setNavigationItemSelectedListener true
+//                }
+//
+//                else -> return@setNavigationItemSelectedListener false
+//            }
+//        }
 
-                R.id.menu_list_all -> {
-                    navigationHandler.replaceContent(ListAllCelebrationsView())
-                    return@setNavigationItemSelectedListener true
-                }
-
-                R.id.menu_settings -> {
-                    navigationHandler.replaceContent(PreferencesFragment())
-                    return@setNavigationItemSelectedListener true
-                }
-
-                R.id.menu_google_play -> {
-                    launchStoreApp(applicationContext)
-                    return@setNavigationItemSelectedListener true
-                }
-
-                R.id.menu_pick_date -> {
-                    CustomDateSearchBuilder(this).show()
-                    return@setNavigationItemSelectedListener true
-                }
-
-                R.id.menu_info -> {
-                    info()
-                    return@setNavigationItemSelectedListener true
-                }
-
-                else -> return@setNavigationItemSelectedListener false
-            }
-        }
-
-        val actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
+//        val actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+//        actionBarDrawerToggle.syncState()
 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                drawerLayout.openDrawer(GravityCompat.START)
+//                drawerLayout.openDrawer(GravityCompat.START)
                 return true
             }
         }
@@ -139,12 +152,12 @@ class ActivityMain : AppCompatActivity(), StoreLocator {
         val args = Bundle()
         args.putSerializable("date", date)
         data.putExtras(args)
-        navigationHandler.showMain(FocusCelebrationView(), args)
+//        navigationHandler.showMain(FocusCelebrationView(), args)
     }
 
     fun setScreenTitle(title: Int) {
-        val supportActionBar = supportActionBar
-        supportActionBar?.setTitle(title)
+//        val supportActionBar = supportActionBar
+//        supportActionBar?.setTitle(title)
     }
 
     companion object {
@@ -171,5 +184,89 @@ class ActivityMain : AppCompatActivity(), StoreLocator {
             Toast.makeText(context, context.getString(R.string.error_market), Toast.LENGTH_SHORT).show()
         }
 
+    }
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun AppScafold() {
+    BackdropScaffold(
+        appBar = {
+            TopAppBar(
+//                title = { Text("Backdrop") },
+//                navigationIcon = {
+//                    if (false) {
+//                        IconButton(
+//                            onClick = {
+////                                scope.launch { scaffoldState.reveal() }
+//                            }
+//                        ) {
+//                            Icon(
+//                                Icons.Default.Menu,
+//                                contentDescription = "Menu"
+//                            )
+//                        }
+//                    } else {
+//                        IconButton(
+//                            onClick = {
+////                                scope.launch { scaffoldState.conceal() }
+//                            }
+//                        ) {
+//                            Icon(
+//                                Icons.Default.Close,
+//                                contentDescription = "Close"
+//                            )
+//                        }
+//                    }
+//                },
+//                elevation = 0.dp,
+//                backgroundColor = Color.Transparent
+            ) {
+
+            }
+        },
+        backLayerContent = {
+            // Back layer content
+        },
+        frontLayerContent = {
+            // Front layer content
+        }
+    )
+}
+
+
+
+@Composable
+fun MyAppNavHost(
+    context: Context,
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = "listAll",
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        composable("main") {
+            FocusCelebrationView()
+        }
+        composable("main/{date}", arguments = listOf(navArgument("date") { type = NavType.StringType })) { backStackEntry ->
+            FocusCelebrationView(backStackEntry.arguments?.getString("date").toMonthDay())
+        }
+        composable("listAll") {
+            ListAllCelebrationsView {
+                navController.navigate("main/${it.date}")
+            }
+        }
+    }
+}
+
+fun String?.toMonthDay(): MonthDay {
+    return try {
+        MonthDay.parse(this)
+    } catch (e: Exception) {
+        MonthDay.now()
     }
 }

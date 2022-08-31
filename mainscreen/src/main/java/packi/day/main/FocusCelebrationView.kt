@@ -1,106 +1,82 @@
 package packi.day.main
 
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso3.Picasso
 import com.squareup.picasso3.compose.rememberPainter
 import org.joda.time.MonthDay
-import packi.day.di.DaggerAppComponent
+import packi.day.di.DaggerFocusCelebrationComponent
 import packi.day.image.PicassoHolder
 import packi.day.store.Celebration
 import packi.day.store.StoreLocator
 import java.util.*
-import javax.inject.Inject
 
-class FocusCelebrationView : Fragment(), SwipeListener {
-
-    private lateinit var viewModel: FocusCelebrationViewModel
-
-    @Inject
-    lateinit var focusViewModelFactory: ViewModelProvider.Factory
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        DaggerAppComponent.builder()
-            .storeLocator(requireContext().applicationContext as StoreLocator)
-            .build()
-            .inject(this)
-
-        viewModel = ViewModelProvider(this, focusViewModelFactory)[FocusCelebrationViewModel::class.java]
-        viewModel.initWithState(arguments)
-
-        setHasOptionsMenu(false)
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        GoogleAnalytics.getInstance(requireContext()).report("/launcher")
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val composeView = ComposeView(requireContext())
-
-//        rootView.findViewById<View>(R.id.random_button).setOnClickListener { v -> viewModel.setRandomDate() }
-
-        composeView.apply {
-            setContent {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    DateTitleCompose(viewModel.current.date)
-                    Divider(
-                        color = colorResource(R.color.text),
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
-                    CelebrationCompose(celebration = viewModel.current.celebration) {
-                        viewModel.setRandomDate()
-                    }
-                }
-            }
-        }
-        return composeView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        view.setOnTouchListener(OnSwipeListener(requireContext(), this));
-    }
-
-    override fun onSwipe(direction: Direction) {
-        when (direction) {
-            Direction.LEFT -> viewModel.plusDays(-1)
-            Direction.RIGHT -> viewModel.plusDays(1)
-            Direction.UP -> viewModel.plusMonths(1)
-            Direction.DOWN -> viewModel.plusMonths(-1)
-        }
-    }
-
+private fun FocusCelebrationViewModelCompose(context: Context): FocusCelebrationViewModel {
+    return DaggerFocusCelebrationComponent.builder()
+        .storeLocator(context as StoreLocator)
+        .build().getViewModel()
 }
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun FocusCelebrationView(
+    monthDay: MonthDay = MonthDay.now()
+) {
+    val applicationContext = LocalContext.current.applicationContext
+    val viewModel = remember { FocusCelebrationViewModelCompose(applicationContext) }
+    val swipeableState = rememberSwipeableState("L") // TODO WTF
+    viewModel.updateState(monthDay)
+
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .swipeable(
+                state = swipeableState,
+                thresholds = { _, _ -> FixedThreshold(20.dp) },
+                anchors = mapOf(0f to "L"),
+                orientation = Orientation.Horizontal // TODO wtf
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+        //    override fun onSwipe(direction: Direction) {
+//        when (direction) {
+//            Direction.LEFT -> viewModel.plusDays(-1)
+//            Direction.RIGHT -> viewModel.plusDays(1)
+//            Direction.UP -> viewModel.plusMonths(1)
+//            Direction.DOWN -> viewModel.plusMonths(-1)
+//        }
+//    }
+
+    ){
+        DateTitleCompose(viewModel.current.date)
+        Divider(
+            color = colorResource(R.color.text),
+            thickness = 1.dp,
+            modifier = Modifier.padding(top = 16.dp)
+        )
+        CelebrationCompose(celebration = viewModel.current.celebration) {
+            viewModel.setRandomDate()
+        }
+    }
+}
+
 
 @Composable
 fun DateTitleCompose(
