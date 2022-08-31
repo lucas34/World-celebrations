@@ -4,7 +4,6 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import org.joda.time.MonthDay
 import packi.day.store.Celebration
-import packi.day.store.CelebrationAdaptable
 import packi.day.store.InternationalDay
 
 /**
@@ -13,7 +12,7 @@ import packi.day.store.InternationalDay
  * Class has to be open for the proxy generation
  * 👎 for Realm
  */
-open class RealmInternationalDay : RealmObject(), CelebrationAdaptable {
+open class RealmInternationalDay : RealmObject() {
 
     @PrimaryKey
     var id: Int = 0
@@ -26,7 +25,8 @@ open class RealmInternationalDay : RealmObject(), CelebrationAdaptable {
 
     var image: String? = null
 
-    override fun adapt(): InternationalDay {
-        return InternationalDay(MonthDay(month, day), Celebration(id, name.orEmpty(), image))
-    }
+}
+
+fun RealmInternationalDay.toInternationalDay(): InternationalDay {
+    return InternationalDay(MonthDay(month, day), Celebration(id, name.orEmpty(), image))
 }

@@ -35,14 +35,13 @@ import packi.day.R
 import packi.day.main.celebrationPainter
 import packi.day.store.Celebration
 import packi.day.store.InternationalDay
-import packi.day.store.StoreLocator
+import packi.day.store.getStoreLocator
 import java.util.*
 
 private fun ListAllCelebrationsViewModelDagger(context: Context): ListAllCelebrationsViewModel {
     return ViewModelProvider(context as ViewModelStoreOwner, object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            val locator = context as StoreLocator?
-            return ListAllCelebrationsViewModel(locator!!.store) as T
+            return ListAllCelebrationsViewModel(context.getStoreLocator().getStore()) as T
         }
     })[ListAllCelebrationsViewModel::class.java]
 }

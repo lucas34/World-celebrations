@@ -26,38 +26,7 @@ class RealmStoreDelegate : StoreDelegate {
             .equalTo("day", date.dayOfMonth)
             .equalTo("month", date.monthOfYear)
             .findFirst()
-            ?.adapt() ?: InternationalDay(date, null)
-    }
-
-    override fun count(criteria: String): Set<Int> {
-        val result = HashSet<Int>(12)
-
-        var total = 0
-
-        for (month in 1..12) {
-            var query = store.where<RealmInternationalDay>().equalTo("month", month)
-            if (criteria.isNotBlank()) {
-                query = query.contains("name", criteria, Case.INSENSITIVE)
-            }
-
-            val current = query.count().toInt()
-
-            // No result for this month
-            if (current == 0) continue
-
-            // Got match for this month
-            // We add the header position for the current month
-            // Which is the total count of all previous celebrations + headers
-            result.add(total)
-
-            // 1 cell for the header
-            total += 1
-
-            // Number of match for the cells
-            total += current
-        }
-
-        return result
+            ?.toInternationalDay() ?: InternationalDay(date, null)
     }
 
     override fun find(criteria: String): List<InternationalDay> {
@@ -73,7 +42,7 @@ class RealmStoreDelegate : StoreDelegate {
                 get() = result.size
 
             override fun get(index: Int): InternationalDay {
-                return result[index]!!.adapt()
+                return result[index]!!.toInternationalDay()
             }
         }
     }
@@ -82,7 +51,7 @@ class RealmStoreDelegate : StoreDelegate {
         val size = store.where<RealmInternationalDay>().count().toInt()
 
         val value = Random().nextInt(size)
-        return store.where<RealmInternationalDay>().findAll()[value]!!.adapt()
+        return store.where<RealmInternationalDay>().findAll()[value]!!.toInternationalDay()
     }
 
 }

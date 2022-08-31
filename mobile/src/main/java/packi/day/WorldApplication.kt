@@ -33,10 +33,6 @@ class WorldApplication : Application(), StoreLocator {
         }
     }
 
-    override val store: InternationalDayRepository
-        get() = celebrationHelper
-
-
     override fun onTerminate() {
         Realm.getDefaultInstance().close()
         super.onTerminate()
@@ -51,6 +47,10 @@ class WorldApplication : Application(), StoreLocator {
             val application = context.applicationContext as WorldApplication
             return application.celebrationHelper
         }
+    }
+
+    override fun getStore(): InternationalDayRepository {
+        return celebrationHelper
     }
 
 }

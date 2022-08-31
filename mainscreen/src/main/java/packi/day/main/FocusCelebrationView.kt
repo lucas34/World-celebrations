@@ -31,12 +31,13 @@ import org.joda.time.MonthDay
 import packi.day.di.DaggerFocusCelebrationComponent
 import packi.day.image.PicassoHolder
 import packi.day.store.Celebration
-import packi.day.store.StoreLocator
+import packi.day.store.getStoreLocator
 import java.util.*
 
 private fun FocusCelebrationViewModelCompose(context: Context): FocusCelebrationViewModel {
+
     return DaggerFocusCelebrationComponent.builder()
-        .storeLocator(context as StoreLocator)
+        .storeLocator(context.getStoreLocator())
         .build().getViewModel()
 }
 
@@ -44,8 +45,8 @@ private fun FocusCelebrationViewModelCompose(context: Context): FocusCelebration
 fun FocusCelebrationView(
     monthDay: MonthDay = MonthDay.now()
 ) {
-    val applicationContext = LocalContext.current.applicationContext
-    val viewModel = remember { FocusCelebrationViewModelCompose(applicationContext) }
+    val context = LocalContext.current
+    val viewModel = remember { FocusCelebrationViewModelCompose(context) }
     val offsetX = remember { mutableStateOf(0f) }
     val offsetY = remember { mutableStateOf(0f) }
     viewModel.updateState(monthDay)
@@ -55,7 +56,7 @@ fun FocusCelebrationView(
             .fillMaxHeight()
             .fillMaxWidth()
             .pointerInput(Unit) {
-                detectDragGestures(
+                detectDragGestures( // TODO this doesn't work
                     onDragEnd = {
                         when {
                             offsetX.value >= 2 -> viewModel.plusDays(1)
@@ -87,7 +88,7 @@ fun FocusCelebrationView(
             modifier = Modifier.padding(top = 16.dp)
         )
         CelebrationCompose(celebration = viewModel.current.celebration) {
-            viewModel.setRandomDate()
+            viewModel.setRandomDate() // TODO this doesn't work
         }
     }
 }

@@ -36,14 +36,7 @@ import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
 import packi.day.screen.list.ListAllCelebrationsView
 
-class ActivityMain : ComponentActivity(), StoreLocator {
-
-    override val store: InternationalDayRepository
-        get() {
-            val application = application as WorldApplication
-            return application.celebrationHelper
-        }
-
+class ActivityMain : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

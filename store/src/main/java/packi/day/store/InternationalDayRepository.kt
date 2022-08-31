@@ -15,10 +15,6 @@ class InternationalDayRepository(context: Context, private val delegate: StoreDe
         return delegate.get(date)
     }
 
-    fun count(criteria: String): Set<Int> {
-        return delegate.count(criteria)
-    }
-
     fun find(criteria: String): List<InternationalDay> {
         return delegate.find(criteria)
     }

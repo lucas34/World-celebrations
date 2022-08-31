@@ -1,16 +1,26 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "packi.day"
-        minSdkVersion 21
+        minSdkVersion 25
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         versionCode 75
         versionName "1.4.0"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -25,14 +35,30 @@ android {
         }
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.0'
+    }
 }
 
 dependencies {
     implementation project(':common')
     implementation project(':store')
+    implementation project(':mainscreen')
 
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.6.1'
 
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.google.android.support:wearable:2.1.0'
+    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.google.android.support:wearable:2.9.0'
+    implementation 'com.google.android.wearable:wearable:2.9.0'
+
+    implementation "androidx.activity:activity-compose:1.5.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.2.1"
+    implementation "androidx.wear.compose:compose-material:1.0.1"
+    implementation "androidx.wear.compose:compose-foundation:1.0.1"
+
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.2.1"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.2.1"
 }

@@ -9,8 +9,6 @@ interface StoreDelegate {
 
     fun get(date: MonthDay): InternationalDay
 
-    fun count(criteria: String): Set<Int>
-
     fun find(criteria: String): List<InternationalDay>
 
     fun getRandom(): InternationalDay

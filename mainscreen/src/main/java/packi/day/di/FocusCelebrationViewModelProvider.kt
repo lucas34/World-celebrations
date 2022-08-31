@@ -16,7 +16,7 @@ object FocusCelebrationViewModelProvider {
     fun provideFocusCelebrationViewModel(locator: StoreLocator): FocusCelebrationViewModel {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return FocusCelebrationViewModel(locator.store) as T
+                return FocusCelebrationViewModel(locator.getStore()) as T
             }
         }.create(FocusCelebrationViewModel::class.java)
     }
