@@ -3,15 +3,21 @@ package packi.day.main
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -34,36 +40,45 @@ private fun FocusCelebrationViewModelCompose(context: Context): FocusCelebration
         .build().getViewModel()
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FocusCelebrationView(
     monthDay: MonthDay = MonthDay.now()
 ) {
     val applicationContext = LocalContext.current.applicationContext
     val viewModel = remember { FocusCelebrationViewModelCompose(applicationContext) }
-    val swipeableState = rememberSwipeableState("L") // TODO WTF
+    val offsetX = remember { mutableStateOf(0f) }
+    val offsetY = remember { mutableStateOf(0f) }
     viewModel.updateState(monthDay)
-
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .swipeable(
-                state = swipeableState,
-                thresholds = { _, _ -> FixedThreshold(20.dp) },
-                anchors = mapOf(0f to "L"),
-                orientation = Orientation.Horizontal // TODO wtf
-            ),
+            .fillMaxHeight()
+            .fillMaxWidth()
+            .pointerInput(Unit) {
+                detectDragGestures(
+                    onDragEnd = {
+                        when {
+                            offsetX.value >= 2 -> viewModel.plusDays(1)
+                            offsetX.value <= 2 -> viewModel.plusDays(-1)
+                            offsetY.value <= 2 -> viewModel.plusMonths(1)
+                            offsetY.value >= 2 -> viewModel.plusMonths(1)
+                        }
+                    },
+                    onDrag = { _, over ->
+                        val original = Offset(offsetX.value, offsetY.value)
+                        val summed = original + over
+                        val newValue = Offset(
+                            x = summed.x.coerceIn(0f, size.width - 50.dp.toPx()),
+                            y = summed.y.coerceIn(0f, size.height - 50.dp.toPx())
+                        )
+
+                        offsetX.value = newValue.x
+                        offsetY.value = newValue.y
+                    }
+                )
+
+            },
         horizontalAlignment = Alignment.CenterHorizontally
-
-        //    override fun onSwipe(direction: Direction) {
-//        when (direction) {
-//            Direction.LEFT -> viewModel.plusDays(-1)
-//            Direction.RIGHT -> viewModel.plusDays(1)
-//            Direction.UP -> viewModel.plusMonths(1)
-//            Direction.DOWN -> viewModel.plusMonths(-1)
-//        }
-//    }
-
     ){
         DateTitleCompose(viewModel.current.date)
         Divider(
@@ -76,7 +91,6 @@ fun FocusCelebrationView(
         }
     }
 }
-
 
 @Composable
 fun DateTitleCompose(

@@ -63,7 +63,7 @@ class AlarmService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         alarm.init(this)
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     override fun onBind(intent: Intent): IBinder? {

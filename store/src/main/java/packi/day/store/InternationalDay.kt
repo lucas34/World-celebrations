@@ -1,6 +1,5 @@
 package packi.day.store
 
-import android.net.Uri
 import org.joda.time.MonthDay
 
 data class InternationalDay(

@@ -9,11 +9,19 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AlertDialog
-import androidx.compose.material.BackdropScaffold
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -23,7 +31,6 @@ import androidx.navigation.navArgument
 import org.joda.time.MonthDay
 import packi.day.R
 import packi.day.WorldApplication
-import packi.day.common.Keyboard
 import packi.day.main.FocusCelebrationView
 import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
@@ -31,39 +38,17 @@ import packi.day.ui.fragments.ListAllCelebrationsView
 
 class ActivityMain : ComponentActivity(), StoreLocator {
 
-//    private lateinit var navigationHandler: SupportNavigationHandler<Fragment>
-//    private lateinit var drawerLayout: DrawerLayout
-
     override val store: InternationalDayRepository
         get() {
             val application = application as WorldApplication
             return application.celebrationHelper
         }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        Keyboard.hide(this)
-        if (intent.hasExtra("date")) {
-            val serializable = intent.getSerializableExtra("date")
-            if (serializable != null) {
-                val date = serializable as MonthDay
-                showFocus(date)
-            }
-        }
-    }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-
-        // Init lateinit var
-//        navigationHandler = SupportNavigationHandler(fragmentManager, R.id.content)
-//        drawerLayout = findViewById(R.id.drawer)
-
         setContent {
-            MyAppNavHost(this)
+            AppScafold()
         }
 
 //        navigationHandler.setOnFragmentChangeListener { _ ->
@@ -147,13 +132,6 @@ class ActivityMain : ComponentActivity(), StoreLocator {
         builder.show()
     }
 
-    fun showFocus(date: MonthDay) {
-        val data = Intent()
-        val args = Bundle()
-        args.putSerializable("date", date)
-        data.putExtras(args)
-//        navigationHandler.showMain(FocusCelebrationView(), args)
-    }
 
     fun setScreenTitle(title: Int) {
 //        val supportActionBar = supportActionBar
@@ -187,67 +165,69 @@ class ActivityMain : ComponentActivity(), StoreLocator {
     }
 }
 
-
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AppScafold() {
-    BackdropScaffold(
-        appBar = {
-            TopAppBar(
-//                title = { Text("Backdrop") },
-//                navigationIcon = {
-//                    if (false) {
-//                        IconButton(
-//                            onClick = {
-////                                scope.launch { scaffoldState.reveal() }
-//                            }
-//                        ) {
-//                            Icon(
-//                                Icons.Default.Menu,
-//                                contentDescription = "Menu"
-//                            )
-//                        }
-//                    } else {
-//                        IconButton(
-//                            onClick = {
-////                                scope.launch { scaffoldState.conceal() }
-//                            }
-//                        ) {
-//                            Icon(
-//                                Icons.Default.Close,
-//                                contentDescription = "Close"
-//                            )
-//                        }
-//                    }
-//                },
-//                elevation = 0.dp,
-//                backgroundColor = Color.Transparent
-            ) {
+fun BottomBar(
+    navController: NavController
+) {
+    val selectedIndex = remember { mutableStateOf(0) }
+    BottomNavigation(elevation = 10.dp) {
+        BottomNavigationItem(icon = {
+            Icon(imageVector = Icons.Default.Home,"")
+        },
+            label = { Text(text = "Today") },
+            selected = (selectedIndex.value == 0),
+            onClick = {
+                selectedIndex.value = 0
+                navController.navigate("main")
+            })
 
-            }
+        BottomNavigationItem(icon = {
+            Icon(imageVector = Icons.Default.List,"")
         },
-        backLayerContent = {
-            // Back layer content
+            label = { Text(text = "List All") },
+            selected = (selectedIndex.value == 1),
+            onClick = {
+                selectedIndex.value = 1
+                navController.navigate("listAll")
+            })
+
+        BottomNavigationItem(icon = {
+            Icon(imageVector = Icons.Default.Settings,"")
         },
-        frontLayerContent = {
-            // Front layer content
-        }
-    )
+            label = { Text(text = "Settings") },
+            selected = (selectedIndex.value == 2),
+            onClick = {
+                selectedIndex.value = 2
+                navController.navigate("settings")
+            })
+    }
 }
 
 
+@Composable
+fun AppScafold(
+) {
+    val navController: NavHostController = rememberNavController()
+    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Open))
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { TopAppBar(title = {Text(stringResource(id = R.string.app_name))})  },
+        bottomBar = { BottomBar(navController) }
+    ) { padding ->
+        MyAppNavHost(modifier = Modifier.padding(padding), navController = navController)
+    }
+}
 
 @Composable
 fun MyAppNavHost(
-    context: Context,
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
-    startDestination: String = "listAll",
+    navController: NavHostController,
+    startDestination: String = "main",
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
         composable("main") {
             FocusCelebrationView()
@@ -259,6 +239,9 @@ fun MyAppNavHost(
             ListAllCelebrationsView {
                 navController.navigate("main/${it.date}")
             }
+        }
+        composable("settings") {
+
         }
     }
 }

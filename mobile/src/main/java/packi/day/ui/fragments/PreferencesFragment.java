@@ -4,17 +4,15 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.RemoteViews;
+
 import androidx.annotation.ColorInt;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import android.widget.RemoteViews;
 
 import packi.day.R;
 import packi.day.notification.Alarm;
-import packi.day.ui.ActivityMain;
 import packi.day.widget.WidgetProvider;
-
-import static packi.day.R.string.preference;
 
 public class PreferencesFragment extends PreferenceFragmentCompat {
 

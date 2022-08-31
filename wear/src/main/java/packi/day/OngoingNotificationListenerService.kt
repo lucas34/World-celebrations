@@ -5,21 +5,13 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
-import androidx.core.app.NotificationManagerCompat
 import android.util.Log
-
-import com.google.android.gms.common.ConnectionResult
+import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.data.FreezableUtils
-import com.google.android.gms.wearable.DataEvent
-import com.google.android.gms.wearable.DataEventBuffer
-import com.google.android.gms.wearable.DataMapItem
-import com.google.android.gms.wearable.MessageEvent
-import com.google.android.gms.wearable.Wearable
-import com.google.android.gms.wearable.WearableListenerService
-import java.util.concurrent.TimeUnit
-
+import com.google.android.gms.wearable.*
 import packi.day.common.Constants
+import java.util.concurrent.TimeUnit
 
 class OngoingNotificationListenerService : WearableListenerService() {
 

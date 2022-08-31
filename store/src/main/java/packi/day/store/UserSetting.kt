@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.preference.PreferenceManager
 import org.joda.time.Hours
 import org.joda.time.Minutes
-import org.joda.time.MonthDay
 
 class UserSetting(context: Context) {
 
