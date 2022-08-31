@@ -44,7 +44,7 @@ class OngoingNotificationListenerService : WearableListenerService() {
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        val notificationIntent = Intent(this, NotificationActivity::class.java)
+        val notificationIntent = Intent(this, WearActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -72,7 +72,7 @@ class OngoingNotificationListenerService : WearableListenerService() {
             val dataMapItem = DataMapItem.fromDataItem(event.dataItem)
             val title = dataMapItem.dataMap.getString(Constants.KEY_TITLE)
 
-            notificationIntent.putExtra(NotificationActivity.EXTRA_TITLE, title)
+            notificationIntent.putExtra("NOTIFICATION", title)
 
             notificationManager.notify(++notificationId, notificationBuilder.build())
         }

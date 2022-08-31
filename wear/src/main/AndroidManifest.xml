@@ -26,13 +26,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="packi.day.NotificationActivity"
-            android:allowEmbedded="true"
-            android:exported="true"
-            android:taskAffinity=""
-            android:theme="@android:style/Theme.DeviceDefault.Light"/>
-
         <service android:name="packi.day.OngoingNotificationListenerService"
             android:exported="true">
             <intent-filter>
