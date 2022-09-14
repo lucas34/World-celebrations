@@ -2,13 +2,31 @@ ext {
     compileSdkVersion = 33
     targetSdkVersion = 33
 
-    dagger = "2.43.2"
+    jacocoVersion = "0.8.8" // https://www.eclemma.org/jacoco/
+    kotlinVersion = "1.7.10" // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
 
-    jacoco = "0.8.0"
+    daggerVersion = "2.43.2" /// https://mvnrepository.com/artifact/com.google.dagger/dagger
+    playServicesAnalyticsVersion = "18.0.1" // https://mvnrepository.com/artifact/com.google.android.gms/play-services-analytics
+    playServicesWearableVersion = "17.1.0" // https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
+    materialVersion = "1.6.1"// https://mvnrepository.com/artifact/com.google.android.material/material
+    constraintlayoutVersion = "2.1.4"// https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
+    picasso3ComposeVersion = "3.0.0-alpha01" // https://mvnrepository.com/artifact/com.squareup.picasso3/picasso-compose
+    lifecycleExtensionsVersion = "2.2.0" // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-extensions
+    lifecycleCommonJava8Version = "2.5.1" // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-common-java8
+    appcompatVersion = "1.5.0" // https://mvnrepository.com/artifact/androidx.appcompat/appcompat
+    activityComposeVersion = "1.5.1" // https://mvnrepository.com/artifact/androidx.activity/activity-compose
+    materialMaterialVersion = "1.2.1" // https://mvnrepository.com/artifact/androidx.compose.material/material
+    animationAnimationVersion = "1.2.1" // https://mvnrepository.com/artifact/androidx.compose.animation/animation
+    uiToolingVersion = "1.2.1" // https://mvnrepository.com/artifact/androidx.compose.ui/ui-tooling
+    lifecycleViewmodelComposeVersion = "2.5.1" // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-compose
+    uiTestJunit4Version = "1.2.1" // https://mvnrepository.com/artifact/androidx.compose.ui/ui-test-junit4
+    gsonVersion = "2.9.1" // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    jodaTimeVersion = "2.11.1" // https://mvnrepository.com/artifact/joda-time/joda-time
+    annotationVersion = "1.4.0" // https://mvnrepository.com/artifact/androidx.annotation/annotation
 }
 
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = "1.7.10"
     repositories {
         google()
         jcenter()

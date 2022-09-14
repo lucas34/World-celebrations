@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.9.1'
-    api 'joda-time:joda-time:2.11.1'
-    api 'androidx.annotation:annotation:1.4.0'
+    implementation 'com.google.code.gson:gson:' + rootProject.ext.gsonVersion
+    api 'joda-time:joda-time:' + rootProject.ext.jodaTimeVersion
+    api 'androidx.annotation:annotation:' + rootProject.ext.annotationVersion
 }
