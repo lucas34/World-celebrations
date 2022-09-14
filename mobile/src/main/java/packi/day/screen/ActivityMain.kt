@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -162,7 +163,7 @@ class ActivityMain : ComponentActivity() {
 fun BottomBar(
     navController: NavController
 ) {
-    val selectedIndex = remember { mutableStateOf(0) }
+    val selectedIndex = rememberSaveable { mutableStateOf(0) }
     BottomNavigation(elevation = 10.dp) {
         BottomNavigationItem(icon = {
             Icon(imageVector = Icons.Default.Home,"")
@@ -204,7 +205,6 @@ fun AppScafold(
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Open))
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopAppBar(title = {Text(stringResource(id = R.string.app_name))})  },
         bottomBar = { BottomBar(navController) }
     ) { padding ->
         MyAppNavHost(modifier = Modifier.padding(padding), navController = navController)
@@ -226,7 +226,7 @@ fun MyAppNavHost(
             FocusCelebrationView()
         }
         composable("main/{date}", arguments = listOf(navArgument("date") { type = NavType.StringType })) { backStackEntry ->
-            FocusCelebrationView(backStackEntry.arguments?.getString("date").toMonthDay())
+            FocusCelebrationView(monthDay = backStackEntry.arguments?.getString("date").toMonthDay())
         }
         composable("listAll") {
             ListAllCelebrationsView {

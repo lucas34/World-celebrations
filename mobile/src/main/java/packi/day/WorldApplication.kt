@@ -8,6 +8,7 @@ import io.realm.RealmConfiguration
 import packi.day.image.PicassoHolder
 import packi.day.store.InternationalDayRepository
 import packi.day.store.StoreLocator
+import packi.day.store.feature.HashMapStoreDelegate
 import packi.day.store.feature.realm.RealmStoreDelegate
 
 class WorldApplication : Application(), StoreLocator {
@@ -26,7 +27,7 @@ class WorldApplication : Application(), StoreLocator {
 
         Realm.setDefaultConfiguration(config)
 
-        celebrationHelper = InternationalDayRepository(applicationContext, RealmStoreDelegate())
+        celebrationHelper = InternationalDayRepository(applicationContext, HashMapStoreDelegate())
 
         if (BuildConfig.DEBUG) {
             StrictMode.ThreadPolicy.Builder().detectAll().penaltyDeath().build()

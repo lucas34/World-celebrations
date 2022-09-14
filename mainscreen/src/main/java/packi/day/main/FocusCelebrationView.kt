@@ -33,6 +33,8 @@ import packi.day.image.PicassoHolder
 import packi.day.store.Celebration
 import packi.day.store.getStoreLocator
 import java.util.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 private fun FocusCelebrationViewModelCompose(context: Context): FocusCelebrationViewModel {
 
@@ -43,13 +45,14 @@ private fun FocusCelebrationViewModelCompose(context: Context): FocusCelebration
 
 @Composable
 fun FocusCelebrationView(
+    context: Context = LocalContext.current,
     monthDay: MonthDay = MonthDay.now()
 ) {
-    val context = LocalContext.current
     val viewModel = remember { FocusCelebrationViewModelCompose(context) }
+    val celebration = remember { mutableStateOf(viewModel.get(monthDay)) }
     val offsetX = remember { mutableStateOf(0f) }
     val offsetY = remember { mutableStateOf(0f) }
-    viewModel.updateState(monthDay)
+
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -59,10 +62,10 @@ fun FocusCelebrationView(
                 detectDragGestures( // TODO this doesn't work
                     onDragEnd = {
                         when {
-                            offsetX.value >= 2 -> viewModel.plusDays(1)
-                            offsetX.value <= 2 -> viewModel.plusDays(-1)
-                            offsetY.value <= 2 -> viewModel.plusMonths(1)
-                            offsetY.value >= 2 -> viewModel.plusMonths(1)
+                            offsetX.value >= 2 -> celebration.value = viewModel.get(monthDay.plusDays(1))
+                            offsetX.value <= 2 -> celebration.value = viewModel.get(monthDay.plusDays(-1))
+                            offsetY.value <= 2 -> celebration.value = viewModel.get(monthDay.plusMonths(1))
+                            offsetY.value >= 2 -> celebration.value = viewModel.get(monthDay.plusMonths(1))
                         }
                     },
                     onDrag = { _, over ->
@@ -81,14 +84,14 @@ fun FocusCelebrationView(
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        DateTitleCompose(viewModel.current.date)
+        DateTitleCompose(celebration.value.date)
         Divider(
             color = colorResource(R.color.text),
             thickness = 1.dp,
             modifier = Modifier.padding(top = 16.dp)
         )
-        CelebrationCompose(celebration = viewModel.current.celebration) {
-            viewModel.setRandomDate() // TODO this doesn't work
+        CelebrationCompose(celebration = celebration.value.celebration) {
+            celebration.value = viewModel.setRandomDate()
         }
     }
 }

@@ -1,41 +1,52 @@
 package packi.day.widget
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.widget.RemoteViews
+import androidx.compose.runtime.Composable
+import androidx.glance.LocalContext
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import packi.day.main.FocusCelebrationView
+import packi.day.store.InternationalDayRepository
+import packi.day.store.StoreLocator
 
-import org.joda.time.MonthDay
+class WorldCelebrationWidget : GlanceAppWidget() {
 
-import packi.day.R
-import packi.day.WorldApplication
-import packi.day.store.UserSetting
-import packi.day.screen.ActivityMain
-
-class WidgetProvider : AppWidgetProvider() {
-
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val celebrationName = WorldApplication.with(context).get(MonthDay.now()).celebration?.name
-
-        val userSettings = UserSetting(context)
-
-        for (appWidgetId in appWidgetIds) {
-            val views = RemoteViews(context.packageName, R.layout.widget_layout)
-            views.setInt(R.id.WidgetText, "setBackgroundColor", userSettings.background)
-            views.setInt(R.id.WidgetText, "setTextColor", userSettings.widgetTextColor)
-            views.setFloat(R.id.WidgetText, "setTextSize", userSettings.widgetFontSize)
-            views.setTextViewText(R.id.WidgetText, celebrationName)
-            views.setOnClickPendingIntent(R.id.WidgetText, getPendingIntent(context, appWidgetId))
-            appWidgetManager.updateAppWidget(appWidgetId, views)
-        }
+    @Composable
+    override fun Content() {
+        FocusCelebrationView(LocalContext.current)
     }
 
-    private fun getPendingIntent(context: Context, appWidgetId: Int): PendingIntent {
-        val intent = Intent(context, ActivityMain::class.java)
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+}
+
+class CelebrationWidgetReceiver : GlanceAppWidgetReceiver(), StoreLocator {
+
+    private lateinit var store: InternationalDayRepository
+
+    override val glanceAppWidget: GlanceAppWidget = WorldCelebrationWidget()
+
+    override fun onEnabled(context: Context?) {
+        super.onEnabled(context)
+        store = InternationalDayRepository(context!!)
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        store = InternationalDayRepository(context)
+    }
+
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        store = InternationalDayRepository(context)
+    }
+
+    override fun getStore(): InternationalDayRepository {
+        return store
     }
 
 }

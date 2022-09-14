@@ -12,7 +12,6 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import packi.day.R;
 import packi.day.notification.Alarm;
-import packi.day.widget.WidgetProvider;
 
 public class PreferencesFragment extends PreferenceFragmentCompat {
 
@@ -68,13 +67,14 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
     }
 
     private boolean update(String methodName, int value) {
-        String packageName = getActivity().getBaseContext().getPackageName();
-        RemoteViews views = new RemoteViews(packageName, R.layout.widget_layout);
-        views.setInt(R.id.WidgetText, methodName, value);
-
-        AppWidgetManager manager = AppWidgetManager.getInstance(getActivity());
-        ComponentName provider = new ComponentName(getActivity().getPackageName(), WidgetProvider.class.getName());
-        manager.updateAppWidget(provider, views);
+//        String packageName = getActivity().getBaseContext().getPackageName();
+//        RemoteViews views = new RemoteViews(packageName, R.layout.widget_layout);
+//        views.setInt(R.id.WidgetText, methodName, value);
+//
+//        AppWidgetManager manager = AppWidgetManager.getInstance(getActivity());
+//        ComponentName provider = new ComponentName(getActivity().getPackageName(), WidgetProvider.class.getName());
+//        manager.updateAppWidget(provider, views);
+//        return true;
         return true;
     }
 
