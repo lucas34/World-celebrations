@@ -53,16 +53,19 @@ dependencies {
     implementation "com.google.dagger:dagger:" + rootProject.ext.daggerVersion
 
     implementation 'com.google.android.material:material:' + rootProject.ext.materialVersion
-    implementation 'androidx.constraintlayout:constraintlayout:' + rootProject.ext.constraintlayoutVersion
     implementation 'com.squareup.picasso3:picasso-compose:' + rootProject.ext.picasso3ComposeVersion
-    implementation 'androidx.lifecycle:lifecycle-extensions:' + rootProject.ext.lifecycleExtensionsVersion
-    implementation "androidx.lifecycle:lifecycle-common-java8:" + rootProject.ext.lifecycleCommonJava8Version
+
     implementation 'androidx.appcompat:appcompat:' + rootProject.ext.appcompatVersion
     implementation 'androidx.activity:activity-compose:' + rootProject.ext.activityComposeVersion
+
     implementation 'androidx.compose.material:material:' + rootProject.ext.materialMaterialVersion
     implementation 'androidx.compose.animation:animation:' + rootProject.ext.animationAnimationVersion
     implementation 'androidx.compose.ui:ui-tooling:' + rootProject.ext.uiToolingVersion
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:' + rootProject.ext.lifecycleExtensionsVersion
+    implementation "androidx.lifecycle:lifecycle-common-java8:" + rootProject.ext.lifecycleCommonJava8Version
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:' + rootProject.ext.lifecycleViewmodelComposeVersion
+
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:' + rootProject.ext.uiTestJunit4Version
 
     implementation project(':store')

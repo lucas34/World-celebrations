@@ -45,20 +45,17 @@ dependencies {
     implementation project(':store')
     implementation project(':mainscreen')
 
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:' + rootProject.ext.materialVersion
+    implementation 'com.squareup.picasso3:picasso-compose:' + rootProject.ext.picasso3ComposeVersion
 
-    implementation 'com.squareup.picasso:picasso:2.8'
-    implementation 'com.google.android.support:wearable:2.9.0'
-    implementation 'com.google.android.wearable:wearable:2.9.0'
+    implementation 'androidx.appcompat:appcompat:' + rootProject.ext.appcompatVersion
+    implementation 'androidx.activity:activity-compose:' + rootProject.ext.activityComposeVersion
 
-    implementation "androidx.activity:activity-compose:1.5.1"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.2.1"
-    implementation "androidx.wear.compose:compose-material:1.0.1"
-    implementation "androidx.wear.compose:compose-foundation:1.0.1"
+    implementation 'androidx.compose.material:material:' + rootProject.ext.materialMaterialVersion
+    implementation 'androidx.compose.animation:animation:' + rootProject.ext.animationAnimationVersion
+    implementation 'androidx.compose.ui:ui-tooling:' + rootProject.ext.uiToolingVersion
 
-    testImplementation "junit:junit:4.13.2"
-    androidTestImplementation "androidx.test.ext:junit:1.1.3"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.2.1"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.2.1"
+    implementation "androidx.wear.compose:compose-material:" + rootProject.ext.wearComposeMaterialVersion
+    implementation "androidx.wear.compose:compose-foundation:" + rootProject.ext.wearComposeFoundation
+
 }

@@ -3,7 +3,7 @@ ext {
     targetSdkVersion = 33
 
     jacocoVersion = "0.8.8" // https://www.eclemma.org/jacoco/
-    kotlinVersion = "1.7.10" // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+    kotlinVersion = "1.7.10" //
 
     daggerVersion = "2.43.2" /// https://mvnrepository.com/artifact/com.google.dagger/dagger
     playServicesAnalyticsVersion = "18.0.1" // https://mvnrepository.com/artifact/com.google.android.gms/play-services-analytics
@@ -23,18 +23,28 @@ ext {
     gsonVersion = "2.9.1" // https://mvnrepository.com/artifact/com.google.code.gson/gson
     jodaTimeVersion = "2.11.1" // https://mvnrepository.com/artifact/joda-time/joda-time
     annotationVersion = "1.4.0" // https://mvnrepository.com/artifact/androidx.annotation/annotation
+    annotationVersion = "1.4.0" // https://mvnrepository.com/artifact/androidx.annotation/annotation
+    preferenceKtxVersion = "1.2.0" // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
+    navigationCompose = "2.5.1" // https://mvnrepository.com/artifact/androidx.navigation/navigation-compose
+    glanceWidgetVersion = "1.0.0-alpha04" // https://mvnrepository.com/artifact/androidx.glance/glance-appwidget
+    wearComposeMaterialVersion = "1.0.1" // https://mvnrepository.com/artifact/androidx.wear.compose/compose-material
+    wearComposeFoundation = "1.0.1" // https://mvnrepository.com/artifact/androidx.wear.compose/compose-foundation
+
+    buildToolsVersion = "7.2.2"
+    realmGradlePluginVersion = "10.11.1"
+
 }
 
 buildscript {
-    ext.kotlin_version = "1.7.10"
+    ext.kotlin_version = "1.7.10" // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
     repositories {
         google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
-        classpath 'io.realm:realm-gradle-plugin:10.11.1'
+        classpath 'com.android.tools.build:gradle:7.2.2' // https://mvnrepository.com/artifact/com.android.tools.build/gradle
+        classpath 'io.realm:realm-gradle-plugin:10.11.1' // https://mvnrepository.com/artifact/io.realm/realm-gradle-plugin
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
